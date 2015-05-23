@@ -496,8 +496,15 @@ $(document).ready(function() {
 
             // Update the fields
             if (!required) {
-                textarea.value   = "";
-                checkbox.checked = false;
+                // disables checkbox that does not meet requirements
+                //textarea.value   = "";
+                //checkbox.checked = false;
+                
+                // enables all requisites
+                child['requires'].forEach(function(requisite) {
+                    var elem = $('#' + requisite);
+                    elem.prop('checked', !elem.prop('checked')).trigger('change');
+                });
             } else {
                 if (checkbox.checked) {
                     textarea.value = child['true'] || "";
