@@ -497,14 +497,14 @@ $(document).ready(function() {
             // Update the fields
             if (!required) {
                 // disables checkbox that does not meet requirements
-                //textarea.value   = "";
-                //checkbox.checked = false;
+                textarea.value   = "";
+                checkbox.checked = false;
                 
                 // enables all requisites
-                child['requires'].forEach(function(requisite) {
-                    var elem = $('#' + requisite);
-                    elem.prop('checked', !elem.prop('checked')).trigger('change');
-                });
+                //child['requires'].forEach(function(requisite) {
+                //    var elem = $('#' + requisite);
+                //    elem.prop('checked', !elem.prop('checked')).trigger('change');
+                //});
             } else {
                 if (checkbox.checked) {
                     textarea.value = child['true'] || "";
