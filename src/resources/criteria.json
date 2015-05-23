@@ -71,29 +71,29 @@
                         "id": "gui_plotter_exists",
                         "criteria": "Plotter exists",
                         "weight": 0,
-                        "false": "Plotter class is not implemented."
+                        "false": "The plotter class has not been implemented."
                     },
                     {
                         "id": "gui_plotter_plots_one",
-                        "criteria": "Plots one station",
+                        "criteria": "<indent>Plots one station",
                         "weight": 0.25,
-                        "requires_": [
+                        "requires": [
                             "gui_plotter_exists"
                         ],
                         "false": "Can't plot a station."
                     },
                     {
                         "id": "gui_plotter_plots_many",
-                        "criteria": "Plots multiple stations",
+                        "criteria": "<indent><indent>Plots multiple stations",
                         "weight": 0.5,
-                        "requires_": [
+                        "requires": [
                             "gui_plotter_plots_one"
                         ],
                         "false": "Can't plot multiple stations."
                     },
                     {
                         "id": "gui_plotter_station_colours",
-                        "criteria": "Plots coloured correctly",
+                        "criteria": "<indent><indent>Plots coloured correctly",
                         "weight": 0.25,
                         "requires_": [
                             "gui_plotter_plots_many"
@@ -102,9 +102,9 @@
                     },
                     {
                         "id": "gui_plotter_vertical_line",
-                        "criteria": "Clicking plot draws vertical line",
+                        "criteria": "<indent>Clicking plot draws vertical line",
                         "weight": 0.25,
-                        "requires_": [
+                        "requires": [
                             "gui_plotter_exists"
                         ],
                         "false": "Clicking the Plotter does not draw a vertical line."
@@ -122,52 +122,52 @@
                         "id": "gui_selectionFrame_exists",
                         "criteria": "SelectionFrame exists",
                         "weight": 0,
-                        "false": "SelectionFrame class is not implemented"
+                        "false": "SelectionFrame has not been implemented"
                     },
                     {
                         "id": "gui_selectionFrame_checkboxes",
-                        "criteria": "Checkboxes & labels are displayed for each station loaded",
+                        "criteria": "<indent>Checkboxes & labels are displayed for each station loaded",
                         "weight": 0.25,
-                        "requires_": [
+                        "requires": [
                             "gui_selectionFrame_exists"
                         ],
                         "false": "Checkboxes with labels are not displayed when a station is loaded."
                     },
                     {
                         "id": "gui_selectionFrame_checkbox_preselected",
-                        "criteria": "Checkboxes are preselected",
+                        "criteria": "<indent><indent>Checkboxes are preselected",
                         "weight": 0,
-                        "requires_": [
+                        "requires": [
                             "gui_selectionFrame_checkboxes"
                         ],
-                        "false": "Checkboxes are not automatically preselected."
+                        "false": "Checkboxes are not automatically checked."
                     },
                     {
                         "id": "gui_selectionFrame_checkbox_colour",
-                        "criteria": "Checkboxes coloured correctly",
+                        "criteria": "<indent><indent>Checkboxes coloured correctly",
                         "weight": 0.25,
-                        "requires_": [
+                        "requires": [
                             "gui_selectionFrame_checkboxes"
                         ],
                         "false": "The colour of the checkboxes does not match the corresponding station plots"
                     },
                     {
                         "id": "gui_selectionFrame_checkbox_toggling_plots",
-                        "criteria": "Checkboxes toggle station plots",
+                        "criteria": "<indent><indent>Checkboxes toggle station plots",
                         "weight": 0.5,
-                        "requires_": [
+                        "requires": [
                             "gui_selectionFrame_checkboxes"
                         ],
-                        "false": "Toggling checkboxes does not toggle display of corresponding station plot."
+                        "false": "Toggling checkboxes does not toggle the display of the corresponding station plot."
                     },
                     {
                         "id": "gui_selectionFrame_checkbox_toggling_labels",
-                        "criteria": "Checkboxes toggle labels in DataFrame",
+                        "criteria": "<indent><indent>Checkboxes toggle labels in DataFrame",
                         "weight": 0.5,
-                        "requires_": [
+                        "requires": [
                             "gui_selectionFrame_checkboxes"
                         ],
-                        "false": "Toggling checkboxes does not toggle display of corresponding label in DataFrame"
+                        "false": "Toggling checkboxes does not toggle the display of the corresponding label in DataFrame"
                     }
                 ]
             },
@@ -182,58 +182,56 @@
                         "id": "gui_dataFrame_exists",
                         "criteria": "DataFrame exists",
                         "weight": 0,
-                        "false": "DataFrame class is not implemented."
+                        "false": "DataFrame has not been implemented."
                     },
                     {
                         "id": "gui_dataFrame_displays_year",
-                        "criteria": "Clicking plot displays year",
+                        "criteria": "<indent>Clicking plot displays year",
                         "weight": 0.25,
-                        "requires_": [
+                        "requires": [
                             "gui_dataFrame_exists"
                         ],
                         "false": "Clicking the Plotter does not display the year in the DataFrame."
                     },
                     {
                         "id": "gui_dataFrame_displays_temperature",
-                        "criteria": "Clicking plot displays station temperatures",
+                        "criteria": "<indent>Clicking plot displays station temperatures",
                         "weight": 0.5,
-                        "requires_": [
+                        "requires": [
                             "gui_dataFrame_exists"
                         ],
                         "false": "Clicking the Plotter does not display temperatures for each station that is visible."
                     },
                     {
                         "id": "gui_dataFrame_dragging",
-                        "criteria": "Clicking and dragging updates DataFrame",
+                        "criteria": "<indent>Clicking and dragging updates DataFrame",
                         "weight": 0.5,
-                        "requires_": [
+                        "requires": [
                             "gui_dataFrame_exists"
                         ],
                         "false": "Clicking and dragging does not correctly update the DataFrame."
                     },
                     {
                         "id": "gui_dataFrame_no_stations_error",
-                        "criteria": "Clicking plot with no stations throws error",
+                        "criteria": "<indent>Clicking plot with no stations throws error",
                         "weight": -0.25,
-                        "requires_": [
-                            "gui.dataFrame.exists",
-                            "code.general.console_errors"
+                        "requires": [
+                            "gui.dataFrame.exists"
                         ],
                         "true": "Clicking the plot when no stations have been loaded or are visible should not throw an error."
                     },
                     {
                         "id": "gui_dataFrame_dragging_error",
-                        "criteria": "Clicking and dragging off plotter throws error",
+                        "criteria": "<indent>Clicking and dragging off plotter throws error",
                         "weight": -0.25,
                         "requires_": [
-                            "gui.dataFrame.exists",
-                            "code.general.console_errors"
+                            "gui.dataFrame.exists"
                         ],
                         "true": "Clicking and dragging off the plotter should not result in an error being printed to the python console."
                     },
                     {
                         "id": "gui_dataFrame_resizing_line",
-                        "criteria": "Resizing the window does not redraw line correctly",
+                        "criteria": "<indent>Resizing the window does not redraw line correctly",
                         "weight": -0.25,
                         "requires_": [
                             "gui_dataFrame_exists"
@@ -249,55 +247,6 @@
         "weight": 4,
         "children": [
             {
-                "criteria": "Docstrings",
-                "weight": 1,
-                "children": [
-                    {
-                        "id": "code_docstrings_description",
-                        "criteria": "Function description",
-                        "weight": 0.5,
-                        "jump": [
-                            "# Add your code here",
-                            "\"\"\""
-                        ],
-                        "false": "Docstrings do not give a description of what the function does."
-                    },
-                    {
-                        "id": "code_docstrings_types",
-                        "criteria": "Argument & return types",
-                        "weight": 0.5,
-                        "jump": [
-                            "# Add your code here",
-                            "\"\"\""
-                        ],
-                        "false": "Docstrings do not include an argument/return types statement."
-                    },
-                    {
-                        "id": "code_docstrings_location",
-                        "criteria": "Docstrings are not immediately below function/class definition.",
-                        "weight": 0,
-                        "jump": [
-                            "# Add your code here",
-                            "\"\"\""
-                        ],
-                        "false": "Docstrings need to be included immediately below the function/class definition line."
-                    },
-                    {
-                        "id": "code_docstrings_bad_description",
-                        "criteria": "Explain implementation",
-                        "requires_": [
-                            "code_docstrings_description"
-                        ],
-                        "weight": 0,
-                        "jump": [
-                            "# Add your code here",
-                            "\"\"\""
-                        ],
-                        "false": "Docstrings should not detail how a function is implemented, but what it does."
-                    }
-                ]
-            },
-            {
                 "criteria": "TemperatureData",
                 "jump": [
                     "class TemperatureData"
@@ -308,98 +257,99 @@
                         "id": "code_temperatureData_exists",
                         "criteria": "TemperatureData exists",
                         "weight": 0,
-                        "false": "TemperatureData class is not implemented."
+                        "false": "TemperatureData class is not implemented",
+                        "requires" : []
                     },
                     {
                         "id": "code_temperatureData_load_data",
-                        "criteria": "load_data",
+                        "criteria": "<indent>load_data",
                         "weight": 0.25,
                         "jump": [
                             "class TemperatureData",
                             "def load_data"
                         ],
-                        "requires_": [
+                        "requires": [
                             "code_temperatureData_exists"
                         ],
-                        "false": "load_data is not implemented."
+                        "false": "load_data is not implemented"
                     },
                     {
                         "id": "code_temperatureData_get_data",
-                        "criteria": "get_data",
+                        "criteria": "<indent>get_data",
                         "weight": 0.25,
                         "jump": [
                             "class TemperatureData",
                             "def get_data"
                         ],
-                        "requires_": [
+                        "requires": [
                             "code_temperatureData_exists"
                         ],
-                        "false": "get_data is not implemented."
+                        "false": "get_data is not implemented"
                     },
                     {
                         "id": "code_temperatureData_toggle_selected",
-                        "criteria": "toggle_selected",
+                        "criteria": "<indent>toggle_selected",
                         "weight": 0.25,
                         "jump": [
                             "class TemperatureData",
                             "def toggle_selected"
                         ],
-                        "requires_": [
+                        "requires": [
                             "code_temperatureData_exists"
                         ],
-                        "false": "toggle_selected is not implemented."
+                        "false": "toggle_selected is not implemented"
                     },
                     {
                         "id": "code_temperatureData_is_selected",
-                        "criteria": "is_selected",
+                        "criteria": "<indent>is_selected",
                         "weight": 0.25,
                         "jump": [
                             "class TemperatureData",
                             "def is_selected"
                         ],
-                        "requires_": [
+                        "requires": [
                             "code_temperatureData_exists"
                         ],
-                        "false": "is_selected is not implemented."
+                        "false": "is_selected is not implemented"
                     },
                     {
                         "id": "code_temperatureData_get_stations",
-                        "criteria": "get_stations",
+                        "criteria": "<indent>get_stations",
                         "weight": 0.25,
                         "jump": [
                             "class TemperatureData",
                             "def get_stations"
                         ],
-                        "requires_": [
+                        "requires": [
                             "code_temperatureData_exists"
                         ],
-                        "false": "get_stations is not implemented."
+                        "false": "get_stations is not implemented"
                     },
                     {
                         "id": "code_temperatureData_get_ranges",
-                        "criteria": "get_ranges",
+                        "criteria": "<indent>get_ranges",
                         "weight": 0.75,
                         "jump": [
                             "class TemperatureData",
                             "def get_ranges"
                         ],
-                        "requires_": [
+                        "requires": [
                             "code_temperatureData_load_data"
                         ],
-                        "false": "get_ranges is not implemented."
+                        "false": "get_ranges is not implemented"
                     },
                     {
                         "id": "code_temperatureData_no_dictionary",
-                        "criteria": "Does not use dictionary",
-                        "weight": 0.25,
+                        "criteria": "<indent>Does not use dictionary",
+                        "weight": -0.5,
                         "jump": [
                             "class TemperatureData",
                             "\\{"
                         ],
-                        "requires_": [
+                        "requires": [
                             "code_temperatureData_exists"
                         ],
-                        "false": "TemperatureData does not use a dictionary to interally store its data."
+                        "true": "TemperatureData does not use a dictionary to interally store its data"
                     }
                 ]
             },
@@ -417,7 +367,7 @@
                         "requires_": [
                             "gui_plotter_exists"
                         ],
-                        "false": "Plotter class does not inherit from Canvas class."
+                        "false": "Plotter does not inherit from tk.Canvas"
                     },
                     {
                         "id": "code_inheritance_selectionFrame",
@@ -429,7 +379,7 @@
                         "requires_": [
                             "gui_selectionFrame_exists"
                         ],
-                        "false": "SelectionFrame class does not inherit from Frame class."
+                        "false": "SelectionFrame does not inherit from tk.Frame"
                     },
                     {
                         "id": "code_inheritance_dataFrame",
@@ -441,7 +391,7 @@
                         "requires_": [
                             "gui_dataFrame_exists"
                         ],
-                        "false": "DataFrame class does not inherit from Frame class."
+                        "false": "DataFrame does not inherit from tk.Frame"
                     },
                     {
                         "id": "code_inheritance_temperaturePlotApp",
@@ -450,7 +400,7 @@
                         "jump": [
                             "class TemperaturePlotApp"
                         ],
-                        "false": "TemperaturePlotApp class does not inherit from object class."
+                        "false": "TemperaturePlotApp does not inherit from object"
                     }
                 ]
             },
@@ -462,27 +412,27 @@
                         "id": "code_general_globals",
                         "criteria": "Globals",
                         "weight": -1,
-                        "true": "Global variables should not be used."
+                        "true": "Global variables should not be used"
                     },
                     {
                         "id": "code_general_syntax_error_minor",
                         "criteria": "Minor syntax errors",
                         "weight": -0.5,
-                        "true": "There are syntax errors."
+                        "true": "Code contains syntax errors"
                     },
                     {
                         "id": "code_general_syntax_error_medium",
-                        "criteria": "Medium syntax errors",
+                        "criteria": "<indent>Medium syntax errors",
                         "weight": -0.5,
-                        "requires_": [
+                        "requires": [
                             "code_general_syntax_error_minor"
                         ]
                     },
                     {
                         "id": "code_general_syntax_error_major",
-                        "criteria": "Major syntax errors",
+                        "criteria": "<indent>Major syntax errors",
                         "weight": -0.5,
-                        "requires_": [
+                        "requires": [
                             "code_general_syntax_error_medium"
                         ]
                     },
@@ -496,7 +446,7 @@
                         "criteria": "Line length < 80",
                         "weight": 0,
                         "checked": true,
-                        "false": "Line length must be less than 80 characters."
+                        "false": "Line length must be less than 80 characters"
                     },
                     {
                         "id": "code_general_pack",
@@ -509,6 +459,55 @@
                         "criteria": "Console errors",
                         "weight": -1,
                         "true": "There should not be any errors output to the python console."
+                    }
+                ]
+            },
+            {
+                "criteria": "Docstrings",
+                "weight": 1,
+                "children": [
+                    {
+                        "id": "code_docstrings_description",
+                        "criteria": "Function description",
+                        "weight": 0.5,
+                        "jump": [
+                            "# Add your code here",
+                            "\"\"\""
+                        ],
+                        "false": "The docstrings do not give a description of what each function does."
+                    },
+                    {
+                        "id": "code_docstrings_types",
+                        "criteria": "Argument & return types",
+                        "weight": 0.5,
+                        "jump": [
+                            "# Add your code here",
+                            "\"\"\""
+                        ],
+                        "false": "The docstrings do not include an argument or return types statement."
+                    },
+                    {
+                        "id": "code_docstrings_location",
+                        "criteria": "Docstrings below function",
+                        "weight": 0,
+                        "jump": [
+                            "# Add your code here",
+                            "\"\"\""
+                        ],
+                        "true": "Docstrings need to be included immediately below the function or class definition."
+                    },
+                    {
+                        "id": "code_docstrings_bad_description",
+                        "criteria": "Explain implementation",
+                        "requires_": [
+                            "code_docstrings_description"
+                        ],
+                        "weight": 0,
+                        "jump": [
+                            "# Add your code here",
+                            "\"\"\""
+                        ],
+                        "false": "The docstrings should not detail how a function is implemented, but rather what it does."
                     }
                 ]
             }
