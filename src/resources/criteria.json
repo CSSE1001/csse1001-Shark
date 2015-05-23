@@ -50,13 +50,13 @@
                         "requires_": [
                             "code_general_console_errors"
                         ],
-                        "false": "Clicking cancel on the File->Open dialog should not result in an error being printed to the console."
+                        "true": "Clicking cancel on the File->Open dialog should not result in an error being printed to the console."
                     },
                     {
                         "id": "gui_general_cancel_error_box",
                         "criteria": "File->Open->Cancel shows error box",
                         "weight": 0,
-                        "false": "Clicking cancel on the File->Open dialog should not show an error box."
+                        "true": "Clicking cancel on the File->Open dialog should not show an error box."
                     }
                 ]
             },
@@ -219,7 +219,7 @@
                             "gui.dataFrame.exists",
                             "code.general.console_errors"
                         ],
-                        "false": "Clicking the plot when no stations have been loaded or are visible should not throw an error."
+                        "true": "Clicking the plot when no stations have been loaded or are visible should not throw an error."
                     },
                     {
                         "id": "gui_dataFrame_dragging_error",
@@ -229,7 +229,7 @@
                             "gui.dataFrame.exists",
                             "code.general.console_errors"
                         ],
-                        "false": "Clicking and dragging off the plotter should not result in an error being printed to the python console."
+                        "true": "Clicking and dragging off the plotter should not result in an error being printed to the python console."
                     },
                     {
                         "id": "gui_dataFrame_resizing_line",
@@ -238,7 +238,7 @@
                         "requires_": [
                             "gui_dataFrame_exists"
                         ],
-                        "false": "Resizing the window does not correctly redraw the vertical line, if it was drawn."
+                        "true": "Resizing the window does not correctly redraw the vertical line, if it was drawn."
                     }
                 ]
             }
