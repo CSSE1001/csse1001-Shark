@@ -99,6 +99,7 @@ function flushSocket() {
         ws.close();
     }
 
+
     if ("WebSocket" in window) {
 
         // Add INSERT
@@ -120,6 +121,13 @@ function flushSocket() {
 }
 
 $(document).ready(function() {
+	$('#graph').on('hidden.bs.modal', function () {
+		if (typeof ws !== 'undefined') {
+        	ws.close();
+		}	
+		ws = undefined;
+	})
+
 	setInterval(function() {
 		if (needsRedraw) {
 			needsRedraw = false;
@@ -247,6 +255,7 @@ $(document).ready(function() {
     });
 
 
+
     // Open a WebSocket to the python server
-    flushSocket();
+    // flushSocket();
 });

@@ -57,11 +57,10 @@ function getScriptInfo(script, criteria, callback) {
         var total_passed = 0;
         if (test_array) {
             var tests = test_array[1].trim();
-            var tests = test_array[1].trim();
             var matches = tests.match(/Passed ([0-9]+)\/([0-9]+) tests/);
-            if(matches) {
-                total_passed = parseInt(matches[1], 10);
-                total_tests = parseInt(matches[2], 10);
+            if (matches) {
+                total_passed = parseInt(matches[1], 10);             
+				total_tests = parseInt(matches[2], 10);
             }
         }
 

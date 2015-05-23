@@ -1,0 +1,385 @@
+[
+    {
+        "criteria": "Code",
+        "weight": 10,
+        "children" : [
+            {
+                "criteria": "load_dates",
+                "weight": 1,
+                "jump" : ["def load_dates"],
+                "children" : [
+                    {
+                        "id" : "load_dates_open_close",
+                        "criteria" : "Opens and closes file",
+                        "jump" : ["def load_dates", "open.*?\\(.*?\\)"],
+                        "weight" : 0.5,
+                        "false" : "The load_dates function doesn’t open/close the station file"
+                    },
+                    {
+                        "id" : "load_dates_return_dates",
+                        "criteria" : "Returns list of dates",
+                        "weight" : 0.5,
+                        "false" : "The load_dates function doesn’t return a list of dates from one of the station files"
+                    }
+                ]
+            },
+            {
+                "criteria": "load_station_data",
+                "weight": 1,
+                "jump" : ["def load_station_data"],
+                "children" : [
+                    {
+                        "id" : "load_station_data_temperature",
+                        "criteria" : "Extracts temperatures from station file",
+                        "weight" : 0.25,
+                        "false" : "The load_station_data function doesn’t extract temperatures from the station file"
+                    },
+                    {
+                        "id" : "load_station_data_strip",
+                        "criteria" : "<indent>Strips new line",
+                        "jump" : ["def load_station_data", "\\.strip\\(.*?\\)"],
+                        "weight" : 0,
+                        "false" : "Don’t forget to sanitise your input. The strip() command will remove any leading or trailing whitespace, including the newline character",
+                        "requires" : ["load_station_data_temperature"]
+                    },
+                    {
+                        "id" : "load_station_data_floats",
+                        "criteria" : "<indent>Converts temperatures to floats",
+                        "jump" : ["def load_station_data", "float\\(.*?\\)"],
+                        "weight" : 0.25,
+                        "false" : "The load_station_data function doesn’t convert temperatures to floats",
+                        "requires" : ["load_station_data_temperature"]
+                    },
+                    {
+                        "id" : "load_station_data_positive",
+                        "criteria" : "<indent>Works with positive temperatures",
+                        "weight" : 0.25,
+                        "false" : "The load_station_data function doesn’t work for positive temperatures",
+                        "requires" : ["load_station_data_temperature"]
+                    },
+                    {
+                        "id" : "load_station_data_negative",
+                        "criteria" : "<indent>Works with negative temperatures",
+                        "weight" : 0.25,
+                        "false" : "The load_station_data function doesn’t work for negative temperatures",
+                        "requires" : ["load_station_data_temperature"]
+                    }
+                ]
+            },
+            {
+                "criteria": "load_all_stations_data",
+                "weight": 1,
+                "children" : [
+                    {
+                        "id" : "load_all_stations_data_no_stations",
+                        "criteria" : "works for no stations",
+                        "weight" : 0.25,
+                        "false" : "The load_all_stations_data function doesn’t work when the stations list is empty"
+                    },
+                    {
+                        "id" : "load_all_stations_data_single_station",
+                        "criteria" : "works for a single station",
+                        "weight" : 0.25,
+                        "false" : "The load_all_stations_data function does’t work for a single station"
+                    },
+                    {
+                        "id" : "load_all_stations_data_multiple_stations",
+                        "criteria" : "works for multiple stations",
+                        "weight" : 0.5,
+                        "false" : "The load_all_stations_data function does’t work for multiple stations"
+                    },
+                    {
+                        "id" : "load_station_data_not_used_in_load_all_stations_data",
+                        "criteria" : "works, but doesn't use load_station_data",
+                        "weight" : -0.25,
+                        "true" : "You could have used the load_station_data function in the load_all_stations_data function"
+                    },
+                    {
+                        "id" : "load_all_stations_data_load_station_data_floats",
+                        "criteria" : "<indent>temperatures are not floats",
+                        "weight" : -0.5,
+                        "true" : "The load_all_stations_data function doesn’t convert temperatures to floats",
+                        "requires" : ["load_station_data_not_used_in_load_all_stations_data"]
+                    },
+                    {
+                        "id" : "load_all_stations_data_load_station_data_positive",
+                        "criteria" : "<indent>doesn't work with positive temperatures",
+                        "weight" : -0.25,
+                        "true" : "The load_all_stations_data function doesn’t work for positive temperatures",
+                        "requires" : ["load_station_data_not_used_in_load_all_stations_data"]
+                    },
+                    {
+                        "id" : "load_all_stations_data_load_station_data_negative",
+                        "criteria" : "<indent>doesn't work with negative temperatures",
+                        "weight" : -0.25,
+                        "true" : "The load_all_stations_data function doesn’t work for negative temperatures",
+                        "requires" : ["load_station_data_not_used_in_load_all_stations_data"]
+                    }
+                ]
+            }, 
+            {
+                "criteria": "display_maxs",
+                "weight": 1,
+                "children" : [
+                    {   
+                        "id" : "display_maxs_formatted_header",
+                        "criteria" : "Displays the correctly formatted header",
+                        "weight" : 0.25,
+                        "false" : "The display_maxs function doesn’t print the right header"
+                    },
+                    {
+                        "id" : "display_maxs_display_stations",
+                        "criteria" : "<indent>Doesn't use supplied display_stations functions",
+                        "weight" : 0,
+                        "true" : "The display_stations function could have been used in display_maxs to print the header",
+                        "requires" : ["display_maxs_formatted_header"]
+                    },
+                    {
+                        "id" : "display_maxs_correct_temp",
+                        "criteria" : "Displays correct temperatures",
+                        "weight" : 0.5,
+                        "false" : "The display_maxs function doesn’t calculate maximum temperatures"
+                    },
+                    {
+                        "id" : "display_maxs_temperature_format",
+                        "criteria" : "<indent>Temperatures correctly formatted",
+                        "weight" : 0.25,
+                        "false" : "The display_maxs function doesn’t correctly print maximum temperatures",
+                        "requires" : ["display_maxs_correct_temp"]
+                    },
+                    {
+                        "id" : "display_maxs_supplied_display_temp",
+                        "criteria" : "<indent>Doesn't use the supplied display_temp function",
+                        "weight" : 0,
+                        "true" : "The display_temp function could have been used in display_maxs to print each temperature",
+                        "requires" : ["display_maxs_correct_temp"]
+                    },
+                    {
+                        "id" : "display_maxs_data_missing",
+                        "criteria" : "<indent><indent>Doesn't display \"----\" when data is missing",
+                        "weight" : -0.25,
+                        "true" : "The display_maxs function doesn’t display ---- when the temperature is missing",
+                        "requires" : ["display_maxs_correct_temp", "display_maxs_supplied_display_temp"]
+                    }
+                ]
+            },
+            {
+                "criteria" : "temperature_diffs",
+                "weight" : 2,
+                "children" : [
+                    {
+                        "id" : "temperature_diffs_calculation",
+                        "criteria" : "Computes temperature differences",
+                        "weight" : 0.0,
+                        "false" : "The temperature_diffs function doesn’t compute temperature differences"
+                    },
+                    {
+                        "id" : "temperature_diffs_positive",
+                        "criteria" : "<indent>Works with positive numbers",
+                        "weight" : 1.0,
+                        "false" : "The temperature_diffs function doesn’t work with positive temperature differences",
+                        "requires" : ["temperature_diffs_calculation"]
+                    },
+                    {
+                        "id" : "temperature_diffs_negative",
+                        "criteria" : "<indent>Works with negative numbers",
+                        "weight" : 0.25,
+                        "false" : "The temperature_diffs function doesn’t work with negative temperature differences",
+                        "requires" : ["temperature_diffs_calculation"]
+                    },
+                    {
+                        "id" : "temperature_diffs_returns",
+                        "criteria" : "<indent>Returns a list of correct tuples",
+                        "weight" : 0.5,
+                        "false" : "The temperature_diffs function doesn’t return a correct list of tuples",
+                        "requires" : ["temperature_diffs_calculation"]
+                    },
+                    {
+                        "id" : "temperature_diffs_unknown",
+                        "criteria" : "Correctly handles unknown data",
+                        "weight" : 0.25,
+                        "false" : "The temperature_diffs function doesn’t handle unknown data"
+                    }
+                ]
+            },
+            {
+                "criteria" : "display_diffs",
+                "weight" : 1.0,
+                "children" : [
+                    {
+                        "id" : "display_diffs_header",
+                        "criteria" : "Prints the correct header",
+                        "weight" : 0.25,
+                        "false" : "The display_diffs function doesn’t print the right header"
+                    },
+                    {
+                        "id" : "display_diffs_format",
+                        "criteria" : "Prints correctly formatted date differences",
+                        "weight" : 0.75,
+                        "false" : "The display_diffs function doesn’t correctly print date differences"
+                    }
+                ]
+            },
+            {
+                "criteria" : "interact",
+                "weight" : 2,
+                "children" : [
+                    {
+                        "id" : "interact_ask_file",
+                        "criteria" : "Asks for a file",
+                        "weight" : 0.25,
+                        "false" : "The interact function doesn’t ask for a stations file"
+                    },
+                    {
+                        "id" : "interact_file_loop",
+                        "criteria" : "Loops if invalid file",
+                        "weight" : 0,
+                        "false" : "The interact function doesn’t loop if the stations file is invalid"
+                    },
+                    {
+                        "id" : "interact_calls_load_dates",
+                        "criteria" : "Correctly calls load_dates, load_all_stations",
+                        "weight" : 0.25,
+                        "false" : "The interact function doesn’t call load_dates or load_all_stations correctly"
+                    },
+                    {
+                        "id" : "interact_command_loop",
+                        "criteria" : "Continuously loops asking for a command",
+                        "weight" : 0.25,
+                        "false" : "The interact function doesn’t loop after a command is executed"
+                    },
+                    {
+                        "id" : "interact_dm",
+                        "criteria" : "Correctly handles dm",
+                        "weight" : 0,
+                        "false" : "The interact function doesn’t handle the dm command"
+                    },
+                    {
+                        "id" : "interact_dm_valid",
+                        "criteria" : "<indent>with valid inputs",
+                        "weight" : 0.25,
+                        "false" : "The interact function doesn’t handle the dm command with valid inputs",
+                        "requires" : ["interact_dm"]
+                    },
+                    {
+                        "id" : "interact_dd",
+                        "criteria" : "Correctly handles dd",
+                        "weight" : 0,
+                        "false" : "The interact function doesn’t handle the dd command"
+                    },
+                    {
+                        "id" : "interact_dd_valid",
+                        "criteria" : "<indent>with valid inputs",
+                        "weight" : 0.25,
+                        "false" : "The interact function doesn’t handle the dd command with valid inputs",
+                        "requires" : ["interact_dd"]
+                    },
+                    {
+                        "id" : "interact_q",
+                        "criteria" : "Correctly handles q",
+                        "weight" : 0,
+                        "false" : "The interact function doesn’t handle the q command"
+                    },
+                    {
+                        "id" : "interact_q_valid",
+                        "criteria" : "<indent>with valid inputs",
+                        "weight" : 0.25,
+                        "false" : "The interact function doesn’t handle the q command with valid inputs",
+                        "requires" : ["interact_q"]
+                    },
+                    {
+                        "id" : "interact_unknown",
+                        "criteria" : "Correctly handles unknown commands",
+                        "weight" : 0.25,
+                        "false" : "The interact function doesn’t handle unknown commands"
+                    },
+                    {
+                        "id" : "interact_error_handling",
+                        "criteria" : "Some error handling for invalid dd/dm/q commands",
+                        "weight" : 0.25,
+                        "false" : "The dd/dm/q commands throw an error when given invalid inputs"
+                    }
+                ]
+            },
+            {
+                "criteria" : "comments",
+                "weight" : 1,
+                "children" : [
+                    {
+                        "id" : "comments_description",
+                        "criteria" : "Have description for every function",
+                        "weight" : 0.5,
+                        "false" : "Some of the functions are missing descriptions. Every function should have a short description comment to let readers quickly know what it does."
+                    }, 
+                    {
+                        "id" : "comments_declaration",
+                        "criteria" : "Have type declaration for every function",
+                        "weight" : 0.5,
+                        "false" : "Some of the functions are missing type declarations. Every function should include the input and return types as a comment to let readers know what values can be expected as inputs and outputs."
+                    },
+                    {
+                        "id" : "comments_under_function",
+                        "criteria" : "Comments directly under the function name",
+                        "weight" : 0,
+                        "false" : "The docstrings aren’t in the right spot. Docstrings should go directly under the function name to support Pythons help method."
+                    },
+                    {
+                        "id" : "comments_line_length",
+                        "criteria" : "Line length < 80",
+                        "weight" : 0,
+                        "false" : "Line length should be less than 80 characters."
+                    }
+
+                ]
+            },
+            {
+                "criteria" : "general",
+                "weight" : -1,
+                "children" : [
+                    {
+                        "id" : "general_closing_files",
+                        "criteria" : "Not closing files",
+                        "weight" : 0,
+                        "true" : "Don’t forget to close files after you have finished with them."
+                    }, 
+                    {
+                        "id" : "general_function_name",
+                        "criteria" : "Functions are misnamed",
+                        "weight" : 0,
+                        "true" : "Make sure your function names exactly match the assignment sheet"
+                    },
+                    {
+                        "id" : "general_hardcoding",
+                        "criteria" : "Hardcoding e.g. stations filename, interact inputs",
+                        "weight" : -1
+                    }
+
+                ]
+            },
+            {  
+                "id" : "year_averages",
+                "criteria" : "yearly_averages",
+                "weight" : 2,
+                "masters" : true
+            },
+            {
+                "criteria" : "display_yearly_averages",
+                "weight" : 1,
+                "masters" : true,
+                "children" : [
+                    {
+                        "id" : "display_yearly_averages_averages",
+                        "criteria" : "Prints the correct averages",
+                        "weight" : 0.5
+                    }, 
+                    {
+                        "id" : "display_yearly_averages_format",
+                        "criteria" : "Prints correctly formatted",
+                        "weight" : 0.5
+                    }
+                ]
+            }
+
+        ]
+    }
+]

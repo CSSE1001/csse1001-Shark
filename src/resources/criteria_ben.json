@@ -1,0 +1,567 @@
+[
+    {
+        "criteria": "GUI",
+        "weight": 6,
+        "children": [
+            {
+                "criteria": "Layout/Resizing",
+                "weight": 1,
+                "children": [
+                    {
+                        "id": "gui_window_layout",
+                        "criteria": "Widgets have correct layout",
+                        "weight": 0.5,
+                        "false": "The window is not laid out correctly."
+                    },
+                    {
+                        "id": "gui_window_resizing",
+                        "criteria": "Widgets resize correctly",
+                        "weight": 0.5,
+                        "false": "Resizing the window does not resize the widgets correctly."
+                    }
+                ]
+            },
+            {
+                "criteria": "General",
+                "weight": 1,
+                "children": [
+                    {
+                        "id": "gui_general_file_menu",
+                        "criteria": "File menu is a menubar",
+                        "weight": 0,
+                        "false": "The file menu is not a menu widget."
+                    },
+                    {
+                        "id": "gui_general_open_dialog",
+                        "criteria": "File->Open shows file dialog",
+                        "weight": 0.5,
+                        "false": "File->Open does not show a file dialog box."
+                    },
+                    {
+                        "id": "gui_general_bad_open",
+                        "criteria": "Opening bad file displays error box",
+                        "weight": 0.5,
+                        "false": "Attempting to open a bad file should display an error box"
+                    },
+                    {
+                        "id": "gui_general_cancel_console_error",
+                        "criteria": "File->Open->Cancel throws an error",
+                        "weight": -0.25,
+                        "requires_": [
+                            "code_general_console_errors"
+                        ],
+                        "true": "Clicking cancel on the File->Open dialog should not result in an error being printed to the console."
+                    },
+                    {
+                        "id": "gui_general_cancel_error_box",
+                        "criteria": "File->Open->Cancel shows error box",
+                        "weight": 0,
+                        "true": "Clicking cancel on the File->Open dialog should not show an error box."
+                    }
+                ]
+            },
+            {
+                "criteria": "Plotter",
+                "jump": [
+                    "class Plotter"
+                ],
+                "weight": 1.25,
+                "children": [
+                    {
+                        "id": "gui_plotter_exists",
+                        "criteria": "Plotter exists",
+                        "weight": 0,
+                        "false": "Plotter class is not implemented."
+                    },
+                    {
+                        "id": "gui_plotter_plots_one",
+                        "criteria": "Plots one station",
+                        "weight": 0.25,
+                        "requires_": [
+                            "gui_plotter_exists"
+                        ],
+                        "false": "Can't plot a station."
+                    },
+                    {
+                        "id": "gui_plotter_plots_many",
+                        "criteria": "Plots multiple stations",
+                        "weight": 0.5,
+                        "requires_": [
+                            "gui_plotter_plots_one"
+                        ],
+                        "false": "Can't plot multiple stations."
+                    },
+                    {
+                        "id": "gui_plotter_station_colours",
+                        "criteria": "Plots coloured correctly",
+                        "weight": 0.25,
+                        "requires_": [
+                            "gui_plotter_plots_many"
+                        ],
+                        "false": "Plots of station data are not coloured correctly."
+                    },
+                    {
+                        "id": "gui_plotter_vertical_line",
+                        "criteria": "Clicking plot draws vertical line",
+                        "weight": 0.25,
+                        "requires_": [
+                            "gui_plotter_exists"
+                        ],
+                        "false": "Clicking the Plotter does not draw a vertical line."
+                    }
+                ]
+            },
+            {
+                "criteria": "SelectionFrame",
+                "jump": [
+                    "class SelectionFrame"
+                ],
+                "weight": 1.5,
+                "children": [
+                    {
+                        "id": "gui_selectionFrame_exists",
+                        "criteria": "SelectionFrame exists",
+                        "weight": 0,
+                        "false": "SelectionFrame class is not implemented"
+                    },
+                    {
+                        "id": "gui_selectionFrame_checkboxes",
+                        "criteria": "Checkboxes & labels are displayed for each station loaded",
+                        "weight": 0.25,
+                        "requires_": [
+                            "gui_selectionFrame_exists"
+                        ],
+                        "false": "Checkboxes with labels are not displayed when a station is loaded."
+                    },
+                    {
+                        "id": "gui_selectionFrame_checkbox_preselected",
+                        "criteria": "Checkboxes are preselected",
+                        "weight": 0,
+                        "requires_": [
+                            "gui_selectionFrame_checkboxes"
+                        ],
+                        "false": "Checkboxes are not automatically preselected."
+                    },
+                    {
+                        "id": "gui_selectionFrame_checkbox_colour",
+                        "criteria": "Checkboxes coloured correctly",
+                        "weight": 0.25,
+                        "requires_": [
+                            "gui_selectionFrame_checkboxes"
+                        ],
+                        "false": "The colour of the checkboxes does not match the corresponding station plots"
+                    },
+                    {
+                        "id": "gui_selectionFrame_checkbox_toggling_plots",
+                        "criteria": "Checkboxes toggle station plots",
+                        "weight": 0.5,
+                        "requires_": [
+                            "gui_selectionFrame_checkboxes"
+                        ],
+                        "false": "Toggling checkboxes does not toggle display of corresponding station plot."
+                    },
+                    {
+                        "id": "gui_selectionFrame_checkbox_toggling_labels",
+                        "criteria": "Checkboxes toggle labels in DataFrame",
+                        "weight": 0.5,
+                        "requires_": [
+                            "gui_selectionFrame_checkboxes"
+                        ],
+                        "false": "Toggling checkboxes does not toggle display of corresponding label in DataFrame"
+                    }
+                ]
+            },
+            {
+                "criteria": "DataFrame",
+                "jump": [
+                    "class DataFrame"
+                ],
+                "weight": 1.25,
+                "children": [
+                    {
+                        "id": "gui_dataFrame_exists",
+                        "criteria": "DataFrame exists",
+                        "weight": 0,
+                        "false": "DataFrame class is not implemented."
+                    },
+                    {
+                        "id": "gui_dataFrame_displays_year",
+                        "criteria": "Clicking plot displays year",
+                        "weight": 0.25,
+                        "requires_": [
+                            "gui_dataFrame_exists"
+                        ],
+                        "false": "Clicking the Plotter does not display the year in the DataFrame."
+                    },
+                    {
+                        "id": "gui_dataFrame_displays_temperature",
+                        "criteria": "Clicking plot displays station temperatures",
+                        "weight": 0.5,
+                        "requires_": [
+                            "gui_dataFrame_exists"
+                        ],
+                        "false": "Clicking the Plotter does not display temperatures for each station that is visible."
+                    },
+                    {
+                        "id": "gui_dataFrame_dragging",
+                        "criteria": "Clicking and dragging updates DataFrame",
+                        "weight": 0.5,
+                        "requires_": [
+                            "gui_dataFrame_exists"
+                        ],
+                        "false": "Clicking and dragging does not correctly update the DataFrame."
+                    },
+                    {
+                        "id": "gui_dataFrame_no_stations_error",
+                        "criteria": "Clicking plot with no stations throws error",
+                        "weight": -0.25,
+                        "requires_": [
+                            "gui.dataFrame.exists",
+                            "code.general.console_errors"
+                        ],
+                        "true": "Clicking the plot when no stations have been loaded or are visible should not throw an error."
+                    },
+                    {
+                        "id": "gui_dataFrame_dragging_error",
+                        "criteria": "Clicking and dragging off plotter throws error",
+                        "weight": -0.25,
+                        "requires_": [
+                            "gui.dataFrame.exists",
+                            "code.general.console_errors"
+                        ],
+                        "true": "Clicking and dragging off the plotter should not result in an error being printed to the python console."
+                    },
+                    {
+                        "id": "gui_dataFrame_resizing_line",
+                        "criteria": "Resizing the window does not redraw line correctly",
+                        "weight": -0.25,
+                        "requires_": [
+                            "gui_dataFrame_exists"
+                        ],
+                        "true": "Resizing the window does not correctly redraw the vertical line, if it was drawn."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "criteria": "Code",
+        "weight": 4,
+        "children": [
+            {
+                "criteria": "Docstrings",
+                "weight": 1,
+                "children": [
+                    {
+                        "id": "code_docstrings_description",
+                        "criteria": "Function description",
+                        "weight": 0.5,
+                        "jump": [
+                            "# Add your code here",
+                            "\"\"\""
+                        ],
+                        "false": "Docstrings do not give a description of what the function does."
+                    },
+                    {
+                        "id": "code_docstrings_types",
+                        "criteria": "Argument & return types",
+                        "weight": 0.5,
+                        "jump": [
+                            "# Add your code here",
+                            "\"\"\""
+                        ],
+                        "false": "Docstrings do not include an argument/return types statement."
+                    },
+                    {
+                        "id": "code_docstrings_location",
+                        "criteria": "Docstrings are not immediately below function/class definition.",
+                        "weight": 0,
+                        "jump": [
+                            "# Add your code here",
+                            "\"\"\""
+                        ],
+                        "true": "Docstrings need to be included immediately below the function/class definition line."
+                    },
+                    {
+                        "id": "code_docstrings_bad_description",
+                        "criteria": "Explain implementation",
+                        "requires_": [
+                            "code_docstrings_description"
+                        ],
+                        "weight": 0,
+                        "jump": [
+                            "# Add your code here",
+                            "\"\"\""
+                        ],
+                        "false": "Docstrings should not detail how a function is implemented, but what it does."
+                    }
+                ]
+            },
+            {
+                "criteria": "TemperatureData",
+                "jump": [
+                    "class TemperatureData"
+                ],
+                "weight": 2,
+                "children": [
+                    {
+                        "id": "code_temperatureData_exists",
+                        "criteria": "TemperatureData exists",
+                        "weight": 0,
+                        "false": "TemperatureData class is not implemented.",
+                        "requires" : []
+                    },
+                    {
+                        "id": "code_temperatureData_load_data",
+                        "criteria": "load_data",
+                        "weight": 0.25,
+                        "jump": [
+                            "class TemperatureData",
+                            "def load_data"
+                        ],
+                        "requires": [
+                            "code_temperatureData_exists"
+                        ],
+                        "false": "load_data is not implemented."
+                    },
+                    {
+                        "id": "code_temperatureData_get_data",
+                        "criteria": "get_data",
+                        "weight": 0.25,
+                        "jump": [
+                            "class TemperatureData",
+                            "def get_data"
+                        ],
+                        "requires": [
+                            "code_temperatureData_exists"
+                        ],
+                        "false": "get_data is not implemented."
+                    },
+                    {
+                        "id": "code_temperatureData_toggle_selected",
+                        "criteria": "toggle_selected",
+                        "weight": 0.25,
+                        "jump": [
+                            "class TemperatureData",
+                            "def toggle_selected"
+                        ],
+                        "requires": [
+                            "code_temperatureData_exists"
+                        ],
+                        "false": "toggle_selected is not implemented."
+                    },
+                    {
+                        "id": "code_temperatureData_is_selected",
+                        "criteria": "is_selected",
+                        "weight": 0.25,
+                        "jump": [
+                            "class TemperatureData",
+                            "def is_selected"
+                        ],
+                        "requires": [
+                            "code_temperatureData_exists"
+                        ],
+                        "false": "is_selected is not implemented."
+                    },
+                    {
+                        "id": "code_temperatureData_get_stations",
+                        "criteria": "get_stations",
+                        "weight": 0.25,
+                        "jump": [
+                            "class TemperatureData",
+                            "def get_stations"
+                        ],
+                        "requires": [
+                            "code_temperatureData_exists"
+                        ],
+                        "false": "get_stations is not implemented."
+                    },
+                    {
+                        "id": "code_temperatureData_get_ranges",
+                        "criteria": "get_ranges",
+                        "weight": 0.75,
+                        "jump": [
+                            "class TemperatureData",
+                            "def get_ranges"
+                        ],
+                        "requires": [
+                            "code_temperatureData_load_data"
+                        ],
+                        "false": "get_ranges is not implemented."
+                    },
+                    {
+                        "id": "code_temperatureData_no_dictionary",
+                        "criteria": "Does not use dictionary",
+                        "weight": 0.25,
+                        "jump": [
+                            "class TemperatureData",
+                            "\\{"
+                        ],
+                        "requires": [
+                            "code_temperatureData_exists"
+                        ],
+                        "true": "TemperatureData does not use a dictionary to interally store its data."
+                    }
+                ]
+            },
+            {
+                "criteria": "Inheritance",
+                "weight": 1,
+                "children": [
+                    {
+                        "id": "code_inheritance_plotter",
+                        "criteria": "Plotter inherits from Canvas",
+                        "weight": 0.5,
+                        "jump": [
+                            "class Plotter"
+                        ],
+                        "requires_": [
+                            "gui_plotter_exists"
+                        ],
+                        "false": "Plotter class does not inherit from Canvas class."
+                    },
+                    {
+                        "id": "code_inheritance_selectionFrame",
+                        "criteria": "SelectionFrame inherits from Frame",
+                        "weight": 0.5,
+                        "jump": [
+                            "class SelectionFrame"
+                        ],
+                        "requires_": [
+                            "gui_selectionFrame_exists"
+                        ],
+                        "false": "SelectionFrame class does not inherit from Frame class."
+                    },
+                    {
+                        "id": "code_inheritance_dataFrame",
+                        "criteria": "DataFrame inherits from Frame",
+                        "weight": 0,
+                        "jump": [
+                            "class DataFrame"
+                        ],
+                        "requires_": [
+                            "gui_dataFrame_exists"
+                        ],
+                        "false": "DataFrame class does not inherit from Frame class."
+                    },
+                    {
+                        "id": "code_inheritance_temperaturePlotApp",
+                        "criteria": "TemperaturePlotApp inherits from object",
+                        "weight": 0,
+                        "jump": [
+                            "class TemperaturePlotApp"
+                        ],
+                        "false": "TemperaturePlotApp class does not inherit from object class."
+                    }
+                ]
+            },
+            {
+                "criteria": "General",
+                "weight": 0,
+                "children": [
+                    {
+                        "id": "code_general_globals",
+                        "criteria": "Globals",
+                        "weight": -1,
+                        "true": "Global variables should not be used."
+                    },
+                    {
+                        "id": "code_general_syntax_error_minor",
+                        "criteria": "Minor syntax errors",
+                        "weight": -0.5,
+                        "true": "There are syntax errors."
+                    },
+                    {
+                        "id": "code_general_syntax_error_medium",
+                        "criteria": "Medium syntax errors",
+                        "weight": -0.5,
+                        "requires_": [
+                            "code_general_syntax_error_minor"
+                        ]
+                    },
+                    {
+                        "id": "code_general_syntax_error_major",
+                        "criteria": "Major syntax errors",
+                        "weight": -0.5,
+                        "requires_": [
+                            "code_general_syntax_error_medium"
+                        ]
+                    },
+                    {
+                        "id": "code_general_style",
+                        "criteria": "Code has poor style",
+                        "weight": -1
+                    },
+                    {
+                        "id": "code_general_line_length",
+                        "criteria": "Line length < 80",
+                        "weight": 0,
+                        "checked": true,
+                        "false": "Line length must be less than 80 characters."
+                    },
+                    {
+                        "id": "code_general_pack",
+                        "criteria": "Not using .pack()",
+                        "weight": -1,
+                        "true": "GUI must be implemented using the .pack() method."
+                    },
+                    {
+                        "id": "code_general_console_errors",
+                        "criteria": "Console errors",
+                        "weight": -1,
+                        "true": "There should not be any errors output to the python console."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "criteria": "Masters",
+        "weight": 3,
+        "masters": true,
+        "children": [
+            {
+                "criteria": "Line of Best Fit",
+                "weight": 3,
+                "children": [
+                    {
+                        "id": "masters_lobf_selection_forward",
+                        "criteria": "Selection works forward",
+                        "weight": 1,
+                        "false": "Line of best fit selection does not work going left to right."
+                    },
+                    {
+                        "id": "masters_lobf_selection_backward",
+                        "criteria": "Selection works backward",
+                        "weight": 0.5,
+                        "false": "Line of best fit selection does not work going right to left."
+                    },
+                    {
+                        "id": "masters_lobf_selection_hides_previous",
+                        "criteria": "Selection hides previous line(s)",
+                        "weight": 0.5,
+                        "false": "Selecting a new line of best fit does not hide the previous line(s)."
+                    },
+                    {
+                        "id": "masters_lobf_toggling",
+                        "criteria": "Toggling station(s) toggles line(s)",
+                        "weight": 0.5,
+                        "false": "Toggling a station does also correctly toggle its line of best fit, when one has been selected."
+                    },
+                    {
+                        "id": "masters_lobf_loading_new",
+                        "criteria": "Loading new data redraws line(s) correctly",
+                        "weight": 0.5,
+                        "false": "Loading new data does not correctly redraw line(s) of best fit."
+                    },
+                    {
+                        "id": "masters_lobf_resizing",
+                        "criteria": "Resizing window redraws line(s) correctly",
+                        "weight": 0.5,
+                        "false": "Resizing the window does not correctly redraw line(s) of best fit."
+                    }
+                ]
+            }
+        ]
+    }
+]

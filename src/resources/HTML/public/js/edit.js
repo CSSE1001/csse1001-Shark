@@ -343,10 +343,10 @@ function setupActivity() {
 }
 function startTimer() {
     // wait 10 seconds before calling goInactive
-    timeoutID = window.setTimeout(goInactive, 10000);
+    //timeoutID = window.setTimeout(goInactive, 10000);
 }
 function resetTimer(e) {
-    window.clearTimeout(timeoutID);
+    //window.clearTimeout(timeoutID);
 
     goActive();
 }
