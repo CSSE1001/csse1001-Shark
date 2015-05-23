@@ -1,385 +1,566 @@
 [
     {
-        "criteria": "Code",
-        "weight": 10,
-        "children" : [
+        "criteria": "GUI",
+        "weight": 6,
+        "children": [
             {
-                "criteria": "load_dates",
+                "criteria": "Layout/Resizing",
                 "weight": 1,
-                "jump" : ["def load_dates"],
-                "children" : [
+                "children": [
                     {
-                        "id" : "load_dates_open_close",
-                        "criteria" : "Opens and closes file",
-                        "jump" : ["def load_dates", "open.*?\\(.*?\\)"],
-                        "weight" : 0.5,
-                        "false" : "The load_dates function doesn’t open/close the station file"
+                        "id": "gui_window_layout",
+                        "criteria": "Widgets have correct layout",
+                        "weight": 0.5,
+                        "false": "The window is not laid out correctly."
                     },
                     {
-                        "id" : "load_dates_return_dates",
-                        "criteria" : "Returns list of dates",
-                        "weight" : 0.5,
-                        "false" : "The load_dates function doesn’t return a list of dates from one of the station files"
+                        "id": "gui_window_resizing",
+                        "criteria": "Widgets resize correctly",
+                        "weight": 0.5,
+                        "false": "Resizing the window does not resize the widgets correctly."
                     }
                 ]
             },
             {
-                "criteria": "load_station_data",
+                "criteria": "General",
                 "weight": 1,
-                "jump" : ["def load_station_data"],
-                "children" : [
+                "children": [
                     {
-                        "id" : "load_station_data_temperature",
-                        "criteria" : "Extracts temperatures from station file",
-                        "weight" : 0.25,
-                        "false" : "The load_station_data function doesn’t extract temperatures from the station file"
+                        "id": "gui_general_file_menu",
+                        "criteria": "File menu is a menubar",
+                        "weight": 0,
+                        "false": "The file menu is not a menu widget."
                     },
                     {
-                        "id" : "load_station_data_strip",
-                        "criteria" : "<indent>Strips new line",
-                        "jump" : ["def load_station_data", "\\.strip\\(.*?\\)"],
-                        "weight" : 0,
-                        "false" : "Don’t forget to sanitise your input. The strip() command will remove any leading or trailing whitespace, including the newline character",
-                        "requires" : ["load_station_data_temperature"]
+                        "id": "gui_general_open_dialog",
+                        "criteria": "File->Open shows file dialog",
+                        "weight": 0.5,
+                        "false": "File->Open does not show a file dialog box."
                     },
                     {
-                        "id" : "load_station_data_floats",
-                        "criteria" : "<indent>Converts temperatures to floats",
-                        "jump" : ["def load_station_data", "float\\(.*?\\)"],
-                        "weight" : 0.25,
-                        "false" : "The load_station_data function doesn’t convert temperatures to floats",
-                        "requires" : ["load_station_data_temperature"]
+                        "id": "gui_general_bad_open",
+                        "criteria": "Opening bad file displays error box",
+                        "weight": 0.5,
+                        "false": "Attempting to open a bad file should display an error box"
                     },
                     {
-                        "id" : "load_station_data_positive",
-                        "criteria" : "<indent>Works with positive temperatures",
-                        "weight" : 0.25,
-                        "false" : "The load_station_data function doesn’t work for positive temperatures",
-                        "requires" : ["load_station_data_temperature"]
+                        "id": "gui_general_cancel_console_error",
+                        "criteria": "File->Open->Cancel throws an error",
+                        "weight": -0.25,
+                        "requires_": [
+                            "code_general_console_errors"
+                        ],
+                        "false": "Clicking cancel on the File->Open dialog should not result in an error being printed to the console."
                     },
                     {
-                        "id" : "load_station_data_negative",
-                        "criteria" : "<indent>Works with negative temperatures",
-                        "weight" : 0.25,
-                        "false" : "The load_station_data function doesn’t work for negative temperatures",
-                        "requires" : ["load_station_data_temperature"]
+                        "id": "gui_general_cancel_error_box",
+                        "criteria": "File->Open->Cancel shows error box",
+                        "weight": 0,
+                        "false": "Clicking cancel on the File->Open dialog should not show an error box."
                     }
                 ]
             },
             {
-                "criteria": "load_all_stations_data",
-                "weight": 1,
-                "children" : [
+                "criteria": "Plotter",
+                "jump": [
+                    "class Plotter"
+                ],
+                "weight": 1.25,
+                "children": [
                     {
-                        "id" : "load_all_stations_data_no_stations",
-                        "criteria" : "works for no stations",
-                        "weight" : 0.25,
-                        "false" : "The load_all_stations_data function doesn’t work when the stations list is empty"
+                        "id": "gui_plotter_exists",
+                        "criteria": "Plotter exists",
+                        "weight": 0,
+                        "false": "Plotter class is not implemented."
                     },
                     {
-                        "id" : "load_all_stations_data_single_station",
-                        "criteria" : "works for a single station",
-                        "weight" : 0.25,
-                        "false" : "The load_all_stations_data function does’t work for a single station"
+                        "id": "gui_plotter_plots_one",
+                        "criteria": "Plots one station",
+                        "weight": 0.25,
+                        "requires_": [
+                            "gui_plotter_exists"
+                        ],
+                        "false": "Can't plot a station."
                     },
                     {
-                        "id" : "load_all_stations_data_multiple_stations",
-                        "criteria" : "works for multiple stations",
-                        "weight" : 0.5,
-                        "false" : "The load_all_stations_data function does’t work for multiple stations"
+                        "id": "gui_plotter_plots_many",
+                        "criteria": "Plots multiple stations",
+                        "weight": 0.5,
+                        "requires_": [
+                            "gui_plotter_plots_one"
+                        ],
+                        "false": "Can't plot multiple stations."
                     },
                     {
-                        "id" : "load_station_data_not_used_in_load_all_stations_data",
-                        "criteria" : "works, but doesn't use load_station_data",
-                        "weight" : -0.25,
-                        "true" : "You could have used the load_station_data function in the load_all_stations_data function"
+                        "id": "gui_plotter_station_colours",
+                        "criteria": "Plots coloured correctly",
+                        "weight": 0.25,
+                        "requires_": [
+                            "gui_plotter_plots_many"
+                        ],
+                        "false": "Plots of station data are not coloured correctly."
                     },
                     {
-                        "id" : "load_all_stations_data_load_station_data_floats",
-                        "criteria" : "<indent>temperatures are not floats",
-                        "weight" : -0.5,
-                        "true" : "The load_all_stations_data function doesn’t convert temperatures to floats",
-                        "requires" : ["load_station_data_not_used_in_load_all_stations_data"]
-                    },
-                    {
-                        "id" : "load_all_stations_data_load_station_data_positive",
-                        "criteria" : "<indent>doesn't work with positive temperatures",
-                        "weight" : -0.25,
-                        "true" : "The load_all_stations_data function doesn’t work for positive temperatures",
-                        "requires" : ["load_station_data_not_used_in_load_all_stations_data"]
-                    },
-                    {
-                        "id" : "load_all_stations_data_load_station_data_negative",
-                        "criteria" : "<indent>doesn't work with negative temperatures",
-                        "weight" : -0.25,
-                        "true" : "The load_all_stations_data function doesn’t work for negative temperatures",
-                        "requires" : ["load_station_data_not_used_in_load_all_stations_data"]
-                    }
-                ]
-            }, 
-            {
-                "criteria": "display_maxs",
-                "weight": 1,
-                "children" : [
-                    {   
-                        "id" : "display_maxs_formatted_header",
-                        "criteria" : "Displays the correctly formatted header",
-                        "weight" : 0.25,
-                        "false" : "The display_maxs function doesn’t print the right header"
-                    },
-                    {
-                        "id" : "display_maxs_display_stations",
-                        "criteria" : "<indent>Doesn't use supplied display_stations functions",
-                        "weight" : 0,
-                        "true" : "The display_stations function could have been used in display_maxs to print the header",
-                        "requires" : ["display_maxs_formatted_header"]
-                    },
-                    {
-                        "id" : "display_maxs_correct_temp",
-                        "criteria" : "Displays correct temperatures",
-                        "weight" : 0.5,
-                        "false" : "The display_maxs function doesn’t calculate maximum temperatures"
-                    },
-                    {
-                        "id" : "display_maxs_temperature_format",
-                        "criteria" : "<indent>Temperatures correctly formatted",
-                        "weight" : 0.25,
-                        "false" : "The display_maxs function doesn’t correctly print maximum temperatures",
-                        "requires" : ["display_maxs_correct_temp"]
-                    },
-                    {
-                        "id" : "display_maxs_supplied_display_temp",
-                        "criteria" : "<indent>Doesn't use the supplied display_temp function",
-                        "weight" : 0,
-                        "true" : "The display_temp function could have been used in display_maxs to print each temperature",
-                        "requires" : ["display_maxs_correct_temp"]
-                    },
-                    {
-                        "id" : "display_maxs_data_missing",
-                        "criteria" : "<indent><indent>Doesn't display \"----\" when data is missing",
-                        "weight" : -0.25,
-                        "true" : "The display_maxs function doesn’t display ---- when the temperature is missing",
-                        "requires" : ["display_maxs_correct_temp", "display_maxs_supplied_display_temp"]
+                        "id": "gui_plotter_vertical_line",
+                        "criteria": "Clicking plot draws vertical line",
+                        "weight": 0.25,
+                        "requires_": [
+                            "gui_plotter_exists"
+                        ],
+                        "false": "Clicking the Plotter does not draw a vertical line."
                     }
                 ]
             },
             {
-                "criteria" : "temperature_diffs",
-                "weight" : 2,
-                "children" : [
+                "criteria": "SelectionFrame",
+                "jump": [
+                    "class SelectionFrame"
+                ],
+                "weight": 1.5,
+                "children": [
                     {
-                        "id" : "temperature_diffs_calculation",
-                        "criteria" : "Computes temperature differences",
-                        "weight" : 0.0,
-                        "false" : "The temperature_diffs function doesn’t compute temperature differences"
+                        "id": "gui_selectionFrame_exists",
+                        "criteria": "SelectionFrame exists",
+                        "weight": 0,
+                        "false": "SelectionFrame class is not implemented"
                     },
                     {
-                        "id" : "temperature_diffs_positive",
-                        "criteria" : "<indent>Works with positive numbers",
-                        "weight" : 1.0,
-                        "false" : "The temperature_diffs function doesn’t work with positive temperature differences",
-                        "requires" : ["temperature_diffs_calculation"]
+                        "id": "gui_selectionFrame_checkboxes",
+                        "criteria": "Checkboxes & labels are displayed for each station loaded",
+                        "weight": 0.25,
+                        "requires_": [
+                            "gui_selectionFrame_exists"
+                        ],
+                        "false": "Checkboxes with labels are not displayed when a station is loaded."
                     },
                     {
-                        "id" : "temperature_diffs_negative",
-                        "criteria" : "<indent>Works with negative numbers",
-                        "weight" : 0.25,
-                        "false" : "The temperature_diffs function doesn’t work with negative temperature differences",
-                        "requires" : ["temperature_diffs_calculation"]
+                        "id": "gui_selectionFrame_checkbox_preselected",
+                        "criteria": "Checkboxes are preselected",
+                        "weight": 0,
+                        "requires_": [
+                            "gui_selectionFrame_checkboxes"
+                        ],
+                        "false": "Checkboxes are not automatically preselected."
                     },
                     {
-                        "id" : "temperature_diffs_returns",
-                        "criteria" : "<indent>Returns a list of correct tuples",
-                        "weight" : 0.5,
-                        "false" : "The temperature_diffs function doesn’t return a correct list of tuples",
-                        "requires" : ["temperature_diffs_calculation"]
+                        "id": "gui_selectionFrame_checkbox_colour",
+                        "criteria": "Checkboxes coloured correctly",
+                        "weight": 0.25,
+                        "requires_": [
+                            "gui_selectionFrame_checkboxes"
+                        ],
+                        "false": "The colour of the checkboxes does not match the corresponding station plots"
                     },
                     {
-                        "id" : "temperature_diffs_unknown",
-                        "criteria" : "Correctly handles unknown data",
-                        "weight" : 0.25,
-                        "false" : "The temperature_diffs function doesn’t handle unknown data"
+                        "id": "gui_selectionFrame_checkbox_toggling_plots",
+                        "criteria": "Checkboxes toggle station plots",
+                        "weight": 0.5,
+                        "requires_": [
+                            "gui_selectionFrame_checkboxes"
+                        ],
+                        "false": "Toggling checkboxes does not toggle display of corresponding station plot."
+                    },
+                    {
+                        "id": "gui_selectionFrame_checkbox_toggling_labels",
+                        "criteria": "Checkboxes toggle labels in DataFrame",
+                        "weight": 0.5,
+                        "requires_": [
+                            "gui_selectionFrame_checkboxes"
+                        ],
+                        "false": "Toggling checkboxes does not toggle display of corresponding label in DataFrame"
                     }
                 ]
             },
             {
-                "criteria" : "display_diffs",
-                "weight" : 1.0,
-                "children" : [
+                "criteria": "DataFrame",
+                "jump": [
+                    "class DataFrame"
+                ],
+                "weight": 1.25,
+                "children": [
                     {
-                        "id" : "display_diffs_header",
-                        "criteria" : "Prints the correct header",
-                        "weight" : 0.25,
-                        "false" : "The display_diffs function doesn’t print the right header"
+                        "id": "gui_dataFrame_exists",
+                        "criteria": "DataFrame exists",
+                        "weight": 0,
+                        "false": "DataFrame class is not implemented."
                     },
                     {
-                        "id" : "display_diffs_format",
-                        "criteria" : "Prints correctly formatted date differences",
-                        "weight" : 0.75,
-                        "false" : "The display_diffs function doesn’t correctly print date differences"
-                    }
-                ]
-            },
-            {
-                "criteria" : "interact",
-                "weight" : 2,
-                "children" : [
-                    {
-                        "id" : "interact_ask_file",
-                        "criteria" : "Asks for a file",
-                        "weight" : 0.25,
-                        "false" : "The interact function doesn’t ask for a stations file"
+                        "id": "gui_dataFrame_displays_year",
+                        "criteria": "Clicking plot displays year",
+                        "weight": 0.25,
+                        "requires_": [
+                            "gui_dataFrame_exists"
+                        ],
+                        "false": "Clicking the Plotter does not display the year in the DataFrame."
                     },
                     {
-                        "id" : "interact_file_loop",
-                        "criteria" : "Loops if invalid file",
-                        "weight" : 0,
-                        "false" : "The interact function doesn’t loop if the stations file is invalid"
+                        "id": "gui_dataFrame_displays_temperature",
+                        "criteria": "Clicking plot displays station temperatures",
+                        "weight": 0.5,
+                        "requires_": [
+                            "gui_dataFrame_exists"
+                        ],
+                        "false": "Clicking the Plotter does not display temperatures for each station that is visible."
                     },
                     {
-                        "id" : "interact_calls_load_dates",
-                        "criteria" : "Correctly calls load_dates, load_all_stations",
-                        "weight" : 0.25,
-                        "false" : "The interact function doesn’t call load_dates or load_all_stations correctly"
+                        "id": "gui_dataFrame_dragging",
+                        "criteria": "Clicking and dragging updates DataFrame",
+                        "weight": 0.5,
+                        "requires_": [
+                            "gui_dataFrame_exists"
+                        ],
+                        "false": "Clicking and dragging does not correctly update the DataFrame."
                     },
                     {
-                        "id" : "interact_command_loop",
-                        "criteria" : "Continuously loops asking for a command",
-                        "weight" : 0.25,
-                        "false" : "The interact function doesn’t loop after a command is executed"
+                        "id": "gui_dataFrame_no_stations_error",
+                        "criteria": "Clicking plot with no stations throws error",
+                        "weight": -0.25,
+                        "requires_": [
+                            "gui.dataFrame.exists",
+                            "code.general.console_errors"
+                        ],
+                        "false": "Clicking the plot when no stations have been loaded or are visible should not throw an error."
                     },
                     {
-                        "id" : "interact_dm",
-                        "criteria" : "Correctly handles dm",
-                        "weight" : 0,
-                        "false" : "The interact function doesn’t handle the dm command"
+                        "id": "gui_dataFrame_dragging_error",
+                        "criteria": "Clicking and dragging off plotter throws error",
+                        "weight": -0.25,
+                        "requires_": [
+                            "gui.dataFrame.exists",
+                            "code.general.console_errors"
+                        ],
+                        "false": "Clicking and dragging off the plotter should not result in an error being printed to the python console."
                     },
                     {
-                        "id" : "interact_dm_valid",
-                        "criteria" : "<indent>with valid inputs",
-                        "weight" : 0.25,
-                        "false" : "The interact function doesn’t handle the dm command with valid inputs",
-                        "requires" : ["interact_dm"]
-                    },
-                    {
-                        "id" : "interact_dd",
-                        "criteria" : "Correctly handles dd",
-                        "weight" : 0,
-                        "false" : "The interact function doesn’t handle the dd command"
-                    },
-                    {
-                        "id" : "interact_dd_valid",
-                        "criteria" : "<indent>with valid inputs",
-                        "weight" : 0.25,
-                        "false" : "The interact function doesn’t handle the dd command with valid inputs",
-                        "requires" : ["interact_dd"]
-                    },
-                    {
-                        "id" : "interact_q",
-                        "criteria" : "Correctly handles q",
-                        "weight" : 0,
-                        "false" : "The interact function doesn’t handle the q command"
-                    },
-                    {
-                        "id" : "interact_q_valid",
-                        "criteria" : "<indent>with valid inputs",
-                        "weight" : 0.25,
-                        "false" : "The interact function doesn’t handle the q command with valid inputs",
-                        "requires" : ["interact_q"]
-                    },
-                    {
-                        "id" : "interact_unknown",
-                        "criteria" : "Correctly handles unknown commands",
-                        "weight" : 0.25,
-                        "false" : "The interact function doesn’t handle unknown commands"
-                    },
-                    {
-                        "id" : "interact_error_handling",
-                        "criteria" : "Some error handling for invalid dd/dm/q commands",
-                        "weight" : 0.25,
-                        "false" : "The dd/dm/q commands throw an error when given invalid inputs"
-                    }
-                ]
-            },
-            {
-                "criteria" : "comments",
-                "weight" : 1,
-                "children" : [
-                    {
-                        "id" : "comments_description",
-                        "criteria" : "Have description for every function",
-                        "weight" : 0.5,
-                        "false" : "Some of the functions are missing descriptions. Every function should have a short description comment to let readers quickly know what it does."
-                    }, 
-                    {
-                        "id" : "comments_declaration",
-                        "criteria" : "Have type declaration for every function",
-                        "weight" : 0.5,
-                        "false" : "Some of the functions are missing type declarations. Every function should include the input and return types as a comment to let readers know what values can be expected as inputs and outputs."
-                    },
-                    {
-                        "id" : "comments_under_function",
-                        "criteria" : "Comments directly under the function name",
-                        "weight" : 0,
-                        "false" : "The docstrings aren’t in the right spot. Docstrings should go directly under the function name to support Pythons help method."
-                    },
-                    {
-                        "id" : "comments_line_length",
-                        "criteria" : "Line length < 80",
-                        "weight" : 0,
-                        "false" : "Line length should be less than 80 characters."
-                    }
-
-                ]
-            },
-            {
-                "criteria" : "general",
-                "weight" : -1,
-                "children" : [
-                    {
-                        "id" : "general_closing_files",
-                        "criteria" : "Not closing files",
-                        "weight" : 0,
-                        "true" : "Don’t forget to close files after you have finished with them."
-                    }, 
-                    {
-                        "id" : "general_function_name",
-                        "criteria" : "Functions are misnamed",
-                        "weight" : 0,
-                        "true" : "Make sure your function names exactly match the assignment sheet"
-                    },
-                    {
-                        "id" : "general_hardcoding",
-                        "criteria" : "Hardcoding e.g. stations filename, interact inputs",
-                        "weight" : -1
-                    }
-
-                ]
-            },
-            {  
-                "id" : "year_averages",
-                "criteria" : "yearly_averages",
-                "weight" : 2,
-                "masters" : true
-            },
-            {
-                "criteria" : "display_yearly_averages",
-                "weight" : 1,
-                "masters" : true,
-                "children" : [
-                    {
-                        "id" : "display_yearly_averages_averages",
-                        "criteria" : "Prints the correct averages",
-                        "weight" : 0.5
-                    }, 
-                    {
-                        "id" : "display_yearly_averages_format",
-                        "criteria" : "Prints correctly formatted",
-                        "weight" : 0.5
+                        "id": "gui_dataFrame_resizing_line",
+                        "criteria": "Resizing the window does not redraw line correctly",
+                        "weight": -0.25,
+                        "requires_": [
+                            "gui_dataFrame_exists"
+                        ],
+                        "false": "Resizing the window does not correctly redraw the vertical line, if it was drawn."
                     }
                 ]
             }
-
+        ]
+    },
+    {
+        "criteria": "Code",
+        "weight": 4,
+        "children": [
+            {
+                "criteria": "Docstrings",
+                "weight": 1,
+                "children": [
+                    {
+                        "id": "code_docstrings_description",
+                        "criteria": "Function description",
+                        "weight": 0.5,
+                        "jump": [
+                            "# Add your code here",
+                            "\"\"\""
+                        ],
+                        "false": "Docstrings do not give a description of what the function does."
+                    },
+                    {
+                        "id": "code_docstrings_types",
+                        "criteria": "Argument & return types",
+                        "weight": 0.5,
+                        "jump": [
+                            "# Add your code here",
+                            "\"\"\""
+                        ],
+                        "false": "Docstrings do not include an argument/return types statement."
+                    },
+                    {
+                        "id": "code_docstrings_location",
+                        "criteria": "Docstrings are not immediately below function/class definition.",
+                        "weight": 0,
+                        "jump": [
+                            "# Add your code here",
+                            "\"\"\""
+                        ],
+                        "false": "Docstrings need to be included immediately below the function/class definition line."
+                    },
+                    {
+                        "id": "code_docstrings_bad_description",
+                        "criteria": "Explain implementation",
+                        "requires_": [
+                            "code_docstrings_description"
+                        ],
+                        "weight": 0,
+                        "jump": [
+                            "# Add your code here",
+                            "\"\"\""
+                        ],
+                        "false": "Docstrings should not detail how a function is implemented, but what it does."
+                    }
+                ]
+            },
+            {
+                "criteria": "TemperatureData",
+                "jump": [
+                    "class TemperatureData"
+                ],
+                "weight": 2,
+                "children": [
+                    {
+                        "id": "code_temperatureData_exists",
+                        "criteria": "TemperatureData exists",
+                        "weight": 0,
+                        "false": "TemperatureData class is not implemented."
+                    },
+                    {
+                        "id": "code_temperatureData_load_data",
+                        "criteria": "load_data",
+                        "weight": 0.25,
+                        "jump": [
+                            "class TemperatureData",
+                            "def load_data"
+                        ],
+                        "requires_": [
+                            "code_temperatureData_exists"
+                        ],
+                        "false": "load_data is not implemented."
+                    },
+                    {
+                        "id": "code_temperatureData_get_data",
+                        "criteria": "get_data",
+                        "weight": 0.25,
+                        "jump": [
+                            "class TemperatureData",
+                            "def get_data"
+                        ],
+                        "requires_": [
+                            "code_temperatureData_exists"
+                        ],
+                        "false": "get_data is not implemented."
+                    },
+                    {
+                        "id": "code_temperatureData_toggle_selected",
+                        "criteria": "toggle_selected",
+                        "weight": 0.25,
+                        "jump": [
+                            "class TemperatureData",
+                            "def toggle_selected"
+                        ],
+                        "requires_": [
+                            "code_temperatureData_exists"
+                        ],
+                        "false": "toggle_selected is not implemented."
+                    },
+                    {
+                        "id": "code_temperatureData_is_selected",
+                        "criteria": "is_selected",
+                        "weight": 0.25,
+                        "jump": [
+                            "class TemperatureData",
+                            "def is_selected"
+                        ],
+                        "requires_": [
+                            "code_temperatureData_exists"
+                        ],
+                        "false": "is_selected is not implemented."
+                    },
+                    {
+                        "id": "code_temperatureData_get_stations",
+                        "criteria": "get_stations",
+                        "weight": 0.25,
+                        "jump": [
+                            "class TemperatureData",
+                            "def get_stations"
+                        ],
+                        "requires_": [
+                            "code_temperatureData_exists"
+                        ],
+                        "false": "get_stations is not implemented."
+                    },
+                    {
+                        "id": "code_temperatureData_get_ranges",
+                        "criteria": "get_ranges",
+                        "weight": 0.75,
+                        "jump": [
+                            "class TemperatureData",
+                            "def get_ranges"
+                        ],
+                        "requires_": [
+                            "code_temperatureData_load_data"
+                        ],
+                        "false": "get_ranges is not implemented."
+                    },
+                    {
+                        "id": "code_temperatureData_no_dictionary",
+                        "criteria": "Does not use dictionary",
+                        "weight": 0.25,
+                        "jump": [
+                            "class TemperatureData",
+                            "\\{"
+                        ],
+                        "requires_": [
+                            "code_temperatureData_exists"
+                        ],
+                        "false": "TemperatureData does not use a dictionary to interally store its data."
+                    }
+                ]
+            },
+            {
+                "criteria": "Inheritance",
+                "weight": 1,
+                "children": [
+                    {
+                        "id": "code_inheritance_plotter",
+                        "criteria": "Plotter inherits from Canvas",
+                        "weight": 0.5,
+                        "jump": [
+                            "class Plotter"
+                        ],
+                        "requires_": [
+                            "gui_plotter_exists"
+                        ],
+                        "false": "Plotter class does not inherit from Canvas class."
+                    },
+                    {
+                        "id": "code_inheritance_selectionFrame",
+                        "criteria": "SelectionFrame inherits from Frame",
+                        "weight": 0.5,
+                        "jump": [
+                            "class SelectionFrame"
+                        ],
+                        "requires_": [
+                            "gui_selectionFrame_exists"
+                        ],
+                        "false": "SelectionFrame class does not inherit from Frame class."
+                    },
+                    {
+                        "id": "code_inheritance_dataFrame",
+                        "criteria": "DataFrame inherits from Frame",
+                        "weight": 0,
+                        "jump": [
+                            "class DataFrame"
+                        ],
+                        "requires_": [
+                            "gui_dataFrame_exists"
+                        ],
+                        "false": "DataFrame class does not inherit from Frame class."
+                    },
+                    {
+                        "id": "code_inheritance_temperaturePlotApp",
+                        "criteria": "TemperaturePlotApp inherits from object",
+                        "weight": 0,
+                        "jump": [
+                            "class TemperaturePlotApp"
+                        ],
+                        "false": "TemperaturePlotApp class does not inherit from object class."
+                    }
+                ]
+            },
+            {
+                "criteria": "General",
+                "weight": 0,
+                "children": [
+                    {
+                        "id": "code_general_globals",
+                        "criteria": "Globals",
+                        "weight": -1,
+                        "true": "Global variables should not be used."
+                    },
+                    {
+                        "id": "code_general_syntax_error_minor",
+                        "criteria": "Minor syntax errors",
+                        "weight": -0.5,
+                        "true": "There are syntax errors."
+                    },
+                    {
+                        "id": "code_general_syntax_error_medium",
+                        "criteria": "Medium syntax errors",
+                        "weight": -0.5,
+                        "requires_": [
+                            "code_general_syntax_error_minor"
+                        ]
+                    },
+                    {
+                        "id": "code_general_syntax_error_major",
+                        "criteria": "Major syntax errors",
+                        "weight": -0.5,
+                        "requires_": [
+                            "code_general_syntax_error_medium"
+                        ]
+                    },
+                    {
+                        "id": "code_general_style",
+                        "criteria": "Code has poor style",
+                        "weight": -1
+                    },
+                    {
+                        "id": "code_general_line_length",
+                        "criteria": "Line length < 80",
+                        "weight": 0,
+                        "checked": true,
+                        "false": "Line length must be less than 80 characters."
+                    },
+                    {
+                        "id": "code_general_pack",
+                        "criteria": "Not using .pack()",
+                        "weight": -1,
+                        "true": "GUI must be implemented using the .pack() method."
+                    },
+                    {
+                        "id": "code_general_console_errors",
+                        "criteria": "Console errors",
+                        "weight": -1,
+                        "true": "There should not be any errors output to the python console."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "criteria": "Masters",
+        "weight": 3,
+        "masters": true,
+        "children": [
+            {
+                "criteria": "Line of Best Fit",
+                "weight": 3,
+                "children": [
+                    {
+                        "id": "masters_lobf_selection_forward",
+                        "criteria": "Selection works forward",
+                        "weight": 1,
+                        "false": "Line of best fit selection does not work going left to right."
+                    },
+                    {
+                        "id": "masters_lobf_selection_backward",
+                        "criteria": "Selection works backward",
+                        "weight": 0.5,
+                        "false": "Line of best fit selection does not work going right to left."
+                    },
+                    {
+                        "id": "masters_lobf_selection_hides_previous",
+                        "criteria": "Selection hides previous line(s)",
+                        "weight": 0.5,
+                        "false": "Selecting a new line of best fit does not hide the previous line(s)."
+                    },
+                    {
+                        "id": "masters_lobf_toggling",
+                        "criteria": "Toggling station(s) toggles line(s)",
+                        "weight": 0.5,
+                        "false": "Toggling a station does also correctly toggle its line of best fit, when one has been selected."
+                    },
+                    {
+                        "id": "masters_lobf_loading_new",
+                        "criteria": "Loading new data redraws line(s) correctly",
+                        "weight": 0.5,
+                        "false": "Loading new data does not correctly redraw line(s) of best fit."
+                    },
+                    {
+                        "id": "masters_lobf_resizing",
+                        "criteria": "Resizing window redraws line(s) correctly",
+                        "weight": 0.5,
+                        "false": "Resizing the window does not correctly redraw line(s) of best fit."
+                    }
+                ]
+            }
         ]
     }
 ]
