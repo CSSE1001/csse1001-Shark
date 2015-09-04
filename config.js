@@ -11,7 +11,7 @@ path = require("path");
 // General
 //---------------------------
 // Express
-config.port = 3000;
+config.port = 3222; // todo: remove hardcoding in src/resources/HTML/public/js/practical.js:2
 config.plugins = path.join(process.cwd(), './src/plugins/');
 
 // Shark
