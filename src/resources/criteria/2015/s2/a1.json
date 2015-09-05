@@ -1,0 +1,314 @@
+[
+    {
+        "criteria" : "Code",
+        "weight" : 10,
+        "children" : [
+            {
+                "criteria" : "2.2.1 Comments",
+                "weight" : 1,
+                "jump" : ["def *", "\"\"\""],
+                "children" : [
+                    {
+                        "id" : "comment",
+                        "criteria" : "Most functions have comments",
+                        "weight" : 0.5,
+                        "jump" : ["def *", "\"\"\""],
+                        "false" : "Docstrings are missing."
+                    },
+                    {
+                        "id" : "comment_types",
+                        "criteria" : "<indent>Most docstrings have correct types",
+                        "weight" : 0.5,
+                        "jump" : ["def *", "\"\"\"", "->"],
+                        "requires" : ["comment"],
+                        "false" : "Docstrings are missing return types."
+                    }
+                ]
+            },
+            {
+                "id" : "load_data",
+                "criteria" : "2.2.2 load_data",
+                "weight" : 2,
+                "jump" : ["def load_data\\(.+\\)"],
+                "children" : [
+                    {
+                        "id" : "load_data_exists",
+                        "criteria" : "load_data exists",
+                        "weight": 0,
+                        "jump" : ["def load_data\\(.+\\)"],
+                        "false" : "load_data does not exist"
+                    },
+                    {
+                        "id" : "load_data_open",
+                        "criteria" : "<indent>opens file",
+                        "weight": 0.25,
+                        "jump" : ["def load_data\\(.+\\)", "open\\(.+\\)"],
+                        "requires" : ["load_data_exists"],
+                        "false" : "load_data does not open the file."
+                    },
+                    {
+                        "id" : "load_data_close",
+                        "criteria" : "<indent><indent>closes file",
+                        "jump" : ["def load_data\\(.+\\)", "close\\(.+\\)"],
+                        "weight": 0.25,
+                        "requires" : ["load_data_exists", "load_data_open"],
+                        "false" : "load_data does not return in the correct data format."
+                    },
+                    {
+                        "id" : "load_data_return",
+                        "criteria" : "<indent>list of tuples returned",
+                        "weight": 0.5,
+                        "requires" : ["load_data_exists"],
+                        "jump" : ["return"],
+                        "false" : "load_data does not close the file."
+                    },
+                    {
+                        "id" : "load_data_float",
+                        "criteria" : "<indent>heights converted to floats",
+                        "weight": 0.5,
+                        "jump" : ["def load_data\\(.+\\)", "float\\(.+\\)"],
+                        "requires" : ["load_data_exists"],
+                        "false" : "load_data does not convert the heights into floats."
+                    },
+                    {
+                        "id" : "load_data_sort",
+                        "criteria" : "<indent>does not sort data",
+                        "jump" : ["def load_data\\(.+\\)", "sort"],
+                        "weight": 0.5,
+                        "requires" : ["load_data_exists"],
+                        "false" : "load_data should not be sorting the data."
+                    },
+                    {
+                        "id" : "load_data_space",
+                        "criteria" : "<indent>comma+space delimiter",
+                        "weight": 0,
+                        "jump" : ["def load_data\\(.+\\)", "split\\(\", \"\\)"],
+                        "requires" : ["load_data_exists"],
+                        "false" : "split(\", \") will not work if the csv file does not contain a space after the commas [no marks deducted]"
+                    }
+                ]
+            },
+            {
+                "criteria" : "2.2.3 get_ranges",
+                "weight" : 0.5,
+                "jump" : ["def get_ranges\\(.+\\)"],
+                "children" : [
+                    {
+                        "id" : "get_ranges_sorted",
+                        "criteria" : "Correct for sorted",
+                        "weight" : 0.25
+                    },
+                    {
+                        "id" : "get_ranges_unsorted",
+                        "criteria" : "Correct for unsorted",
+                        "weight" : 0.25
+                    }
+                ]
+            },
+            {
+                "criteria" : "2.2.4 get_mean",
+                "weight" : 0.5,
+                "jump" : ["def get_mean\\(.+\\)"],
+                "children" : [
+                    {
+                        "id" : "get_mean_output",
+                        "criteria" : "Correct output",
+                        "weight" : 0.25
+                    },
+                    {
+                        "id" : "get_mean_rounding",
+                        "criteria" : "Non-rounded output",
+                        "weight" : 0.25
+                    }
+                ]
+            },
+            {
+                "criteria" : "2.2.5 get_median",
+                "weight" : 1,
+                "jump" : ["def get_median\\(.+\\)"],
+                "children" : [
+                    {
+                        "id" : "get_median_sorted",
+                        "criteria" : "Works for sorted lists",
+                        "weight" : 0.25
+                    },
+                    {
+                        "id" : "get_median_unsorted",
+                        "criteria" : "Works for unsorted lists",
+                        "weight" : 0.25
+                    },
+                    {
+                        "id" : "get_median_even",
+                        "criteria" : "Works for even lists",
+                        "weight" : 0.25
+                    },
+                    {
+                        "id" : "get_median_odd",
+                        "criteria" : "Works for odd lists",
+                        "weight" : 0.25
+                    },
+                    {
+                        "id" : "get_median_inplace",
+                        "criteria" : "Sorting data in place",
+                        "weight" : 0
+                    }
+                ]
+            },
+            {
+                "criteria" : "2.2.6 get_std_dev",
+                "weight" : 1,
+                "jump" : ["def get_std_sev\\(.+\\)"],
+                "children" : [
+                    {
+                        "criteria" : "Decent attempt",
+                        "weight" : 0.5
+                    },
+                    {
+                        "criteria" : "Correct output",
+                        "weight" : 0.5
+                    }
+                ]
+            },
+            {
+                "criteria" : "2.2.7 data_summary",
+                "weight" : 1,
+                "jump" : ["def data_summary\\(.+\\)"],
+                "children" : [
+                    {
+                        "criteria" : "Correctly loops over data",
+                        "weight" : 0.5
+                    },
+                    {
+                        "criteria" : "Correct output",
+                        "weight" : 0.5
+                    },
+                    {
+                        "criteria" : "Doesn't use other functions",
+                        "weight" : -0.5
+                    }
+                ]
+            },
+            {
+                "criteria" : "2.2.8 display_set_summaries",
+                "weight" : 1,
+                "jump" : ["def display_set_summaries\\(.+\\)"],
+                "children" : [
+                    {
+                        "criteria" : "Correct rounding",
+                        "weight" : 0.25
+                    },
+                    {
+                        "criteria" : "Takes correct input - i.e. data_summary not load_data",
+                        "weight" : 0.25
+                    },
+                    {
+                        "criteria" : "Decent looking output",
+                        "weight" : 0.25
+                    },
+                    {
+                        "criteria" : "Works for any number of animals",
+                        "weight" : 0.25
+                    },
+                    {
+                        "criteria" : "Incorrect numbers",
+                        "weight" : -0.5
+                    }
+                ]
+            },
+            {
+                "criteria" : "2.2.9 interact",
+                "weight" : 2,
+                "jump" : ["def interact\\(.+\\)"],
+                "children" : [
+                    {
+                        "criteria" : "quits on q",
+                        "weight" : 0.25
+                    },
+                    {
+                        "criteria" : "command prompt loops",
+                        "weight" : 0.25
+                    },
+                    {
+                        "criteria" : "summary works",
+                        "weight" : 0.25
+                    },
+                    {
+                        "criteria" : "asks for filename",
+                        "weight" : 0.25
+                    },
+                    {
+                        "criteria" : "handles unknown command",
+                        "weight" : 0.25
+                    },
+                    {
+                        "criteria" : "sets works perfectly",
+                        "weight" : 0.75
+                    },
+                    {
+                        "criteria" : "repeated unknown commands",
+                        "weight" : 0
+                    }
+                ]
+            },
+            {
+                "criteria" : "2.3.1 data_comparison",
+                "weight" : 1.5,
+                "masters" : true,
+                "jump" : ["def data_compariso\\(.+\\)n"],
+                "children" : [
+                    {
+                        "criteria" : "correct names",
+                        "weight" : 0.5
+                    },
+                    {
+                        "criteria" : "correct means",
+                        "weight" : 0.5
+                    },
+                    {
+                        "criteria" : "correct standard deviations",
+                        "weight" : 0.5
+                    }
+                ]
+            },
+            {
+                "criteria" : "2.3.2 display_comparison",
+                "weight" : 1.5,
+                "masters" : true,
+                "jump" : ["def display_comparison\\(.+\\)"],
+                "children" : [
+                    {
+                        "criteria" : "correct data",
+                        "weight" : 0.5
+                    },
+                    {
+                        "criteria" : "correct spacing",
+                        "weight" : 0.5
+                    },
+                    {
+                        "criteria" : "S +/- before mean",
+                        "weight" : 0.5
+                    }
+                ]
+            },
+            {
+                "criteria": "General",
+                "weight": 0,
+                "children": [
+                    {
+                        "criteria": "Non-math imports",
+                        "weight": -1,
+                        "jump" : ["import (?!(math|assign1_support))([a-z0-9]+)"]
+                    },
+                    {
+                        "criteria": "Hard coding (e.g. filename)",
+                        "weight": -1
+                    },
+                    {
+                        "criteria": "Globals",
+                        "weight": -1
+                    }
+                ]
+            }
+        ]
+    }
+]

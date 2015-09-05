@@ -26,9 +26,9 @@ config.uploadDirectory   = config.pythonDirectory + "/upload";
 config.downloadDirectory = config.pythonDirectory + "/download";
 config.markingDirectory  = config.pythonDirectory + "/marking";
 config.ejsPath           = "./src/resources/HTML/ejs";
-config.criteriaPath      = "./src/resources/criteria.json";
+config.criteriaPath      = "./src/resources/criteria/2015/s2/a1.json";
 config.publicPath        = "./src/resources/HTML/public";
-config.supportPath       = "./src/resources/Support";
+config.supportPath       = "./src/resources/support";
 
 // Python execution
 config.pythonPaths = [
