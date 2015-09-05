@@ -49,20 +49,19 @@ function getScriptInfo(script, criteria, callback) {
         if (name_array) {
             student = name_array[1].trim();
         }
-
         // How many tests did this student pass?
-        var tests_regex = /TEST RUN:([\s\S]*)END TEST/
+        var tests_regex = /TEST RUN:([\s\S]+?)\/------------\\/
         var test_array = script_data.match(tests_regex);
         var total_tests = 0;
         var total_passed = 0;
         if (test_array) {
             var tests = test_array[1].trim();
             var matches = tests.match(/.+: ([0-9]+)\/([0-9]+) \n/g);
-            if (typeof matches !== 'undefined') {
+            if (matches != null) {
                 for (var i = 0; i < matches.length; i+=1) {
                     var rmax = /([0-9]+)\/([0-9]+)/;
                     var nums = matches[i].match(rmax);
-                    if (nums) {
+                    if (nums != null) {
                         total_passed += parseInt(nums[1]);
                         total_tests  += parseInt(nums[2]);
                     }
