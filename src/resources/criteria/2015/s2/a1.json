@@ -26,7 +26,6 @@
                 ]
             },
             {
-                "id" : "load_data",
                 "criteria" : "2.2.2 load_data",
                 "weight" : 2,
                 "jump" : ["def load_data\\(.+\\)"],
@@ -36,7 +35,7 @@
                         "criteria" : "load_data exists",
                         "weight": 0,
                         "jump" : ["def load_data\\(.+\\)"],
-                        "false" : "load_data does not exist"
+                        "false" : "Does not exist."
                     },
                     {
                         "id" : "load_data_open",
@@ -44,23 +43,23 @@
                         "weight": 0.25,
                         "jump" : ["def load_data\\(.+\\)", "open\\(.+\\)"],
                         "requires" : ["load_data_exists"],
-                        "false" : "load_data does not open the file."
+                        "false" : "Does not open the file."
                     },
                     {
                         "id" : "load_data_close",
                         "criteria" : "<indent><indent>closes file",
-                        "jump" : ["def load_data\\(.+\\)", "close\\(.+\\)"],
+                        "jump" : ["def load_data\\(.+\\)", "[ |\\\t]*", ".+close\\(\\)"],
                         "weight": 0.25,
                         "requires" : ["load_data_exists", "load_data_open"],
-                        "false" : "load_data does not return in the correct data format."
+                        "false" : "Incorrect output format."
                     },
                     {
                         "id" : "load_data_return",
                         "criteria" : "<indent>list of tuples returned",
                         "weight": 0.5,
                         "requires" : ["load_data_exists"],
-                        "jump" : ["return"],
-                        "false" : "load_data does not close the file."
+                        "jump" : ["def load_data\\(.+\\)", "return"],
+                        "false" : "Does not close the file."
                     },
                     {
                         "id" : "load_data_float",
@@ -68,7 +67,7 @@
                         "weight": 0.5,
                         "jump" : ["def load_data\\(.+\\)", "float\\(.+\\)"],
                         "requires" : ["load_data_exists"],
-                        "false" : "load_data does not convert the heights into floats."
+                        "false" : "Does not convert the heights into floats."
                     },
                     {
                         "id" : "load_data_sort",
@@ -76,7 +75,7 @@
                         "jump" : ["def load_data\\(.+\\)", "sort"],
                         "weight": 0.5,
                         "requires" : ["load_data_exists"],
-                        "false" : "load_data should not be sorting the data."
+                        "false" : "Should not sort the data."
                     },
                     {
                         "id" : "load_data_space",
@@ -84,7 +83,7 @@
                         "weight": 0,
                         "jump" : ["def load_data\\(.+\\)", "split\\(\", \"\\)"],
                         "requires" : ["load_data_exists"],
-                        "false" : "split(\", \") will not work if the csv file does not contain a space after the commas [no marks deducted]"
+                        "false" : "Split(\", \") will not work if the csv file does not contain a space after the commas [no marks deducted]"
                     }
                 ]
             },
@@ -96,12 +95,14 @@
                     {
                         "id" : "get_ranges_sorted",
                         "criteria" : "Correct for sorted",
-                        "weight" : 0.25
+                        "weight" : 0.25,
+                        "false" : "Incorrect output when the data is sorted."
                     },
                     {
                         "id" : "get_ranges_unsorted",
                         "criteria" : "Correct for unsorted",
-                        "weight" : 0.25
+                        "weight" : 0.25,
+                        "false" : "Incorrect output when the data is unsorted."
                     }
                 ]
             },
@@ -113,12 +114,14 @@
                     {
                         "id" : "get_mean_output",
                         "criteria" : "Correct output",
-                        "weight" : 0.25
+                        "weight" : 0.25,
+                        "false" : "Incorrect output."
                     },
                     {
                         "id" : "get_mean_rounding",
                         "criteria" : "Non-rounded output",
-                        "weight" : 0.25
+                        "weight" : 0.25,
+                        "false" : "Output should not be rounded."
                     }
                 ]
             },
@@ -130,42 +133,52 @@
                     {
                         "id" : "get_median_sorted",
                         "criteria" : "Works for sorted lists",
-                        "weight" : 0.25
+                        "weight" : 0.25,
+                        "false" : "Incorrect output for sorted lists."
                     },
                     {
                         "id" : "get_median_unsorted",
                         "criteria" : "Works for unsorted lists",
-                        "weight" : 0.25
+                        "weight" : 0.25,
+                        "false" : "Incorrect output for unsorted lists."
                     },
                     {
                         "id" : "get_median_even",
                         "criteria" : "Works for even lists",
-                        "weight" : 0.25
+                        "weight" : 0.25,
+                        "false" : "Incorrect output for even length lists."
                     },
                     {
                         "id" : "get_median_odd",
                         "criteria" : "Works for odd lists",
-                        "weight" : 0.25
+                        "weight" : 0.25,
+                        "false" : "Incorrect output for odd length lists."
                     },
                     {
                         "id" : "get_median_inplace",
                         "criteria" : "Sorting data in place",
-                        "weight" : 0
+                        "weight" : 0,
+                        "false" : "Should not modify the data structure."
                     }
                 ]
             },
             {
                 "criteria" : "2.2.6 get_std_dev",
                 "weight" : 1,
-                "jump" : ["def get_std_sev\\(.+\\)"],
+                "jump" : ["def get_std_dev\\(.+\\)"],
                 "children" : [
                     {
+                        "id" : "std_dev_attempt",
                         "criteria" : "Decent attempt",
-                        "weight" : 0.5
+                        "weight" : 0.5,
+                        "false" : "Incorrect output."
                     },
                     {
-                        "criteria" : "Correct output",
-                        "weight" : 0.5
+                        "id" : "std_dev_correct",
+                        "criteria" : "<indent>Correct output",
+                        "weight" : 0.5,
+                        "false" : "Minor output errors.",
+                        "requires" : ["std_dev_attempt"]
                     }
                 ]
             },
@@ -175,16 +188,22 @@
                 "jump" : ["def data_summary\\(.+\\)"],
                 "children" : [
                     {
+                        "id" : "data_summary_loop",
                         "criteria" : "Correctly loops over data",
-                        "weight" : 0.5
+                        "weight" : 0.5,
+                        "false" : "Does not loop over the data."
                     },
                     {
+                        "id" : "data_summary_output",
                         "criteria" : "Correct output",
-                        "weight" : 0.5
+                        "weight" : 0.5,
+                        "false" : "Incorrect output"
                     },
                     {
+                        "id" : "data_summary_functions",
                         "criteria" : "Doesn't use other functions",
-                        "weight" : -0.5
+                        "weight" : -0.5,
+                        "true" : "You should have used the previous functions rather than copying the code."
                     }
                 ]
             },
@@ -194,59 +213,83 @@
                 "jump" : ["def display_set_summaries\\(.+\\)"],
                 "children" : [
                     {
+                        "id" : "display_set_summaries_round",
                         "criteria" : "Correct rounding",
-                        "weight" : 0.25
+                        "weight" : 0.25,
+                        "false" : "Incorrect rounding."
                     },
                     {
+                        "id" : "display_set_summaries_input",
                         "criteria" : "Takes correct input - i.e. data_summary not load_data",
-                        "weight" : 0.25
+                        "weight" : 0.25,
+                        "false" : "Incorrect data input (should be from data_summary, not load_data)."
                     },
                     {
+                        "id" : "display_set_summaries_output",
                         "criteria" : "Decent looking output",
-                        "weight" : 0.25
+                        "weight" : 0.25,
+                        "false" : "Incorrect output."
                     },
                     {
+                        "id" : "display_set_summaries_animals",
                         "criteria" : "Works for any number of animals",
-                        "weight" : 0.25
+                        "weight" : 0.25,
+                        "false" : "Does not work for any number of animals."
                     },
                     {
+                        "id" : "display_set_summaries_numbers",
                         "criteria" : "Incorrect numbers",
-                        "weight" : -0.5
+                        "weight" : -0.5,
+                        "true" : "Incorrect numbers in output."
                     }
                 ]
             },
             {
                 "criteria" : "2.2.9 interact",
                 "weight" : 2,
-                "jump" : ["def interact\\(.+\\)"],
+                "jump" : ["def interact\\(\\)"],
                 "children" : [
                     {
+                        "id" : "interact_q",
                         "criteria" : "quits on q",
-                        "weight" : 0.25
+                        "weight" : 0.25,
+                        "false" : "Quit command does not work."
                     },
                     {
+                        "id" : "interact_loops",
                         "criteria" : "command prompt loops",
-                        "weight" : 0.25
+                        "weight" : 0.25,
+                        "false" : "Does not loop."
                     },
                     {
+                        "id" : "interact_summary",
                         "criteria" : "summary works",
-                        "weight" : 0.25
+                        "weight" : 0.25,
+                        "false" : "Summary command does not work."
                     },
                     {
+                        "id" : "interact_filename",
                         "criteria" : "asks for filename",
-                        "weight" : 0.25
+                        "weight" : 0.25,
+                        "false" : "Does not ask user for a filename"
                     },
                     {
+                        "id" : "interact_unknown",
                         "criteria" : "handles unknown command",
-                        "weight" : 0.25
+                        "weight" : 0.25,
+                        "false" : "Unknown command not handled."
                     },
                     {
+                        "id" : "interact_sets",
                         "criteria" : "sets works perfectly",
-                        "weight" : 0.75
+                        "weight" : 0.75,
+                        "false" : "Sets command does not work."
                     },
                     {
+                        "id" : "interact_repeated_unknown_commands",
                         "criteria" : "repeated unknown commands",
-                        "weight" : 0
+                        "weight" : 0,
+                        "true" : "It is possible to only use one print(\"Unknown command\")"
                     }
                 ]
             },
@@ -254,19 +297,25 @@
                 "criteria" : "2.3.1 data_comparison",
                 "weight" : 1.5,
                 "masters" : true,
-                "jump" : ["def data_compariso\\(.+\\)n"],
+                "jump" : ["def data_comparison\\(.+\\)"],
                 "children" : [
                     {
+                        "id" : "data_comparison_names",
                         "criteria" : "correct names",
-                        "weight" : 0.5
+                        "weight" : 0.5,
+                        "false": "Incorrect names."
                     },
                     {
+                        "id" : "data_comparison_means",
                         "criteria" : "correct means",
-                        "weight" : 0.5
+                        "weight" : 0.5,
+                        "false": "Incorrect means."
                     },
                     {
+                        "id" : "data_comparison_stddev",
                         "criteria" : "correct standard deviations",
-                        "weight" : 0.5
+                        "weight" : 0.5,
+                        "false": "Incorrect standard deviations."
                     }
                 ]
             },
@@ -277,35 +326,47 @@
                 "jump" : ["def display_comparison\\(.+\\)"],
                 "children" : [
                     {
+                        "id" : "display_comparison_data",
                         "criteria" : "correct data",
-                        "weight" : 0.5
+                        "weight" : 0.5,
+                        "false": "Incorrect numbers."
                     },
                     {
+                        "id" : "display_comparison_spacing",
                         "criteria" : "correct spacing",
-                        "weight" : 0.5
+                        "weight" : 0.5,
+                        "false": "Incorrect spacing."
                     },
                     {
+                        "id" : "display_comparison_pm",
                         "criteria" : "S +/- before mean",
-                        "weight" : 0.5
+                        "weight" : 0.5,
+                        "false": "Missing +/- before the mean."
                     }
                 ]
             },
             {
-                "criteria": "General",
+                "criteria": "2.4 general",
                 "weight": 0,
                 "children": [
                     {
+                        "id" : "general_imports",
                         "criteria": "Non-math imports",
                         "weight": -1,
-                        "jump" : ["import (?!(math|assign1_support))([a-z0-9]+)"]
+                        "jump" : ["import (?!(math|assign1_support))([a-z0-9]+)"],
+                        "true": "Your code imports from forbidden modules."
                     },
                     {
+                        "id" : "general_hardcoding",
                         "criteria": "Hard coding (e.g. filename)",
-                        "weight": -1
+                        "weight": -1,
+                        "true": "Your code has hardcoded values."
                     },
                     {
+                        "id" : "general_globals",
                         "criteria": "Globals",
-                        "weight": -1
+                        "weight": -1,
+                        "true": "Your code has global variables."
                     }
                 ]
             }
