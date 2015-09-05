@@ -242,6 +242,131 @@ function nextPractical(i, args) {
     });
 }
 
+
+
+// Updates
+function compare(v1, v2, options) {
+    //remove anything after - 1.1.2-3-a4agbr-dirty
+    function cropDash(s){
+        var idx = s.indexOf('-');
+        if(idx !== -1) {
+            s = s.substring(0, idx);
+        }
+        return s;
+    }
+
+    v1 = cropDash(v1);
+    v2 = cropDash(v2);
+    var lexicographical = options && options.lexicographical,
+        zeroExtend = options && options.zeroExtend,
+        v1parts = v1.split('.'),
+        v2parts = v2.split('.');
+
+
+
+
+
+    function isValidPart(x) {
+        return (lexicographical ? /^\d+[A-Za-z]*$/ : /^\d+$/).test(x);
+    }
+
+    if (!v1parts.every(isValidPart) || !v2parts.every(isValidPart)) {
+        return NaN;
+    }
+
+    if (zeroExtend) {
+        while (v1parts.length < v2parts.length) v1parts.push("0");
+        while (v2parts.length < v1parts.length) v2parts.push("0");
+    }
+
+    if (!lexicographical) {
+        v1parts = v1parts.map(Number);
+        v2parts = v2parts.map(Number);
+    }
+
+    for (var i = 0; i < v1parts.length; ++i) {
+        if (v2parts.length == i) {
+            return 1;
+        }
+
+        if (v1parts[i] == v2parts[i]) {
+            continue;
+        }
+        else if (v1parts[i] > v2parts[i]) {
+            return 1;
+        }
+        else {
+            return -1;
+        }
+    }
+
+    if (v1parts.length != v2parts.length) {
+        return -1;
+    }
+
+    return 0;
+}
+
+function matches(v1, v2, options){
+    return compare(v1, v2, options) === 0;
+}
+
+function gt(v1, v2, options){
+    return compare(v1, v2, options) > 0;
+}
+function gte(v1, v2, options){
+    return compare(v1, v2, options) >= 0;
+}
+function lt(v1, v2, options){
+    return compare(v1, v2, options) < 0;
+}
+function lte(v1, v2, options){
+    return compare(v1, v2, options) <= 0;
+}
+
+function checkForUpdates(callback) {
+    // Read the package json for github
+    require('https').get({
+        host: 'raw.githubusercontent.com',
+        path: '/CSSE1001/csse1001-Shark/master/package.json'
+    }, function(response) {
+        var str = '';
+
+        //another chunk of data has been received, so append it to `str`
+        response.on('data', function (chunk) {
+            console.log("chunk");
+            str += chunk;
+        });
+
+        //the whole response has been recieved, so we just print it out here
+        response.on('end', function () {
+            try {
+                var git_package = JSON.parse(str);
+            } catch (err) {
+                console.error("Error: Failed to check for updates");
+                console.error(err);
+                return callback(false);
+            }
+
+            fs.readFile("package.json", 'utf-8', function (err, data) {
+                if (err) {
+                    return;
+                }
+                var cur_package = JSON.parse(data);
+                console.log(git_package.version + " > " + cur_package.version + "?");
+
+                var update = gt(git_package.version, cur_package.version, {});
+                console.log("Needs update? " + update);
+                return callback(update);
+            });
+
+        });
+    }).on('error', function(err) {
+        return callback(false);
+    });
+}
+
+
 /**
  *
  * @param server
@@ -249,6 +374,7 @@ function nextPractical(i, args) {
  * @param callback
  */
 module.exports = function(server, app, callback) {
+
 
     // Load the criteria file
     fs.readFile(config.criteriaPath, 'utf-8', function (err, json_data) {
@@ -260,42 +386,46 @@ module.exports = function(server, app, callback) {
                 return res.redirect('/login');
             }
 
-            // GET
-            fs.readFile(path.join(config.ejsPath, "mark.ejs"), 'utf-8', function (err, html) {
-                if (err) {
-                    return next(err);
-                }
-
-
-                // Do we have any scripts?
-                var userDir = path.join(config.markingDirectory, (config.skipAuth?config.skipUser:req.user.username));
-                fs.exists(userDir, function(exists) {
-                    if (!exists) {
-                        return res.redirect('/import');
+            // Update check
+            checkForUpdates(function(update) {
+                // GET
+                fs.readFile(path.join(config.ejsPath, "mark.ejs"), 'utf-8', function (err, html) {
+                    if (err) {
+                        return next(err);
                     }
 
-                    function generateScripts(scriptDir) {
-                        fs.readdir(scriptDir, function (err, files) {
-                            if (err) return next(err);
+                    // Do we have any scripts?
+                    var userDir = path.join(config.markingDirectory, (config.skipAuth?config.skipUser:req.user.username));
+                    fs.exists(userDir, function(exists) {
+                        if (!exists) {
+                            return res.redirect('/import');
+                        }
 
-                            // Gather information about each prac
-                            nextPractical(0, {
-                                scripts: scriptDir,
-                                files: files,
-                                output: [],
-                                criteria: criteria,
-                                callback: function (err, pracInfo) {
-                                    if (err) return console.error(err);
-                                    return server.render(req, res, html, {
-                                        global_user: (config.skipAuth?config.skipUser:req.user.username),
-                                        global_prac: pracInfo,
-                                        global_query: req.query
-                                    });
-                                }
+                        function generateScripts(scriptDir) {
+                            fs.readdir(scriptDir, function (err, files) {
+                                if (err) return next(err);
+
+                                // Gather information about each prac
+                                nextPractical(0, {
+                                    scripts: scriptDir,
+                                    files: files,
+                                    output: [],
+                                    criteria: criteria,
+                                    callback: function (err, pracInfo) {
+                                        if (err) return console.error(err);
+                                        return server.render(req, res, html, {
+                                            global_user: (config.skipAuth?config.skipUser:req.user.username),
+                                            global_prac: pracInfo,
+                                            global_query: req.query,
+                                            global_update: update
+                                        });
+                                    }
+                                });
                             });
-                        });
-                    }
-                    generateScripts(userDir);
+                        }
+                        generateScripts(userDir);
+                    });
+
                 });
             });
         });

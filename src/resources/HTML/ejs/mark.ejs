@@ -12,6 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Marking Scripts</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/sb-admin.css" rel="stylesheet">
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
@@ -69,6 +70,11 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<%
+    if (global_update) {
+        %><div class="alert alert-success" role="alert" style="margin:10px">An update is available - type 'git pull' into the console</div><%
+    }
+%>
 
 <%
 // Add each of the practicals rows
