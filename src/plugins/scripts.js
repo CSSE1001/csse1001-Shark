@@ -50,7 +50,7 @@ function getScriptInfo(script, criteria, callback) {
             student = name_array[1].trim();
         }
         // How many tests did this student pass?
-        var tests_regex = /TEST RUN:([\s\S]+?)\/------------\\/
+        var tests_regex = /TEST RUN:([\s\S]+?)END TEST/
         var test_array = script_data.match(tests_regex);
         var total_tests = 0;
         var total_passed = 0;
