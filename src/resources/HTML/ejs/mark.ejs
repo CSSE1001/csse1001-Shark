@@ -1,8 +1,10 @@
 <html>
 <%
     var interview = (typeof global_query['interview'] !== 'undefined');
+    var theme     = (typeof global_query['theme'] !== 'undefined') ? global_query['theme'] : "day";
     var preurl = interview ? "&interview" : "";
     var presort = (typeof global_query['sort'] !== 'undefined') ? "&sort=" + global_query['sort'] : "";
+    preurl += "&theme=" + theme;
 %>
 <head>
     <meta charset="utf-8">
@@ -14,7 +16,8 @@
     <link href="css/sb-admin.css" rel="stylesheet">
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css">
-    <link rel="stylesheet" href="css/mark.css">
+    <link rel="stylesheet" href="css/mark-day.css">
+    <link rel="stylesheet" href="css/mark-<%=theme%>.css">
 
 	<!-- charting -->
 	<script src="js/Chart.min.js"></script>

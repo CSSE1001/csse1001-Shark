@@ -493,7 +493,7 @@ function save() {
         success: function(data){
             if (data['success'] == true) {
                 document.getElementById("save").innerHTML = "<span class='glyphicon glyphicon-save'></span> Saved</a>";
-                window.location = "/" + (interview ? "?interview" : "");
+                window.location = "/" + (interview ? "?interview" : "") + (theme ? "?theme=" + theme : "");
             }
         },
         dataType: "json"

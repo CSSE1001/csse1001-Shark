@@ -1,25 +1,25 @@
-define("ace/theme/xcode",["require","exports","module","ace/lib/dom"], function(require, exports, module) {
+define("ace/theme/xcode-night",["require","exports","module","ace/lib/dom"], function(require, exports, module) {
 
 exports.isDark = false;
 exports.cssClass = "ace-xcode";
 exports.cssText = "\
 .ace-xcode .ace_gutter {\
-background: #e8e8e8;\
-color: #333\
+background: #333;\
+color: #777\
 }\
 .ace-xcode .ace_print-margin {\
 width: 1px;\
 background: #e8e8e8\
 }\
 .ace-xcode {\
-background-color: #FFFFFF;\
-color: #000000\
+background-color: #222;\
+color: #ccc\
 }\
 .ace-xcode .ace_cursor {\
-color: #000000\
+color: #fff\
 }\
 .ace-xcode .ace_marker-layer .ace_selection {\
-background: #B5D5FF\
+background: #333\
 }\
 .ace-xcode.ace_multiselect .ace_selection.ace_start {\
 box-shadow: 0 0 3px 0px #FFFFFF;\
@@ -55,12 +55,12 @@ color: #BFBFBF\
 color: #275A5E\
 }\
 .ace-xcode .ace_constant.ace_numeric {\
-color: #3A00DC\
+color: #66aaff\
 }\
 .ace-xcode .ace_entity.ace_other.ace_attribute-name,\
 .ace-xcode .ace_support.ace_constant,\
 .ace-xcode .ace_support.ace_function {\
-color: #450084\
+color: #ff0\
 }\
 .ace-xcode .ace_fold {\
 background-color: #C800A4;\
@@ -75,7 +75,7 @@ color: #790EAD\
 color: #C900A4\
 }\
 .ace-xcode .ace_string {\
-color: #DF0002\
+color: #33aa02\
 }\
 .ace-xcode .ace_comment {\
 color: #008E00\

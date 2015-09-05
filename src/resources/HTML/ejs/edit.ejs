@@ -1,6 +1,7 @@
 <html>
 <%
 var interview = (typeof global_query['interview'] !== 'undefined');
+var theme     = (typeof global_query['theme'] !== 'undefined') ? global_query['theme'] : "day";
 %>
 <head>
     <meta charset="utf-8">
@@ -12,7 +13,8 @@ var interview = (typeof global_query['interview'] !== 'undefined');
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.0/css/bootstrap-toggle.min.css" rel="stylesheet">
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css">
-    <link rel="stylesheet" href="css/mark.css">
+    <link rel="stylesheet" href="css/mark-day.css">
+    <link rel="stylesheet" href="css/mark-<%=theme%>.css">
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -246,6 +248,7 @@ generateChildren(global_criteria, criteria_save, 0);
 </div>
 
 <script type="text/javascript">
+var theme = "<%-theme%>";
 var interview = <%- interview %>;
 var criteria = <%- json %>;
 var activity = <%- activity %>;
@@ -257,12 +260,12 @@ var prac = "<%=global_query.prac%>";
 <script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
 <script>
     var editor = ace.edit("editor");
-    editor.setTheme("ace/theme/xcode");
+    editor.setTheme("ace/theme/xcode-<%=theme%>");
     editor.getSession().setMode("ace/mode/python");
 
     // Extra code for the python execution engine
     var output = ace.edit("output");
-    output.setTheme("ace/theme/xcode");
+    output.setTheme("ace/theme/xcode-<%=theme%>");
     output.getSession().setMode("ace/mode/python");
     output.setShowPrintMargin(false);
     output.setBehavioursEnabled(false);

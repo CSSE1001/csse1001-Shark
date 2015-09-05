@@ -1,0 +1,115 @@
+.root_head {
+    background-color: #404040;
+    font-size: 13px;
+    font-family: Avenir Next;
+}
+
+.root_header {
+    background-color: #454545;
+    font-size: 13px;
+    font-family: Avenir Next;
+    padding: 30px 20px 20px;
+    margin-bottom: 5px;
+}
+
+.row_cat0 {
+    background-color: #353535;
+    font-size: 15px;
+    font-family: Avenir Next;
+    height: 80px;
+    text-align: center;
+}
+
+.row_cat1 {
+    background-color: #303030;
+    font-size: 15px;
+    font-family: Avenir Next;
+    height: 50px;
+}
+
+textarea {
+    color: white;
+    background-color: #505050;
+}
+.table>tbody>.row_cat0>td {
+    border-top: none;
+    color: white;
+}
+.table>tbody>.row_cat1>td {
+    border-top: none;
+    color: white;
+}
+.table>tbody>.row_cat2:nth-child(even)>td, .table>tbody>.row_cat3:nth-child(even)>td {
+    background-color: #222222;
+    border-top: none;
+    color: white;
+}
+.table>tbody>.row_cat2:nth-child(odd)>td, .table>tbody>.row_cat3:nth-child(odd)>td {
+    background-color: #282828;
+    border-top: none;
+    color: white;
+}
+
+.navbar-default {
+    background-color: #555555;
+}
+
+body {
+    background-color: #505050;
+    color: white;
+}
+
+h5, h4, h3, h2 {
+    color: white;
+}
+.cell_label {
+    color: white;
+}
+
+a {
+    color: #aaeeff;
+}
+a:hover {
+    color: #bbbbbb;
+}
+.table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td
+{
+    background-color: #444444;
+    border: 1px solid #333333
+}
+.table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th {
+    background-color: #333333;
+    border: 1px solid #333333
+}
+.panel, .modal-content {
+    background-color: #222;
+    border: none;
+}
+.panel-default>.panel-heading{
+    background-color: #333;
+    border: none;
+}
+.table-bordered {
+    border: none;
+}
+.table>thead>tr>.danger, .table>tbody>tr>.danger, .table>tfoot>tr>.danger, .table>thead>.danger>td, .table>tbody>.danger>td{
+    background-color: #553333
+}
+.table-hover>tbody>tr>.danger:hover, .table-hover>tbody>.danger:hover>td, .table-hover>tbody>.danger:hover>th {
+    background-color: #775555
+}
+.table>thead>tr>.warning, .table>tbody>tr>.warning, .table>tfoot>tr>.warning, .table>thead>.warning>td, .table>tbody>.warning>td {
+    background-color: #555533
+}
+.table-hover>tbody>tr>.warning:hover, .table-hover>tbody>.warning:hover>td, .table-hover>tbody>.warning:hover>th {
+    background-color: #777755
+}
+.table>thead>tr>.success, .table>tbody>tr>.success, .table>tfoot>tr>.success, .table>thead>.success>td, .table>tbody>.success>td{
+    background-color: #335533
+}
+.table-hover>tbody>tr>.success:hover, .table-hover>tbody>.success:hover>td, .table-hover>tbody>.success:hover>th {
+    background-color: #557755
+}
+.panel-title {
+    color: white;
+}
