@@ -275,7 +275,7 @@
                         "id" : "data_summary_functions",
                         "criteria" : "<indent>Doesn't use other functions",
                         "weight" : -0.5,
-                        "true" : "You should have used the previous functions rather than copying the code.",
+                        "true" : "You should have used previous functions rather than copying code.",
                         "requires" : ["data_summary_exists"]
                     }
                 ]
@@ -297,6 +297,7 @@
                         "criteria" : "<indent>Correct rounding",
                         "weight" : 0.25,
                         "false" : "Incorrect rounding.",
+                        "jump" : ["def display_set_summaries\\(.+\\)", "round\\(.+,.*2.*\\)"],
                         "requires" : ["display_set_summaries_exists"]
                     },
                     {
@@ -311,6 +312,7 @@
                         "criteria" : "<indent>Decent looking output",
                         "weight" : 0.25,
                         "false" : "Incorrect output.",
+                        "jump" : ["def display_set_summaries\\(.+\\)", "display_with_padding\\(.+\\)"],
                         "requires" : ["display_set_summaries_exists"]
                     },
                     {
@@ -318,6 +320,7 @@
                         "criteria" : "<indent>Works for any number of animals",
                         "weight" : 0.25,
                         "false" : "Does not work for any number of animals.",
+                        "jump" : ["def display_set_summaries\\(.+\\)", "for .+:"],
                         "requires" : ["display_set_summaries_exists"]
                     },
                     {
@@ -346,42 +349,48 @@
                         "criteria" : "<indent>quits on q",
                         "weight" : 0.25,
                         "false" : "Quit command does not work.",
-                        "requires" : ["interact_exists"]
+                        "requires" : ["interact_exists"],
+                        "jump" : ["def interact\\(\\)", ".*==.*q.*:"]
                     },
                     {
                         "id" : "interact_loops",
                         "criteria" : "<indent>Command prompt loops",
                         "weight" : 0.25,
                         "false" : "Does not loop.",
-                        "requires" : ["interact_exists"]
+                        "requires" : ["interact_exists"],
+                        "jump" : ["def interact\\(\\)", "(for|while).+:"]
                     },
                     {
                         "id" : "interact_summary",
                         "criteria" : "<indent>summary works",
                         "weight" : 0.25,
                         "false" : "Summary command does not work.",
-                        "requires" : ["interact_exists"]
+                        "requires" : ["interact_exists"],
+                        "jump" : ["def interact\\(\\)", ".*==.*summary.*:"]
                     },
                     {
                         "id" : "interact_filename",
                         "criteria" : "<indent>asks for filename",
                         "weight" : 0.25,
                         "false" : "Does not ask user for a filename",
-                        "requires" : ["interact_exists"]
+                        "requires" : ["interact_exists"],
+                        "jump" : ["def interact\\(\\)", "input(.+)"]
                     },
                     {
                         "id" : "interact_unknown",
                         "criteria" : "<indent>handles unknown command",
                         "weight" : 0.25,
                         "false" : "Unknown command not handled.",
-                        "requires" : ["interact_exists"]
+                        "requires" : ["interact_exists"],
+                        "jump" : ["def interact\\(\\)", "print(.+Unknown.+)"]
                     },
                     {
                         "id" : "interact_sets",
                         "criteria" : "<indent>sets works perfectly",
                         "weight" : 0.75,
                         "false" : "Sets command does not work.",
-                        "requires" : ["interact_exists"]
+                        "requires" : ["interact_exists"],
+                        "jump" : ["def interact\\(\\)", ".*sets.*:"]
                     },
                     {
                         "id" : "interact_repeated_unknown_commands",
