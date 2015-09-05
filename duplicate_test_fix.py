@@ -24,14 +24,19 @@ for script in scripts:
             if line.startswith('END TEST'):
                 in_dup = not in_dup
 
+            if line.startswith('"""') and in_dup:
+                print("Ignoring {}".format(script))
+                break
+
             if not in_dup:
                 lines.append(line)
+        else:
+            with open(script, 'w') as out_file:
+                out_file.writelines(lines)
 
-    with open(script, 'w') as out_file:
-        out_file.writelines(lines)
-
-
-    print(script)
+        #        print(lines)
+            
+            print("Deduplicated {}".format(script))
 
 print('-' * 78)
 print("Processed {} files".format(len(scripts)))
