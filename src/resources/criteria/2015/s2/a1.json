@@ -4,7 +4,32 @@
         "weight" : 10,
         "children" : [
             {
-                "criteria" : "2.2.1 Comments",
+                "criteria": "General",
+                "weight": 0,
+                "children": [
+                    {
+                        "id" : "general_imports",
+                        "criteria": "Non-math imports",
+                        "weight": -1,
+                        "jump" : ["import (?!(math|assign1_support))([a-z0-9]+)"],
+                        "true": "Your code imports from forbidden modules."
+                    },
+                    {
+                        "id" : "general_hardcoding",
+                        "criteria": "Hard coding (e.g. filename)",
+                        "weight": -1,
+                        "true": "Your code has hardcoded values."
+                    },
+                    {
+                        "id" : "general_globals",
+                        "criteria": "Globals",
+                        "weight": -1,
+                        "true": "Your code has global variables."
+                    }
+                ]
+            },
+            {
+                "criteria" : "2.2.1 comments",
                 "weight" : 1,
                 "jump" : ["def *", "\"\"\""],
                 "children" : [
@@ -51,7 +76,7 @@
                         "jump" : ["def load_data\\(.+\\)", "[ |\\\t]*", ".+close\\(\\)"],
                         "weight": 0.25,
                         "requires" : ["load_data_exists", "load_data_open"],
-                        "false" : "Incorrect output format."
+                        "false" : "Does not close the file."
                     },
                     {
                         "id" : "load_data_return",
@@ -59,7 +84,7 @@
                         "weight": 0.5,
                         "requires" : ["load_data_exists"],
                         "jump" : ["def load_data\\(.+\\)", "return"],
-                        "false" : "Does not close the file."
+                        "false" : "Incorrect output format."
                     },
                     {
                         "id" : "load_data_float",
@@ -342,31 +367,6 @@
                         "criteria" : "S +/- before mean",
                         "weight" : 0.5,
                         "false": "Missing +/- before the mean."
-                    }
-                ]
-            },
-            {
-                "criteria": "2.4 general",
-                "weight": 0,
-                "children": [
-                    {
-                        "id" : "general_imports",
-                        "criteria": "Non-math imports",
-                        "weight": -1,
-                        "jump" : ["import (?!(math|assign1_support))([a-z0-9]+)"],
-                        "true": "Your code imports from forbidden modules."
-                    },
-                    {
-                        "id" : "general_hardcoding",
-                        "criteria": "Hard coding (e.g. filename)",
-                        "weight": -1,
-                        "true": "Your code has hardcoded values."
-                    },
-                    {
-                        "id" : "general_globals",
-                        "criteria": "Globals",
-                        "weight": -1,
-                        "true": "Your code has global variables."
                     }
                 ]
             }
