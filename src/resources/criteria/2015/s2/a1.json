@@ -10,6 +10,7 @@
                     {
                         "id" : "general_imports",
                         "criteria": "Non-math imports",
+                        "alert" : true,
                         "weight": -1,
                         "jump" : ["import (?!(math|assign1_support))([a-z0-9]+)"],
                         "true": "Your code imports from forbidden modules."
@@ -18,12 +19,15 @@
                         "id" : "general_hardcoding",
                         "criteria": "Hard coding (e.g. filename)",
                         "weight": -1,
+                        "alert" : true,
+                        "jump" : ["\"END TEST\"", "(animal_heights.csv|Ocelot|Slow Lorris|Tiger)"],
                         "true": "Your code has hardcoded values."
                     },
                     {
                         "id" : "general_globals",
                         "criteria": "Globals",
                         "weight": -1,
+                        "alert" : true,
                         "true": "Your code has global variables."
                     }
                 ]
@@ -37,6 +41,7 @@
                         "id" : "comment",
                         "criteria" : "Most functions have comments",
                         "weight" : 0.5,
+                        "alert" : false,
                         "jump" : ["def *", "\"\"\""],
                         "false" : "Docstrings are missing."
                     },
@@ -44,6 +49,7 @@
                         "id" : "comment_types",
                         "criteria" : "<indent>Most docstrings have correct types",
                         "weight" : 0.5,
+                        "alert" : false,
                         "jump" : ["def *", "\"\"\"", "->"],
                         "requires" : ["comment"],
                         "false" : "Docstrings are missing return types."
@@ -59,6 +65,7 @@
                         "id" : "load_data_exists",
                         "criteria" : "load_data exists",
                         "weight": 0,
+                        "alert" : false,
                         "jump" : ["def load_data\\(.+\\)"],
                         "false" : "Does not exist."
                     },
@@ -68,6 +75,7 @@
                         "weight": 0.25,
                         "jump" : ["def load_data\\(.+\\)", "open\\(.+\\)"],
                         "requires" : ["load_data_exists"],
+                        "alert" : false,
                         "false" : "Does not open the file."
                     },
                     {
@@ -75,6 +83,7 @@
                         "criteria" : "<indent><indent>closes file",
                         "jump" : ["def load_data\\(.+\\)", "[ |\\\t]*", ".+close\\(\\)"],
                         "weight": 0.25,
+                        "alert" : false,
                         "requires" : ["load_data_exists", "load_data_open"],
                         "false" : "Does not close the file."
                     },
@@ -82,6 +91,7 @@
                         "id" : "load_data_return",
                         "criteria" : "<indent>list of tuples returned",
                         "weight": 0.5,
+                        "alert" : false,
                         "requires" : ["load_data_exists"],
                         "jump" : ["def load_data\\(.+\\)", "return"],
                         "false" : "Incorrect output format."
@@ -90,6 +100,7 @@
                         "id" : "load_data_float",
                         "criteria" : "<indent>heights converted to floats",
                         "weight": 0.5,
+                        "alert" : false,
                         "jump" : ["def load_data\\(.+\\)", "float\\(.+\\)"],
                         "requires" : ["load_data_exists"],
                         "false" : "Does not convert the heights into floats."
@@ -106,6 +117,7 @@
                         "id" : "load_data_space",
                         "criteria" : "<indent>comma+space delimiter",
                         "weight": 0,
+                        "alert" : true,
                         "jump" : ["def load_data\\(.+\\)", "split\\(\", \"\\)"],
                         "requires" : ["load_data_exists"],
                         "false" : "Split(\", \") will not work if the csv file does not contain a space after the commas [no marks deducted]"
@@ -121,6 +133,7 @@
                         "id" : "get_ranges_exists",
                         "criteria" : "get_ranges exists",
                         "weight": 0,
+                        "alert" : false,
                         "jump" : ["def get_ranges\\(.+\\)"],
                         "false" : "Does not exist."
                     },
@@ -128,6 +141,7 @@
                         "id" : "get_ranges_sorted",
                         "criteria" : "<indent>Correct for sorted",
                         "weight" : 0.25,
+                        "alert" : false,
                         "false" : "Incorrect output when the data is sorted.",
                         "requires" : ["get_ranges_exists"]
                     },
@@ -135,6 +149,7 @@
                         "id" : "get_ranges_unsorted",
                         "criteria" : "<indent>Correct for unsorted",
                         "weight" : 0.25,
+                        "alert" : false,
                         "false" : "Incorrect output when the data is unsorted.",
                         "requires" : ["get_ranges_exists"]
                     }
@@ -149,6 +164,7 @@
                         "id" : "get_mean_exists",
                         "criteria" : "get_mean exists",
                         "weight": 0,
+                        "alert" : false,
                         "jump" : ["def get_mean\\(.+\\)"],
                         "false" : "Does not exist."
                     },
@@ -156,6 +172,7 @@
                         "id" : "get_mean_output",
                         "criteria" : "<indent>Correct output",
                         "weight" : 0.25,
+                        "alert" : false,
                         "false" : "Incorrect output.",
                         "requires" : ["get_mean_exists"]
                     },
@@ -163,6 +180,7 @@
                         "id" : "get_mean_rounding",
                         "criteria" : "<indent>Non-rounded output",
                         "weight" : 0.25,
+                        "alert" : false,
                         "false" : "Output should not be rounded.",
                         "requires" : ["get_mean_output"]
                     }
@@ -177,6 +195,7 @@
                         "id" : "get_median_exists",
                         "criteria" : "get_median exists",
                         "weight": 0,
+                        "alert" : false,
                         "jump" : ["def get_median\\(.+\\)"],
                         "false" : "Does not exist."
                     },
@@ -184,6 +203,7 @@
                         "id" : "get_median_sorted",
                         "criteria" : "<indent>Works for sorted lists",
                         "weight" : 0.25,
+                        "alert" : false,
                         "false" : "Incorrect output for sorted lists.",
                         "requires" : ["get_median_exists"]
                     },
@@ -191,6 +211,7 @@
                         "id" : "get_median_unsorted",
                         "criteria" : "<indent>Works for unsorted lists",
                         "weight" : 0.25,
+                        "alert" : false,
                         "false" : "Incorrect output for unsorted lists.",
                         "requires" : ["get_median_exists"]
                     },
@@ -198,6 +219,7 @@
                         "id" : "get_median_even",
                         "criteria" : "<indent>Works for even lists",
                         "weight" : 0.25,
+                        "alert" : false,
                         "false" : "Incorrect output for even length lists.",
                         "requires" : ["get_median_exists"]
                     },
@@ -205,6 +227,7 @@
                         "id" : "get_median_odd",
                         "criteria" : "<indent>Works for odd lists",
                         "weight" : 0.25,
+                        "alert" : false,
                         "false" : "Incorrect output for odd length lists.",
                         "requires" : ["get_median_exists"]
                     },
@@ -212,6 +235,7 @@
                         "id" : "get_median_inplace",
                         "criteria" : "<indent>Sorting data in place",
                         "weight" : 0,
+                        "alert" : true,
                         "false" : "Should not modify the data structure.",
                         "requires" : ["get_median_exists"],
                         "jump" : ["def get_median\\(.+\\)", ".+\\.sort\\(\\)"]
@@ -227,6 +251,7 @@
                         "id" : "get_std_dev_exists",
                         "criteria" : "get_std_dev exists",
                         "weight": 0,
+                        "alert" : false,
                         "jump" : ["def get_std_dev\\(.+\\)"],
                         "false" : "Does not exist."
                     },
@@ -234,6 +259,7 @@
                         "id" : "std_dev_attempt",
                         "criteria" : "<indent>Decent attempt",
                         "weight" : 0.5,
+                        "alert" : false,
                         "false" : "Incorrect output.",
                         "requires" : ["get_std_dev_exists"]
                     },
@@ -241,6 +267,7 @@
                         "id" : "std_dev_correct",
                         "criteria" : "<indent><indent>Correct output",
                         "weight" : 0.5,
+                        "alert" : false,
                         "false" : "Minor output errors.",
                         "requires" : ["get_std_dev_exists", "std_dev_attempt"]
                     }
@@ -255,6 +282,7 @@
                         "id" : "data_summary_exists",
                         "criteria" : "data_summary exists",
                         "weight": 0,
+                        "alert" : false,
                         "jump" : ["def data_summary\\(.+\\)"],
                         "false" : "Does not exist."
                     },
@@ -262,6 +290,7 @@
                         "id" : "data_summary_loop",
                         "criteria" : "<indent>Correctly loops over data",
                         "weight" : 0.5,
+                        "alert" : false,
                         "false" : "Does not loop over the data.",
                         "requires" : ["data_summary_exists"]
                     },
@@ -269,6 +298,7 @@
                         "id" : "data_summary_output",
                         "criteria" : "<indent>Correct output",
                         "weight" : 0.5,
+                        "alert" : false,
                         "false" : "Incorrect output",
                         "requires" : ["data_summary_exists"]
                     },
@@ -276,6 +306,7 @@
                         "id" : "data_summary_functions",
                         "criteria" : "<indent>Doesn't use other functions",
                         "weight" : -0.5,
+                        "alert" : false,
                         "true" : "You should have used previous functions rather than copying code.",
                         "requires" : ["data_summary_exists"]
                     }
@@ -290,6 +321,7 @@
                         "id" : "display_set_summaries_exists",
                         "criteria" : "display_set_summaries exists",
                         "weight": 0,
+                        "alert" : false,
                         "jump" : ["def display_set_summaries\\(.+\\)"],
                         "false" : "Does not exist."
                     },
@@ -297,6 +329,7 @@
                         "id" : "display_set_summaries_round",
                         "criteria" : "<indent>Correct rounding",
                         "weight" : 0.25,
+                        "alert" : false,
                         "false" : "Incorrect rounding.",
                         "jump" : ["def display_set_summaries\\(.+\\)", "round\\(.+,.*2.*\\)"],
                         "requires" : ["display_set_summaries_exists"]
@@ -305,13 +338,16 @@
                         "id" : "display_set_summaries_input",
                         "criteria" : "<indent>Takes correct input - i.e. data_summary not load_data",
                         "weight" : 0.25,
+                        "alert" : true,
                         "false" : "Incorrect data input (should be from data_summary, not load_data).",
+                        "jump" : ["def display_set_summaries\\(.+\\)", "(get_mean|data_summary)"],
                         "requires" : ["display_set_summaries_exists"]
                     },
                     {
                         "id" : "display_set_summaries_output",
                         "criteria" : "<indent>Decent looking output",
                         "weight" : 0.25,
+                        "alert" : false,
                         "false" : "Incorrect output.",
                         "jump" : ["def display_set_summaries\\(.+\\)", "display_with_padding\\(.+\\)"],
                         "requires" : ["display_set_summaries_exists"]
@@ -320,6 +356,7 @@
                         "id" : "display_set_summaries_animals",
                         "criteria" : "<indent>Works for any number of animals",
                         "weight" : 0.25,
+                        "alert" : false,
                         "false" : "Does not work for any number of animals.",
                         "jump" : ["def display_set_summaries\\(.+\\)", "for .+:"],
                         "requires" : ["display_set_summaries_exists"]
@@ -328,6 +365,7 @@
                         "id" : "display_set_summaries_numbers",
                         "criteria" : "<indent>Incorrect numbers",
                         "weight" : -0.5,
+                        "alert" : true,
                         "true" : "Incorrect numbers in output.",
                         "requires" : ["display_set_summaries_exists"]
                     }
@@ -342,6 +380,7 @@
                         "id" : "interact_exists",
                         "criteria" : "interact exists",
                         "weight": 0,
+                        "alert" : false,
                         "jump" : ["def interact\\(\\)"],
                         "false" : "Does not exist."
                     },
@@ -349,6 +388,7 @@
                         "id" : "interact_q",
                         "criteria" : "<indent>quits on q",
                         "weight" : 0.25,
+                        "alert" : false,
                         "false" : "Quit command does not work.",
                         "requires" : ["interact_exists"],
                         "jump" : ["def interact\\(\\)", ".*==.*q.*:"]
@@ -357,6 +397,7 @@
                         "id" : "interact_loops",
                         "criteria" : "<indent>Command prompt loops",
                         "weight" : 0.25,
+                        "alert" : false,
                         "false" : "Does not loop.",
                         "requires" : ["interact_exists"],
                         "jump" : ["def interact\\(\\)", "(for|while).+:"]
@@ -365,6 +406,7 @@
                         "id" : "interact_summary",
                         "criteria" : "<indent>summary works",
                         "weight" : 0.25,
+                        "alert" : false,
                         "false" : "Summary command does not work.",
                         "requires" : ["interact_exists"],
                         "jump" : ["def interact\\(\\)", ".*==.*summary.*:"]
@@ -373,6 +415,7 @@
                         "id" : "interact_filename",
                         "criteria" : "<indent>asks for filename",
                         "weight" : 0.25,
+                        "alert" : false,
                         "false" : "Does not ask user for a filename",
                         "requires" : ["interact_exists"],
                         "jump" : ["def interact\\(\\)", "input(.+)"]
@@ -381,6 +424,7 @@
                         "id" : "interact_unknown",
                         "criteria" : "<indent>handles unknown command",
                         "weight" : 0.25,
+                        "alert" : false,
                         "false" : "Unknown command not handled.",
                         "requires" : ["interact_exists"],
                         "jump" : ["def interact\\(\\)", "print(.+Unknown.+)"]
@@ -389,6 +433,7 @@
                         "id" : "interact_sets",
                         "criteria" : "<indent>sets works perfectly",
                         "weight" : 0.75,
+                        "alert" : false,
                         "false" : "Sets command does not work.",
                         "requires" : ["interact_exists"],
                         "jump" : ["def interact\\(\\)", ".*sets.*:"]
@@ -397,6 +442,7 @@
                         "id" : "interact_repeated_unknown_commands",
                         "criteria" : "<indent>repeated unknown commands",
                         "weight" : 0,
+                        "alert" : false,
                         "true" : "It is possible to only use one print(\"Unknown command\")",
                         "requires" : ["interact_exists"]
                     }
@@ -412,6 +458,7 @@
                         "id" : "data_comparison_exists",
                         "criteria" : "data_comparison exists",
                         "weight": 0,
+                        "alert" : false,
                         "jump" : ["def data_comparison\\(.+\\)"],
                         "false" : "Does not exist."
                     },
@@ -419,6 +466,7 @@
                         "id" : "data_comparison_names",
                         "criteria" : "<indent>correct names",
                         "weight" : 0.5,
+                        "alert" : false,
                         "false": "Incorrect names.",
                         "requires" : ["data_comparison_exists"]
                     },
@@ -426,6 +474,7 @@
                         "id" : "data_comparison_means",
                         "criteria" : "<indent>correct means",
                         "weight" : 0.5,
+                        "alert" : false,
                         "false": "Incorrect means.",
                         "requires" : ["data_comparison_exists"]
                     },
@@ -433,6 +482,7 @@
                         "id" : "data_comparison_stddev",
                         "criteria" : "<indent>correct standard deviations",
                         "weight" : 0.5,
+                        "alert" : false,
                         "false": "Incorrect standard deviations.",
                         "requires" : ["data_comparison_exists"]
                     }
@@ -448,6 +498,7 @@
                         "id" : "display_comparison_exists",
                         "criteria" : "display_comparison exists",
                         "weight": 0,
+                        "alert" : false,
                         "jump" : ["def display_comparison\\(.+\\)"],
                         "false" : "Does not exist."
                     },
@@ -455,6 +506,7 @@
                         "id" : "display_comparison_data",
                         "criteria" : "<indent>correct data",
                         "weight" : 0.5,
+                        "alert" : false,
                         "false": "Incorrect numbers.",
                         "requires" : ["display_comparison_exists"]
                     },
@@ -462,6 +514,7 @@
                         "id" : "display_comparison_spacing",
                         "criteria" : "<indent>correct spacing",
                         "weight" : 0.5,
+                        "alert" : false,
                         "false": "Incorrect spacing.",
                         "requires" : ["display_comparison_exists"]
                     },
@@ -469,6 +522,7 @@
                         "id" : "display_comparison_pm",
                         "criteria" : "<indent>S +/- before mean",
                         "weight" : 0.5,
+                        "alert" : false,
                         "false": "Missing +/- before the mean.",
                         "requires" : ["display_comparison_exists"]
                     }
