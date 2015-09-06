@@ -4,22 +4,22 @@ exports.isDark = false;
 exports.cssClass = "ace-xcode";
 exports.cssText = "\
 .ace-xcode .ace_gutter {\
-background: #333;\
-color: #777\
+background: #404045;\
+color: #707070\
 }\
 .ace-xcode .ace_print-margin {\
 width: 1px;\
 background: #e8e8e8\
 }\
 .ace-xcode {\
-background-color: #222;\
-color: #ccc\
+background-color: #2B2B2B;\
+color: #a9b7c6\
 }\
 .ace-xcode .ace_cursor {\
-color: #fff\
+color: #708183\
 }\
 .ace-xcode .ace_marker-layer .ace_selection {\
-background: #333\
+background: #042028\
 }\
 .ace-xcode.ace_multiselect .ace_selection.ace_start {\
 box-shadow: 0 0 3px 0px #FFFFFF;\
@@ -45,22 +45,22 @@ border: 1px solid #B5D5FF\
 .ace-xcode .ace_keyword,\
 .ace-xcode .ace_meta,\
 .ace-xcode .ace_variable.ace_language {\
-color: #C800A4\
+color: #cc7832\
 }\
 .ace-xcode .ace_invisible {\
-color: #BFBFBF\
+color: #a9b7c6\
 }\
 .ace-xcode .ace_constant.ace_character,\
 .ace-xcode .ace_constant.ace_other {\
 color: #275A5E\
 }\
 .ace-xcode .ace_constant.ace_numeric {\
-color: #66aaff\
+color: #9876aa\
 }\
 .ace-xcode .ace_entity.ace_other.ace_attribute-name,\
 .ace-xcode .ace_support.ace_constant,\
 .ace-xcode .ace_support.ace_function {\
-color: #ff0\
+color: #a9b7c6\
 }\
 .ace-xcode .ace_fold {\
 background-color: #C800A4;\
@@ -75,19 +75,17 @@ color: #790EAD\
 color: #C900A4\
 }\
 .ace-xcode .ace_string {\
-color: #33aa02\
+color: #a6c25c\
 }\
 .ace-xcode .ace_comment {\
-color: #008E00\
+color: #808080\
 }\
 .ace-xcode .ace_marking {\
 color: #EE00EE;\
 background-color: yellow;\
 box-shadow: 0px 5px 5px #888888;\
 }\
-.ace-xcode .ace_indent-guide {\
-background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==) right repeat-y\
-}";
+.ace-xcode .ace_indent-guide {background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWNgYGBgYJDzqfwPAANXAeNsiA+ZAAAAAElFTkSuQmCC) right repeat-y}";
 
 var dom = require("../lib/dom");
 dom.importCssString(exports.cssText, exports.cssClass);

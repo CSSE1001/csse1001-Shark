@@ -2,9 +2,10 @@
 <%
     var interview = (typeof global_query['interview'] !== 'undefined');
     var theme     = (typeof global_query['theme'] !== 'undefined') ? global_query['theme'] : "day";
-    var preurl = interview ? "&interview" : "";
-    var presort = (typeof global_query['sort'] !== 'undefined') ? "&sort=" + global_query['sort'] : "";
-    preurl += "&theme=" + theme;
+    var presort   = (typeof global_query['sort'] !== 'undefined') ? "&sort=" + global_query['sort'] : "";
+    var inturl    = interview ? "&interview" : "";
+    var themeurl  = "&theme=" + theme;
+    var preurl    = inturl + themeurl;
 %>
 <head>
     <meta charset="utf-8">
@@ -39,12 +40,18 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
+                <%if (theme == "night") {%>
+                <li><a href="/?<%=inturl%><%=presort%>&theme=day"><span class="glyphicon glyphicon-adjust" aria-hidden="true"></span> Day</a></li>
+                <%} else { %>
+                <li><a href="/?<%=inturl%><%=presort%>&theme=night"><span class="glyphicon glyphicon-adjust" aria-hidden="true"></span> Night</a></li>
+                <%}%>
+
                 <%if (!interview) {%>
-                <li><a href="/?interview<%=presort%>"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Interview</a></li>
+                <li><a href="/?interview<%=presort%><%=themeurl%>"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Interview</a></li>
                 <li><a href="#" data-toggle="modal" data-target="#graph"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Graph</a></li>
                 <li><a href="export"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Export</a></li>
                 <%} else { %>
-                <li><a href="/?<%=presort%>"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Mark</a></li>
+                <li><a href="/?<%=presort%><%=themeurl%>"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Mark</a></li>
                 <%}%>
             </ul>
         </div>
