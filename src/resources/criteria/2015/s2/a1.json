@@ -157,7 +157,7 @@
                         "criteria" : "<indent>Correct output",
                         "weight" : 0.25,
                         "false" : "Incorrect output.",
-                        "requires" : ["get_mean_output"]
+                        "requires" : ["get_mean_exists"]
                     },
                     {
                         "id" : "get_mean_rounding",
@@ -175,7 +175,7 @@
                 "children" : [
                     {
                         "id" : "get_median_exists",
-                        "criteria" : "get_mean exists",
+                        "criteria" : "get_median exists",
                         "weight": 0,
                         "jump" : ["def get_median\\(.+\\)"],
                         "false" : "Does not exist."
@@ -213,7 +213,8 @@
                         "criteria" : "<indent>Sorting data in place",
                         "weight" : 0,
                         "false" : "Should not modify the data structure.",
-                        "requires" : ["get_median_exists"]
+                        "requires" : ["get_median_exists"],
+                        "jump" : ["def get_median\\(.+\\)", ".+\\.sort\\(\\)"]
                     }
                 ]
             },
