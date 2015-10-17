@@ -294,15 +294,15 @@
                         "alert": false,
                         "weight": 0.25,
                         "requires": ["animaldata_exists"],
-                        "false": "load_data is mostly correct"
+                        "false": "load_data is mostly correct."
                     },
                     {
                         "id": "animaldata_reload_data",
-                        "criteria": "load_data reloading",
+                        "criteria": "Ignores already loaded data",
                         "alert": false,
                         "weight": 0.25,
                         "requires": ["animaldata_exists"],
-                        "false": "load_data should ignore attempts to reload an animal"
+                        "false": "load_data should ignore attempts to load an animal that has already been loaded."
                     },
                     {
                         "id": "animaldata_dictionary",
@@ -326,7 +326,7 @@
                         "alert": false,
                         "weight": 0.1,
                         "requires": ["animaldata_exists"],
-                        "false": "get_animal_names does return a list of names in the correct order"
+                        "false": "get_animal_names does return a list of names in the correct order."
                     },
                     {
                         "id": "animaldata_is_selected",
@@ -342,7 +342,7 @@
                         "alert": false,
                         "weight": 0.1,
                         "requires": ["animaldata_exists"],
-                        "false": "select does not work"
+                        "false": "select does not work."
                     },
                     {
                         "id": "animaldata_deselect",
@@ -350,7 +350,7 @@
                         "alert": false,
                         "weight": 0.1,
                         "requires": ["animaldata_exists"],
-                        "false": "deselect does not work"
+                        "false": "deselect does not work."
                     },
                     {
                         "id": "animaldata_get_ranges",
@@ -358,7 +358,7 @@
                         "alert": false,
                         "weight": 0.5,
                         "requires": ["animaldata_exists"],
-                        "false": "get_ranges does not calculate correct ranges for all selected animals"
+                        "false": "get_ranges does not calculate correct ranges for all selected animals."
                     },
                     {
                         "id": "animaldata_to_tabbed_string",
@@ -366,7 +366,7 @@
                         "alert": false,
                         "weight": 0.25,
                         "requires": ["animaldata_exists"],
-                        "false": "to_tabbed_string does not output the correctly formatted string"
+                        "false": "to_tabbed_string does not output the correctly formatted string."
                     }
                 ]
             },
