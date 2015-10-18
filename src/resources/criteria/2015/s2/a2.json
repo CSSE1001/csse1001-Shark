@@ -102,7 +102,7 @@
             {
                 "criteria": "SelectionBox",
                 "jump": ["class SelectionBox"],
-                "weight": 1,
+                "weight": 1.5,
                 "children": [
                     {
                         "id": "selectionbox_exists",
@@ -163,7 +163,8 @@
             },
             {
                 "criteria": "Plotter",
-                "weight": 2.75,
+                "jump": ["class Plotter"],
+                "weight": 3.25,
                 "children": [
                     {
                         "id": "plotter_exists",
