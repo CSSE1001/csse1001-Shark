@@ -1,0 +1,306 @@
+[
+    {
+        "criteria": "Code",
+        "weight": 10,
+        "children" : [
+            {
+                "criteria": "make_initial_state",
+                "weight": 1,
+                "jump" : ["def make_initial_state"],
+                "children" : [
+                    {
+                        "id" : "make_initial_state_return_value",
+                        "criteria" : "Returns String",
+                        "jump" : ["def make_initial_state", "return"],
+                        "weight" : 0.5,
+                        "false" : "The make_initial_state function must return a string (and not print it)."
+                    },
+                    {
+                        "id" : "make_initial_state_correct",
+                        "criteria" : "Correct Output",
+                        "jump" : ["def make_initial_state", "return"],
+                        "weight" : 0.5,
+                        "false" : "The make_initial_state function does not output the correct state."
+                    }
+                ]
+            },
+            {
+                "criteria": "make_position_string",
+                "weight": 1,
+                "jump" : ["def make_position_string"],
+                "children" : [
+                    {
+                        "id" : "make_position_string_return_value",
+                        "criteria" : "Returns String",
+                        "jump" : ["def make_position_string", "return"],
+                        "weight" : 0.5,
+                        "false" : "The make_position_string function must return a string (and not print it)."
+                    },
+                    {
+                        "id" : "make_position_string_correct",
+                        "criteria" : "Correct Output",
+                        "jump" : ["def make_position_string", "return"],
+                        "weight" : 0.5,
+                        "false" : "The make_position_string function does not output the correct string."
+                    }
+                ]
+            },
+            {
+                "criteria": "num_diffs",
+                "weight": 1,
+                "jump" : ["def num_diffs"],
+                "children" : [
+                    {
+                        "id" : "num_diffs_return_value",
+                        "criteria" : "Returns Int",
+                        "jump" : ["def num_diffs", "return"],
+                        "weight" : 0.5,
+                        "false" : "The num_diffs function must return an integer (and not print it)."
+                    },
+                    {
+                        "id" : "num_diffs_correct",
+                        "criteria" : "Correct Output",
+                        "jump" : ["def num_diffs", "return"],
+                        "weight" : 0.5,
+                        "false" : "The num_diffs function does not output the correct value."
+                    }
+                ]
+            },
+            {
+                "criteria": "position_of_blanks",
+                "weight": 1,
+                "jump" : ["def position_of_blanks"],
+                "children" : [
+                    {
+                        "id" : "position_of_blanks_return_value",
+                        "criteria" : "Returns Int",
+                        "jump" : ["def position_of_blanks", "return"],
+                        "weight" : 0.5,
+                        "false" : "The position_of_blanks function must return an integer (and not print it)."
+                    },
+                    {
+                        "id" : "position_of_blanks_correct",
+                        "criteria" : "Correct Output",
+                        "jump" : ["def position_of_blanks", "return"],
+                        "weight" : 0.5,
+                        "false" : "The position_of_blanks function does not output the correct value."
+                    }
+                ]
+            },
+            {
+                "criteria": "make_move",
+                "weight": 1,
+                "jump" : ["def make_move"],
+                "children" : [
+                    {
+                        "id" : "make_move_partial",
+                        "criteria" : "Correct Output",
+                        "jump" : ["def make_move", "return"],
+                        "weight" : 0.5,
+                        "false" : "The make_move function only works for some state/move combinations."
+                    },
+                    {
+                        "id" : "make_move_correct",
+                        "criteria" : "Correct Output",
+                        "jump" : ["def make_move", "return"],
+                        "weight" : 0.5,
+                        "false" : "The make_move function does not return the correct state."
+                    }
+                ]
+            },
+            {
+                "criteria": "show_current_state",
+                "weight": 1,
+                "jump" : ["def show_current_state"],
+                "children" : [
+                    {
+                        "id" : "show_current_state_data",
+                        "criteria" : "Correct Data",
+                        "jump" : ["def show_current_state", "print"],
+                        "weight" : 0.5,
+                        "false" : "The show_current_state function does not display the correct data."
+                    },
+                    {
+                        "id" : "show_current_state_formatting",
+                        "criteria" : "Correct Formatting",
+                        "jump" : ["def show_current_state", "return"],
+                        "weight" : 0.5,
+                        "false" : "The show_current_state function does not correctly format its output."
+                    },
+                    {
+                        "id" : "show_current_state_no_duplication",
+                        "criteria" : "Uses Other Functions",
+                        "jump" : ["def show_current_state", "make_position_string\\("],
+                        "weight" : 0,
+                        "false" : "The show_current_state function should call make_position_string & num_diffs, not duplicate their logic."
+                    },
+                    {
+                        "id" : "show_current_state_no_print",
+                        "criteria" : "Does Not Print",
+                        "jump" : ["def show_current_state"],
+                        "weight" : -0.5,
+                        "false" : "The show_current_state function must print."
+                    },
+                    {
+                        "id" : "show_current_state_no_print",
+                        "criteria" : "Returns",
+                        "jump" : ["def show_current_state"],
+                        "weight" : 0,
+                        "false" : "The show_current_state function does not need to return a value."
+                    }
+                ]
+            },
+            {
+                "criteria" : "interact",
+                "weight" : 3,
+                "children" : [
+                    {
+                        "id" : "interact_ask_supporters",
+                        "criteria" : "Asks for supporters",
+                        "weight" : 0.25,
+                        "false" : "The interact function must first prompt the user for the number of supporters."
+                    },
+                    {
+                        "id" : "interact_initial_state",
+                        "criteria" : "Displays initial state",
+                        "weight" : 0.25,
+                        "false" : "The interact function does not display the initial state properly."
+                    },
+                    {
+                        "id" : "interact_command_once",
+                        "criteria" : "One Command Prompt",
+                        "weight" : 0.25,
+                        "false" : "The interact function must prompt the user for a command."
+                    },
+                    {
+                        "id" : "interact_command_loop",
+                        "criteria" : "Repeated Command Prompts",
+                        "weight" : 0.25,
+                        "requires": ["interact_command_once"],
+                        "false" : "The interact function must repeatedly loop asking for a command."
+                    },
+                    {
+                        "id" : "interact_no_duplication",
+                        "criteria" : "Uses Other Functions",
+                        "weight" : 0.5,
+                        "false" : "The interact function must call make_initial_state & show_current_state where appropriate and not reimplement their logic."
+                    },
+                    {
+                        "id" : "interact_b_single",
+                        "criteria" : "Handles b",
+                        "weight" : 0.25,
+                        "false" : "The interact function does not handle the b command."
+                    },
+                    {
+                        "id" : "interact_b_repeated",
+                        "criteria" : "Handles repeated b",
+                        "weight" : 0.5,
+                        "require": ["interact_b_single"],
+                        "false" : "The interact function does not handle repeated successive b commands."
+                    },
+                    {
+                        "id" : "interact_q",
+                        "criteria" : "Handles q",
+                        "weight" : 0.25,
+                        "false" : "The interact function does not handle the q command."
+                    },
+                    {
+                        "id" : "interact_q_graceful",
+                        "criteria" : "Does not exit()/quit()",
+                        "weight" : 0,
+                        "false" : "The interact function should not call exit/quit but should simply break/return."
+                    },
+                    {
+                        "id" : "interact_perfect",
+                        "criteria" : "Implemented Perfectly",
+                        "weight" : 0.5
+                    },
+                    {
+                        "id": "interact_typos",
+                        "criteria": "Typos / wrong whitespace / extra text",
+                        "weight": 0,
+                        "true": "Your interact() output contains typographical errors, wrong whitespace, or extra text. Make sure to follow the assignment sheet exactly."
+                    },
+                    {
+                        "id": "interact_solved_puzzle",
+                        "criteria": "Exits on Solved Puzzle",
+                        "weight": 0,
+                        "true": "The user should be able to interact with the application after finding a solution, and should not be forced to quit."
+                    }
+                ]
+            },
+            {
+                "criteria" : "comments",
+                "weight" : 1,
+                "children" : [
+                    {
+                        "id" : "comments_description",
+                        "criteria" : "Have description for every function",
+                        "weight" : 0.5,
+                        "false" : "Some of the functions are missing descriptions. Every function should have a short description comment to let readers quickly know what it does."
+                    }, 
+                    {
+                        "id" : "comments_declaration",
+                        "criteria" : "Have type declaration for every function",
+                        "weight" : 0.5,
+                        "false" : "Some of the functions are missing type declarations. Every function should include the input and return types as a comment to let readers know what values can be expected as inputs and outputs."
+                    },
+                    {
+                        "id" : "comments_under_function",
+                        "criteria" : "Comments directly under the function name",
+                        "weight" : 0,
+                        "false" : "The docstrings aren’t in the right spot. Docstrings should go directly under the function name to support Pythons help method."
+                    },
+                    {
+                        "id" : "comments_line_length",
+                        "criteria" : "Line length < 80",
+                        "weight" : 0,
+                        "false" : "Line length should be less than 80 characters."
+                    }
+
+                ]
+            },
+            {
+                "criteria" : "general",
+                "weight" : -2.5,
+                "children" : [
+                    {
+                        "id" : "general_function_name",
+                        "criteria" : "Functions are misnamed",
+                        "weight" : -0.5,
+                        "true" : "Make sure your function names exactly match the assignment sheet."
+                    },
+                    {
+                        "id" : "general_syntax_minor",
+                        "criteria" : "Single Syntax Error",
+                        "weight" : -1,
+                        "true" : "Your code contains a syntax error."
+                    },
+                    {
+                        "id" : "general_syntax_major",
+                        "criteria" : "Multiple Syntax Errors",
+                        "weight" : -2,
+                        "true" : "Your code contains multiple syntax errors."
+                    },
+                    {
+                        "id": "general_fns_not_global",
+                        "criteria": "Functions not Global",
+                        "weight": -1,
+                        "true": "Make sure your functions are defined in the appropriate place."
+                    },
+                    {
+                        "id": "general_globals",
+                        "criteria": "Globals",
+                        "weight": -1,
+                        "true": "Make sure your code does not contain global variables or code outside interact (aside from function definitions)."
+                    },
+                    {
+                        "id" : "general_hardcoding",
+                        "criteria" : "Hardcoding",
+                        "weight": -1
+                    }
+                ]
+            }
+        ]
+    }
+]
