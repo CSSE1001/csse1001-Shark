@@ -94,7 +94,7 @@
                 "children" : [
                     {
                         "id" : "make_move_partial",
-                        "criteria" : "Correct Output",
+                        "criteria" : "Partially Correct",
                         "jump" : ["def make_move", "return"],
                         "weight" : 0.5,
                         "false" : "The make_move function only works for some state/move combinations."
@@ -211,9 +211,10 @@
                         "false" : "The interact function should not call exit/quit but should simply break/return."
                     },
                     {
-                        "id" : "interact_perfect",
-                        "criteria" : "Implemented Perfectly",
-                        "weight" : 0.5
+                        "id": "interact_solved_puzzle",
+                        "criteria": "Exits on Solved Puzzle",
+                        "weight": 0,
+                        "true": "The user should be able to interact with the application after finding a solution, and should not be forced to quit."
                     },
                     {
                         "id": "interact_typos",
@@ -222,10 +223,9 @@
                         "true": "Your interact() output contains typographical errors, wrong whitespace, or extra text. Make sure to follow the assignment sheet exactly."
                     },
                     {
-                        "id": "interact_solved_puzzle",
-                        "criteria": "Exits on Solved Puzzle",
-                        "weight": 0,
-                        "true": "The user should be able to interact with the application after finding a solution, and should not be forced to quit."
+                        "id" : "interact_perfect",
+                        "criteria" : "Implemented Perfectly",
+                        "weight" : 0.5
                     }
                 ]
             },
@@ -235,19 +235,19 @@
                 "children" : [
                     {
                         "id" : "comments_description",
-                        "criteria" : "Have description for every function",
+                        "criteria" : "Description",
                         "weight" : 0.5,
                         "false" : "Some of the functions are missing descriptions. Every function should have a short description comment to let readers quickly know what it does."
                     }, 
                     {
                         "id" : "comments_declaration",
-                        "criteria" : "Have type declaration for every function",
+                        "criteria" : "Argument/Return Types",
                         "weight" : 0.5,
                         "false" : "Some of the functions are missing type declarations. Every function should include the input and return types as a comment to let readers know what values can be expected as inputs and outputs."
                     },
                     {
                         "id" : "comments_under_function",
-                        "criteria" : "Comments directly under the function name",
+                        "criteria" : "Properly Placed",
                         "weight" : 0,
                         "false" : "The docstrings aren’t in the right spot. Docstrings should go directly under the function name to support Pythons help method."
                     },
