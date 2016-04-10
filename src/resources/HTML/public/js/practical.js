@@ -1,5 +1,5 @@
 // Run scripts
-var URL = "http://localhost:3000/python";
+var URL = "http://localhost:3222/python";
 function run() {
     var code = editor.getSession().getValue();
 

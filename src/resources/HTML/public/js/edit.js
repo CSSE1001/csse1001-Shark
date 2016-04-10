@@ -192,6 +192,73 @@ function chunkString(s, len) {
     return output;
 }
 
+
+function indentString(string) {
+    var out = "";
+    var lines = string.split("\n")
+    for(var n = 0; n < lines.length; n++) {
+        out += "\t" + lines[n] + "\n";
+    }
+    return out;
+}
+
+function prettyLine(start, end, size) {
+    var output = start;
+    if (end != "") {
+        var i;
+        for (i = start.length; i < size - end.length; i++) {
+            output += ".";
+        }
+        output += end;
+    }
+    return output;
+}
+
+// Version 1.1 Comment engine
+function computeComments(children) {
+    var output = "";
+    for (var i = 0; i < children.length; i++) {
+        var child = children[i];
+        var subchildren = child['children'];
+        if (!masters_student && child['masters'] == true) {
+            continue;
+        }
+        if (typeof subchildren !== 'undefined') {
+
+            //2
+
+
+
+            var comments = computeComments(subchildren);
+            if (comments != "" || child["weight"] > 0) { // my god someone please rewrite this
+                var mark = "";
+                if (comments == "") {
+                    mark = "correct";
+                }
+                output += prettyLine(child["criteria"], mark, 38) + "\n";
+            }
+            if (comments != "") {
+                output += indentString(comments);
+            }
+        } else {
+            var id = childIdentifier(child);
+            var textarea = document.getElementById(id + "_textarea");
+            var value = textarea.value.trim();
+            if (value != "") {
+
+                // Split value into 80 line segments
+                var strings = chunkString(value, 70);
+                var display = strings.join("\n  ");
+                output += "• " + display + "\n";
+            }
+        }
+
+    }
+    return output;
+}
+
+// Version 1.0 Comment engine
+/*
 function computeComments(children) {
     var output = "";
     for (var i = 0; i < children.length; i++) {
@@ -218,6 +285,7 @@ function computeComments(children) {
     }
     return output;
 }
+*/
 
 function jumpTo(regex) {
     var start = 0;
@@ -425,7 +493,7 @@ function save() {
         success: function(data){
             if (data['success'] == true) {
                 document.getElementById("save").innerHTML = "<span class='glyphicon glyphicon-save'></span> Saved</a>";
-                window.location = "/" + (interview ? "?interview" : "");
+                window.location = "/" + (theme ? "?theme=" + theme : "") + (interview ? "&interview" : "");
             }
         },
         dataType: "json"

@@ -11,7 +11,7 @@ path = require("path");
 // General
 //---------------------------
 // Express
-config.port = 3000;
+config.port = 3222; // todo: remove hardcoding in src/resources/HTML/public/js/practical.js:2
 config.plugins = path.join(process.cwd(), './src/plugins/');
 
 // Shark
@@ -28,7 +28,7 @@ config.markingDirectory  = config.pythonDirectory + "/marking";
 config.ejsPath           = "./src/resources/HTML/ejs";
 config.criteriaPath      = "./src/resources/criteria_2016s1a1.json";
 config.publicPath        = "./src/resources/HTML/public";
-config.supportPath       = "./src/resources/Support";
+config.supportPath       = "./src/resources/support";
 
 // Python execution
 config.pythonPaths = [

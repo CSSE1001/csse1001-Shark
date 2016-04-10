@@ -24,7 +24,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-fs = require('fs');
+fs       = require('fs');
 passport = require('passport');
 
 /**
@@ -37,8 +37,14 @@ module.exports = function(server, app, callback) {
 
     // Load the criteria file
     fs.readFile(config.criteriaPath, 'utf-8', function (err, json_data) {
-        var criteria = JSON.parse(json_data);
-
+    	try {
+       		var criteria = JSON.parse(json_data);
+    	} catch(err) {
+    		console.error("Error: Shark was unable to process the criteria file");
+    		console.error(err);
+    		process.exit();
+    	}
+    	
         // Setup the scripts express page
         app.route('/import').get(function (req, res, next) {
             if (!req.user && !config.skipAuth) {

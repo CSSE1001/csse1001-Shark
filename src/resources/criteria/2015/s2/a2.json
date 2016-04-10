@@ -1,0 +1,479 @@
+[
+    {
+        "criteria": "General",
+        "weight": 0,
+        "children": [
+            {
+                "id" : "general_hardcoding",
+                "criteria": "Hard coding (e.g. filename)",
+                "weight": -1,
+                "alert": true,
+                "jump": ["\"END TEST\"", "(bandicoot|slow loris|echidna|poodle|lemur)"],
+                "true": "Your code has hardcoded values."
+            },
+            {
+                "id" : "general_globals",
+                "criteria": "Globals",
+                "weight": -1,
+                "true": "Your code has global variables."
+            },
+            {
+                "id": "general_misnamed",
+                "criteria": "Misnamed class/function",
+                "weight": -0.5,
+                "alert": false,
+                "true": "<...> was misnamed as <...>"
+            },
+            {
+                "id": "general_exceptions",
+                "criteria": "Unhandled exceptions",
+                "weight": -1,
+                "alert": false,
+                "true": "Unhandled exceptions occur when running your code."
+            },
+            {
+                "id": "general_syntax_errors_a",
+                "criteria": "Syntax errors (A)",
+                "weight": -0.5,
+                "alert": false,
+                "true": "Your code has syntax errors."
+            },
+            {
+                "id": "general_syntax_errors_b",
+                "criteria": "Syntax errors (B)",
+                "weight": -0.5,
+                "alert": false
+            },
+            {
+                "id": "general_syntax_errors_c",
+                "criteria": "Syntax errors (C)",
+                "weight": -1,
+                "alert": false
+            }
+        ]
+    },
+    {
+        "criteria": "GUI",
+        "weight": 6,
+        "children": [
+            {
+                "criteria": "Layout",
+                "weight": 0.5,
+                "children": [
+                    {
+                        "id": "layout_position",
+                        "criteria": "Widgets are positioned mostly correctly.",
+                        "weight": 0.5,
+                        "alert": false,
+                        "false": "Widgets are not positioned correctly."
+                    }
+                ]
+            },
+            {
+                "criteria": "Open File",
+                "weight": 0.75,
+                "children": [
+                    {
+                        "id": "open_exists",
+                        "criteria": "File->Open shows dialog",
+                        "weight": 0.25,
+                        "alert": false,
+                        "requires": ["open_exists"],
+                        "false": "File->Open does not open a filedialog."
+                    },
+                    {
+                        "id": "open_bad",
+                        "criteria": "Bad files",
+                        "weight": 0.5,
+                        "alert": false,
+                        "requires": ["open_exists"],
+                        "false": "Invalid files must be handled by showing an error box."
+                    },
+                    {
+                        "id": "open_menu",
+                        "criteria": "Not proper menu",
+                        "weight": 0,
+                        "alert": false,
+                        "requires": ["open_exists"],
+                        "false": "File->Open should be implemented using a Menu widget. [no marks deducted]"
+                    }
+                ]
+            },
+            {
+                "criteria": "SelectionBox",
+                "jump": ["class SelectionBox"],
+                "weight": 1.5,
+                "children": [
+                    {
+                        "id": "selectionbox_exists",
+                        "criteria": "SelectionBox exists",
+                        "weight": 0,
+                        "alert": false,
+                        "false": "SelectionBox is not implemented."
+                    },
+                    {
+                        "id": "selectionbox_formatting",
+                        "criteria": "Correct formatting",
+                        "weight": 0.25,
+                        "alert": false,
+                        "requires": ["selectionbox_exists"],
+                        "false": "SelectionBox items must be formatted as per to_tabbed_string."
+                    },
+                    {
+                        "id": "selectionbox_colouring",
+                        "criteria": "Correct colouring",
+                        "weight": 0.25,
+                        "alert": false,
+                        "requires": ["selectionbox_exists"],
+                        "false": "SelectionBox items must be coloured appropriately."
+                    },
+                    {
+                        "id": "selectionbox_order",
+                        "criteria": "Correct order",
+                        "weight": 0,
+                        "alert": false,
+                        "requires": ["selectionbox_exists"],
+                        "false": "The order of SelectionBox items should be preserved on Select/Deselect and on loading new data."
+                    },
+                    {
+                        "id": "selectionbox_select",
+                        "criteria": "Select/Deselect works",
+                        "weight": 0.25,
+                        "alert": false,
+                        "requires": ["selectionbox_exists"],
+                        "false": "Items should be selected/deselected when the corresponding button(s) is clicked."
+                    },
+                    {
+                        "id": "selectionbox_select_none",
+                        "criteria": "Select/Deselect none",
+                        "weight": 0.25,
+                        "alert": false,
+                        "requires": ["selectionbox_exists"],
+                        "false": "Clicking Select/Deselect with no animal highlighted should display an appropriate message box."
+                    },
+                    {
+                        "id": "selectionbox_resize",
+                        "criteria": "SelectionBox resizing",
+                        "weight": 0.5,
+                        "alert": false,
+                        "requires": ["selectionbox_exists"],
+                        "false": "SelectionBox should not resize horizontally when window is resized."
+                    }
+                ]
+            },
+            {
+                "criteria": "Plotter",
+                "jump": ["class Plotter"],
+                "weight": 3.25,
+                "children": [
+                    {
+                        "id": "plotter_exists",
+                        "criteria": "Plotter exists",
+                        "weight": 0,
+                        "alert": false,
+                        "false": ""
+                    },
+                    {
+                        "id": "plotter_plots_single",
+                        "criteria": "Plots single animal",
+                        "weight": 0.5,
+                        "alert": false,
+                        "requires": ["plotter_exists"],
+                        "false": "Plotter does not plot any animals."
+                    },
+                    {
+                        "id": "plotter_plots_loaded",
+                        "criteria": "Plots loaded animals and scales",
+                        "weight": 0.25,
+                        "alert": false,
+                        "requires": ["plotter_exists"],
+                        "false": "Plotter should plot animals loaded by user and redraw existing data points."
+                    },
+                    {
+                        "id": "plotter_plots_selected",
+                        "criteria": "Plots only selected animals",
+                        "weight": 0.5,
+                        "alert": false,
+                        "requires": ["plotter_plots_loaded"],
+                        "false": "Plotter does not plot only selected animals."
+                    },
+                    {
+                        "id": "plotter_plots_point",
+                        "criteria": "Point drawn correctly",
+                        "weight": 0.25,
+                        "alert": false,
+                        "requires": ["plotter_plots_single"],
+                        "false": "Plotted points should be 5x5 rectangles with correct colour."
+                    },
+                    {
+                        "id": "plotter_resize",
+                        "criteria": "Plotter resizing",
+                        "weight": 0.5,
+                        "alert": false,
+                        "requires": ["plotter_plots_single"],
+                        "false": "Plotter does not resize appropriately when window is resized."
+                    },
+                    {
+                        "id": "plotter_crosshairs",
+                        "criteria": "Crosshairs move with mouse",
+                        "weight": 0.5,
+                        "alert": false,
+                        "requires": ["plotter_exists"],
+                        "false": "Crosshairs are not drawn on the Plotter when the mouse is moved."
+                    },
+                    {
+                        "id": "plotter_crosshairs_offscreen",
+                        "criteria": "Crosshairs removed",
+                        "weight": 0.25,
+                        "alert": false,
+                        "requires": ["plotter_crosshairs"],
+                        "false": "Crosshairs are not removed when the mouse is moved off the Plotter."
+                    },
+                    {
+                        "id": "plotter_crosshairs_label",
+                        "criteria": "Label updated",
+                        "weight": 0.5,
+                        "alert": false,
+                        "requires": ["plotter_crosshairs"],
+                        "false": "Moving the mouse over the Plotter updates the info label correctly."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "criteria": "Code",
+        "weight": 4,
+        "children": [
+            {
+                "criteria" : "Commenting",
+                "weight" : 1,
+                "jump" : ["def *", "\"\"\""],
+                "children" : [
+                    {
+                        "id" : "comment",
+                        "criteria" : "Most functions have comments",
+                        "weight" : 0.5,
+                        "alert" : false,
+                        "jump" : ["def *", "\"\"\""],
+                        "false" : "Docstrings are missing."
+                    },
+                    {
+                        "id" : "comment_types",
+                        "criteria" : "<indent>Most docstrings have correct types",
+                        "weight" : 0.5,
+                        "alert" : false,
+                        "jump" : ["def *", "\"\"\"", "->"],
+                        "requires" : ["comment"],
+                        "false" : "Docstrings are missing argument/return types."
+                    },
+                    {
+                        "id" : "comment_description",
+                        "criteria" : "<indent>Most docstrings have proper description",
+                        "weight" : 0,
+                        "alert" : false,
+                        "requires" : ["comment"],
+                        "false" : "Docstrings should describe what the function does, not how it is implemented. [no marks deducted]"
+                    }
+                ]
+            },
+            {
+                "criteria": "AnimalData",
+                "weight": 2,
+                "jump": ["class AnimalData"],
+                "children": [
+                    {
+                        "id": "animaldata_exists",
+                        "criteria": "AnimalData exists",
+                        "alert": false,
+                        "weight": 0,
+                        "false": "Does not exist."
+                    },
+                    {
+                        "id": "animaldata_load_data",
+                        "criteria": "load_data",
+                        "alert": false,
+                        "weight": 0.25,
+                        "requires": ["animaldata_exists"],
+                        "false": "load_data is mostly correct."
+                    },
+                    {
+                        "id": "animaldata_reload_data",
+                        "criteria": "Ignores already loaded data",
+                        "alert": false,
+                        "weight": 0.25,
+                        "requires": ["animaldata_exists"],
+                        "false": "load_data should ignore attempts to load an animal that has already been loaded."
+                    },
+                    {
+                        "id": "animaldata_dictionary",
+                        "criteria": "Uses dictionary",
+                        "alert": false,
+                        "weight": 0.25,
+                        "requires": ["animaldata_exists"],
+                        "false": "Data should be stored using a dictionary."
+                    },
+                    {
+                        "id": "animaldata_get_animal",
+                        "criteria": "get_animal",
+                        "alert": false,
+                        "weight": 0.1,
+                        "requires": ["animaldata_exists"],
+                        "false": "get_animal does not work"
+                    },
+                    {
+                        "id": "animaldata_get_animal_names",
+                        "criteria": "get_animal_names",
+                        "alert": false,
+                        "weight": 0.1,
+                        "requires": ["animaldata_exists"],
+                        "false": "get_animal_names does return a list of names in the correct order."
+                    },
+                    {
+                        "id": "animaldata_is_selected",
+                        "criteria": "is_selected",
+                        "alert": false,
+                        "weight": 0.1,
+                        "requires": ["animaldata_exists"],
+                        "false": "is_selected does not work"
+                    },
+                    {
+                        "id": "animaldata_select",
+                        "criteria": "select",
+                        "alert": false,
+                        "weight": 0.1,
+                        "requires": ["animaldata_exists"],
+                        "false": "select does not work."
+                    },
+                    {
+                        "id": "animaldata_deselect",
+                        "criteria": "deselect",
+                        "alert": false,
+                        "weight": 0.1,
+                        "requires": ["animaldata_exists"],
+                        "false": "deselect does not work."
+                    },
+                    {
+                        "id": "animaldata_get_ranges",
+                        "criteria": "get_ranges",
+                        "alert": false,
+                        "weight": 0.5,
+                        "requires": ["animaldata_exists"],
+                        "false": "get_ranges does not calculate correct ranges for all selected animals."
+                    },
+                    {
+                        "id": "animaldata_to_tabbed_string",
+                        "criteria": "to_tabbed_string",
+                        "alert": false,
+                        "weight": 0.25,
+                        "requires": ["animaldata_exists"],
+                        "false": "to_tabbed_string does not output the correctly formatted string."
+                    }
+                ]
+            },
+            {
+                "criteria": "Modularity",
+                "weight": 1,
+                "children": [
+                    {
+                        "id" : "mod_inheritance_plotter",
+                        "criteria" : "Plotter properly inherits from Canvas",
+                        "weight" : 0.25,
+                        "alert" : false,
+                        "jump": ["class Plotter\\(tk.Canvas\\)"],
+                        "false" : "Plotter should inherit from Canvas. Canvas should not be directly instantiated."
+                    },
+                    {
+                        "id" : "mod_inheritance_selectionbox",
+                        "criteria" : "SelectionBox properly inherits from Listbox",
+                        "jump": ["class SelectionBox\\(tk.Listbox\\)"],
+                        "weight" : 0.25,
+                        "alert" : false,
+                        "false" : "SelectionBox should inherit from Listbox. Listbox should not be directly instantiated."
+                    },
+                    {
+                        "id" : "mod_one_animaldata",
+                        "criteria": "Single AnimalData instance",
+                        "weight": 0.25,
+                        "alert": false,
+                        "jump": ["AnimalData\\(\\)"],
+                        "false": "There only needs to be a single isntance of AnimalData that is shared between AnimalDataPlotApp/SelectionBox/Plotter."
+                    },
+                    {
+                        "id" : "mod_reasonable",
+                        "criteria" : "Reasonable modularity",
+                        "weight" : 0.25,
+                        "alert" : false,
+                        "false" : "Plotter/SelectionBox classes should contain reasonable functionality aside from __init__, i.e. some form of plot function."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "criteria": "Masters",
+        "weight": 3,
+        "masters": true,
+        "children": [
+            {
+                "id" : "summarywindow_exists",
+                "criteria" : "SummaryWindow exists",
+                "weight": 0,
+                "alert" : false,
+                "jump" : ["class SummaryWindow"],
+                "false" : "Does not exist."
+            },
+            {
+                "id" : "summarywindow_inherits",
+                "criteria" : "SummaryWindow inherits from Toplevel",
+                "weight": 0.5,
+                "alert" : false,
+                "jump" : ["class SummaryWindow\\(tk.Toplevel\\)"],
+                "false" : "SummaryWindow should inherit from tk.Toplevel."
+            },
+            {
+                "id" : "summarywindow_layout",
+                "criteria" : "Has reasonable layout",
+                "weight": 0.5,
+                "alert" : false,
+                "jump" : ["class SummaryWindow\\(tk.Toplevel\\)"],
+                "false" : "SummaryWindow should be laid out reasonably according to the video specification."
+            },
+            {
+                "id" : "summarywindow_button_twice",
+                "criteria" : "Summary button twice",
+                "weight": 0.5,
+                "alert" : false,
+                "false" : "Clicking the Summary button a second time should not open another SummaryWindow."
+            },
+            {
+                "id" : "summarywindow_correct",
+                "criteria" : "Displays correct statistics for selected animal",
+                "weight": 1,
+                "alert" : false,
+                "false" : "SummaryWindow does not display the correct statistics."
+            },
+            {
+                "id" : "summarywindow_no_selection",
+                "criteria" : "Handles selection change",
+                "weight": 0.5,
+                "alert" : false,
+                "false" : "SummaryWindow should update its information if the user selects a different item in the SelectionBox."
+            },
+            {
+                "id": "summarywindow_non_modal",
+                "criteria": "Non-modal",
+                "weight": 0,
+                "alert": false,
+                "false": "SummaryWindow should not prevent the user from interacting with the rest of the application while it is open. [no marks deducted]"
+            },
+            {
+                "id": "summarywindow_closes",
+                "criteria": "Doesn't close",
+                "weight": -1,
+                "alert": false,
+                "true": "SummaryWindow must be able to be closed."
+            }
+        ]
+    }
+]

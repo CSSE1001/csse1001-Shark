@@ -1,6 +1,7 @@
 <html>
 <%
 var interview = (typeof global_query['interview'] !== 'undefined');
+var theme     = (typeof global_query['theme'] !== 'undefined') ? global_query['theme'] : "day";
 %>
 <head>
     <meta charset="utf-8">
@@ -8,11 +9,13 @@ var interview = (typeof global_query['interview'] !== 'undefined');
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Editing Script</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.0/css/bootstrap-toggle.min.css" rel="stylesheet">
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css">
-    <link rel="stylesheet" href="css/mark.css">
+    <link rel="stylesheet" href="css/mark-day.css">
+    <link rel="stylesheet" href="css/mark-<%=theme%>.css">
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -144,6 +147,19 @@ function childIdentifier(child) {
 // Masters student?
 var script_masters = script_source.indexOf("##### CSSE7030 #####") > -1;
 
+// Helper function
+function jumpExists(jump) {
+    var search = script_source;
+    for (var i = 0; i < jump.length; i++) {
+        var match = new RegExp(jump[i]).exec(search);
+        if (match == null) {
+            return false;
+        }
+        search = search.slice(match.index);
+    }
+    return true;
+}
+
 // Generate the criteria
 function generateChildren(children, savefile, level) {
     if (typeof children === 'undefined') return;
@@ -161,6 +177,7 @@ function generateChildren(children, savefile, level) {
         }
         name = name.replace(/<indent>/g, '');
 
+        var alert       = child['alert'];
         var weight      = child['weight'];
         var subchildren = child['children'];
         var jump        = child['jump'];
@@ -173,9 +190,16 @@ function generateChildren(children, savefile, level) {
         }
 
         // Convert the jump into a usable form
+        var color = "";
         if (typeof jump !== 'undefined') {
+            var jump_exists = jumpExists(jump);
+            if (typeof alert !== 'undefined') {
+                color = ((alert && jump_exists) || (!alert && !jump_exists)) ? "color:red;" : "color:green;";
+            }
+
             jump = JSON.stringify(jump);
         }
+
 
         // Does this child rely on others being ticked?
         if (typeof child['requires'] !== 'undefined' && child['requires'].length > 0) {
@@ -205,9 +229,9 @@ function generateChildren(children, savefile, level) {
                     }
                     %>
                 </td>
-                <%if (typeof jump !== 'undefined') {%>
-                <td class="cell_label" style="padding-left:<%=margin%>"><a href="#" onClick='jumpTo(<%-jump%>)'><%-name%></a></td>
-                <%} else {%>
+                <% if (typeof jump !== 'undefined') {%>
+                <td class="cell_label" style="padding-left:<%=margin%>"><a style="<%=color%>" href="#" onClick='jumpTo(<%-jump%>)'><%-name%></a></td>
+                <% } else {%>
                 <td class="cell_label" style="padding-left:<%=margin%>"><%-name%></td>
                 <%}%>
                 <td><%=weight%></td>
@@ -246,6 +270,7 @@ generateChildren(global_criteria, criteria_save, 0);
 </div>
 
 <script type="text/javascript">
+var theme = "<%-theme%>";
 var interview = <%- interview %>;
 var criteria = <%- json %>;
 var activity = <%- activity %>;
@@ -257,12 +282,12 @@ var prac = "<%=global_query.prac%>";
 <script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
 <script>
     var editor = ace.edit("editor");
-    editor.setTheme("ace/theme/xcode");
+    editor.setTheme("ace/theme/xcode-<%=theme%>");
     editor.getSession().setMode("ace/mode/python");
 
     // Extra code for the python execution engine
     var output = ace.edit("output");
-    output.setTheme("ace/theme/xcode");
+    output.setTheme("ace/theme/xcode-<%=theme%>");
     output.getSession().setMode("ace/mode/python");
     output.setShowPrintMargin(false);
     output.setBehavioursEnabled(false);

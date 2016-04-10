@@ -1,0 +1,177 @@
+.main-brand {
+    color: #a9b7c6;
+}
+
+.modal-header {
+    border-bottom: 1px solid #282828
+}
+.modal-footer {
+    border-top: 1px solid #282828
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #a9b7c6;
+}
+.navbar-default:hover .navbar-nav>li>a:hover {
+    color: white;
+}
+
+
+.navbar-default {
+    background-color: #333;
+    border-bottom: solid 1 #282828;
+}
+
+.root_head {
+    background-color: #505055;
+    font-size: 13px;
+    font-family: Avenir Next;
+}
+
+textarea {
+    color: #a9b7c6;
+    background-color: #667;
+}
+
+.btn-danger, btn:hover, .btn-danger:focus, .btn-danger:active, .btn-danger.active,.open .dropdown-toggle.btn-danger {
+    color: #a9b7c6;
+    background-color: #664444;
+    border: solid 1 #553333;
+}
+
+.btn-danger:hover {
+   color: #a9b7c6;
+   background-color: #775555;
+   border-color: #553333;
+}
+
+.btn-default, btn:hover, .btn-default:focus, .btn-default:active, .btn-default.active,.open .dropdown-toggle.btn-default {
+    color: #a9b7c6;
+    background-color: #446644;
+    border-color: #335533;
+}
+
+.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active,
+.open .dropdown-toggle.btn-default {
+   color: #a9b7c6;
+   background-color: #557755;
+   border-color: #335533;
+}
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+    cursor: not-allowed;
+    background-color: #525252;
+    border: solid 1 #666;
+    color: #a9b7c6;
+}
+
+.form-control, .form-control {
+    cursor: not-allowed;
+    background-color: #667;
+    border: solid 1 #444;
+    color: #a9b7c6;
+}
+
+.root_header {
+    background-color: #505055;
+    font-size: 13px;
+    font-family: Avenir Next;
+    padding: 30px 20px 20px;
+    margin-bottom: 5px;
+}
+
+.row_cat0 {
+    background-color: #505055;
+    font-size: 15px;
+    font-family: Avenir Next;
+    height: 80px;
+    border-top: solid 1 #666;
+    text-align: center;
+}
+
+.row_cat1 {
+    background-color: #404045;
+    font-size: 15px;
+    font-family: Avenir Next;
+    height: 50px;
+}
+
+
+.table>tbody>.row_cat0>td {
+    border-top: none;
+    color: #a9b7c6;
+}
+.table>tbody>.row_cat1>td {
+    border-top: none;
+    color: #a9b7c6;
+}
+.table>tbody>.row_cat2:nth-child(even)>td, .table>tbody>.row_cat3:nth-child(even)>td {
+    background-color: #303030;
+    border-top: solid 1 #353535;
+    color: #a9b7c6;
+}
+.table>tbody>.row_cat2:nth-child(odd)>td, .table>tbody>.row_cat3:nth-child(odd)>td {
+    background-color: #323232;
+    border-top: solid 1 #353535;
+    color: #a9b7c6;
+}
+
+body {
+    background-color: #333;
+    color: #a9b7c6;
+}
+
+h5, h4, h3, h2 {
+    color: #a9b7c6;
+}
+.cell_label {
+    color: #a9b7c6;
+}
+
+a {
+    color: #6897bb;
+}
+a:hover {
+    color: #aa6020;
+}
+.table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td
+{
+    background-color: #444444;
+    border: 1px solid #333333
+}
+.table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th {
+    background-color: #505050;
+    border: 1px solid #333333
+}
+.panel, .modal-content {
+    background-color: #333;
+    border: none;
+}
+.panel-default>.panel-heading{
+    background-color: #505050;
+    border: solid 1 #303030;
+}
+.table-bordered {
+    border: none;
+}
+.table>thead>tr>.danger, .table>tbody>tr>.danger, .table>tfoot>tr>.danger, .table>thead>.danger>td, .table>tbody>.danger>td{
+    background-color: #553333
+}
+.table-hover>tbody>tr>.danger:hover, .table-hover>tbody>.danger:hover>td, .table-hover>tbody>.danger:hover>th {
+    background-color: #664444
+}
+.table>thead>tr>.warning, .table>tbody>tr>.warning, .table>tfoot>tr>.warning, .table>thead>.warning>td, .table>tbody>.warning>td {
+    background-color: #555533
+}
+.table-hover>tbody>tr>.warning:hover, .table-hover>tbody>.warning:hover>td, .table-hover>tbody>.warning:hover>th {
+    background-color: #666644
+}
+.table>thead>tr>.success, .table>tbody>tr>.success, .table>tfoot>tr>.success, .table>thead>.success>td, .table>tbody>.success>td{
+    background-color: #335533
+}
+.table-hover>tbody>tr>.success:hover, .table-hover>tbody>.success:hover>td, .table-hover>tbody>.success:hover>th {
+    background-color: #446644
+}
+.panel-title {
+    color: #a9b7c6;
+}

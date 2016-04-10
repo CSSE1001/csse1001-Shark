@@ -1,4 +1,4 @@
-define("ace/theme/xcode",["require","exports","module","ace/lib/dom"], function(require, exports, module) {
+define("ace/theme/xcode-day",["require","exports","module","ace/lib/dom"], function(require, exports, module) {
 
 exports.isDark = false;
 exports.cssClass = "ace-xcode";

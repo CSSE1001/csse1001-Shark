@@ -42,7 +42,7 @@ module.exports = function(server, app, callback) {
                                         if (err) return next(err);
 
                                         // Source modifier [remove inline comments]
-                                        source = source.replace(/\/\/.*/m, "").replace(/\/\*.*?\*\//m, "");
+                                        source = source.replace(/#\/\/.*/m, "").replace(/\/\*.*?\*\//m, "");
                                         pracZip.file(script, source);
 
                                         // Add the next script

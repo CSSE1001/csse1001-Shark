@@ -91,14 +91,15 @@ var PythonHighlightRules = function() {
     var stringEscape =  "\\\\(x[0-9A-Fa-f]{2}|[0-7]{3}|[\\\\abfnrtv'\"]|U[0-9A-Fa-f]{8}|u[0-9A-Fa-f]{4})";
 
     this.$rules = {
-        "start" : [ {
+        "start" : [
+        {
+            token : "marking",
+            regex : "#\\/\\/",
+            next : "line_marking"
+        },
+        {
             token : "comment",
             regex : "#.*$"
-        },
-		{
-            token : "marking",
-            regex : "\\/\\/",
-            next : "line_marking"
         },
         DocCommentHighlightRules.getStartRule("doc-start"),
         {
