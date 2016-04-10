@@ -304,7 +304,8 @@ function updateGeneral(final, meeting_mark, row, jump) {
 
     // Is this a masters student? Apply the formula
     if (masters_student) {
-        codeMark = (codeMark / 13.0) * 10.0;
+        // todo: abstract master's logic
+        //codeMark = (codeMark / 13.0) * 10.0;
     }
     codeMark = Math.ceil(codeMark);
     var output = "";

@@ -190,7 +190,9 @@ for (var i = 0; i < global_prac.length; i++) {
         var masters = scripts[s].masters;
         var modified = scripts[s].modified;
         var mark = scripts[s].mark;
-		var code = masters ? Math.ceil((mark / 13) * 10) : Math.ceil(mark);
+        // todo: abstract master's logic
+		//var code = masters ? Math.ceil((mark / 13) * 10) : Math.ceil(mark);
+		var code = Math.ceil(mark);
         var tests = scripts[s].testsRun;
         var passed = scripts[s].testsPassed;
         var time = scripts[s].time;
@@ -272,8 +274,11 @@ for (var i = 0; i < global_prac.length; i++) {
 
 				if (!modified) continue;
 
+                // todo: abstract master's logic
 				// this formula really needs to be in a function...
-				var code = masters ? Math.ceil((mark / 13) * 10) : Math.ceil(mark); 
+				// yes it does ^^
+				//var code = masters ? Math.ceil((mark / 13) * 10) : Math.ceil(mark);
+				var code = Math.ceil(mark); 
 				data[code]++;
 			}
 			
