@@ -139,37 +139,41 @@
                         "criteria" : "Does Not Print",
                         "jump" : ["def show_current_state"],
                         "weight" : -0.5,
-                        "false" : "The show_current_state function must print."
+                        "true" : "The show_current_state function must print."
                     },
                     {
-                        "id" : "show_current_state_no_print",
+                        "id" : "show_current_state_returns",
                         "criteria" : "Returns",
                         "jump" : ["def show_current_state"],
                         "weight" : 0,
-                        "false" : "The show_current_state function does not need to return a value."
+                        "true" : "The show_current_state function does not need to return a value."
                     }
                 ]
             },
             {
                 "criteria" : "interact",
                 "weight" : 3,
+                "jump" : ["def interact"],
                 "children" : [
                     {
                         "id" : "interact_ask_supporters",
                         "criteria" : "Asks for supporters",
                         "weight" : 0.25,
+                        "jump" : ["input\\("],
                         "false" : "The interact function must first prompt the user for the number of supporters."
                     },
                     {
                         "id" : "interact_initial_state",
                         "criteria" : "Displays initial state",
                         "weight" : 0.25,
+                        "jump" : ["def interact", "make_initial_state\\("],
                         "false" : "The interact function does not display the initial state properly."
                     },
                     {
                         "id" : "interact_command_once",
                         "criteria" : "One Command Prompt",
                         "weight" : 0.25,
+                        "jump" : ["def interact", "input\\(", "input\\("],
                         "false" : "The interact function must prompt the user for a command."
                     },
                     {
@@ -177,12 +181,14 @@
                         "criteria" : "Repeated Command Prompts",
                         "weight" : 0.25,
                         "requires": ["interact_command_once"],
+                        "jump" : ["def interact", "while"],
                         "false" : "The interact function must repeatedly loop asking for a command."
                     },
                     {
                         "id" : "interact_no_duplication",
                         "criteria" : "Uses Other Functions",
                         "weight" : 0.5,
+                        "jump" : ["def interact"],
                         "false" : "The interact function must call make_initial_state & show_current_state where appropriate and not reimplement their logic."
                     },
                     {
@@ -207,6 +213,7 @@
                     {
                         "id" : "interact_q_graceful",
                         "criteria" : "Does not exit()/quit()",
+                        "jump" : ["def interact", "(exit|quit)\\(\\)"],
                         "weight" : 0,
                         "false" : "The interact function should not call exit/quit but should simply break/return."
                     },
@@ -232,29 +239,34 @@
             {
                 "criteria" : "comments",
                 "weight" : 1,
+                "jump" : ["def *", "\"\"\""],
                 "children" : [
                     {
                         "id" : "comments_description",
                         "criteria" : "Description",
                         "weight" : 0.5,
+                        "jump" : ["def *", "\"\"\""],
                         "false" : "Some of the functions are missing descriptions. Every function should have a short description comment to let readers quickly know what it does."
                     }, 
                     {
                         "id" : "comments_declaration",
                         "criteria" : "Argument/Return Types",
                         "weight" : 0.5,
+                        "jump" : ["def *", "\"\"\""],
                         "false" : "Some of the functions are missing type declarations. Every function should include the input and return types as a comment to let readers know what values can be expected as inputs and outputs."
                     },
                     {
                         "id" : "comments_under_function",
                         "criteria" : "Properly Placed",
                         "weight" : 0,
+                        "jump" : ["def *", "\"\"\""],
                         "false" : "The docstrings aren’t in the right spot. Docstrings should go directly under the function name to support Pythons help method."
                     },
                     {
                         "id" : "comments_line_length",
                         "criteria" : "Line length < 80",
                         "weight" : 0,
+                        "jump" : ["def *", "\"\"\""],
                         "false" : "Line length should be less than 80 characters."
                     }
 
