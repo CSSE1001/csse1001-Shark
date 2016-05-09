@@ -14,13 +14,16 @@ DEFAULTS['VERSION'] = "2016s1a2_1.0.1"
 
 DEFAULTS['CSSE7030'] = False
 DEFAULTS['TEST_DATA'] = None
-DEFAULTS['TEST_DATA_RAW'] = None
 DEFAULTS['SCRIPT'] = 'assign2.py'
+DEFAULTS['TEST_DATA_RAW'] = None
 # END DEFAULT OVERRIDES #
 # #############################################################################
 
 
 __unittest = True
+
+class SuperException(Exception):
+    pass
 
 class PlantTestCase(OrderedTestCase):
     @classmethod
@@ -187,18 +190,20 @@ class PlantTestCase(OrderedTestCase):
         if real_init is None:
             return self.skipTest("Organism has no __init__ method.")
 
-        called = {
-            'called': False
-        }
-
         def fake_init(*args, **kwargs):
-            called['called'] = True
+            raise SuperException
 
         setattr(Organism, "__init__", fake_init)
 
-        p1 = self.createP1()
+        try:
+            p1 = self.createP1()
+            called = False
+        except SuperException:
+            called = True
+        except Exception:
+            return self.skipTest("Could not create Plant.")
 
-        if not called['called']:
+        if not called:
             self.fail("Does not call super().__init__")
 
         setattr(Organism, "__init__", real_init)
@@ -659,18 +664,20 @@ class AnimalTestCase(OrderedTestCase):
         if real_init is None:
             return self.skipTest("Organism has no __init__ method.")
 
-        called = {
-            'called': False
-        }
-
         def fake_init(*args, **kwargs):
-            called['called'] = True
+            raise SuperException
 
         setattr(Organism, "__init__", fake_init)
 
-        a1 = self.createA1()
+        try:
+            a1 = self.createA1()
+            called = False
+        except SuperException:
+            called = True
+        except Exception:
+            return self.skipTest("Could not create Animal.")
 
-        if not called['called']:
+        if not called:
             self.fail("Does not call super().__init__")
 
         setattr(Organism, "__init__", real_init)
