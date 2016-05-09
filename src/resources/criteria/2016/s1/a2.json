@@ -1,0 +1,381 @@
+[
+    {
+        "criteria": "Code",
+        "weight": 10,
+        "children" : [
+            {
+                "criteria": "SurveyModel",
+                "weight": 3,
+                "jump" : ["class SurveyModel"],
+                "children" : [
+                    {
+                        "id" : "SurveyModel_get_set_name",
+                        "criteria" : "get/set_name",
+                        "jump" : ["class SurveyModel", "def get_name"],
+                        "weight" : 0.25,
+                        "false" : "get_name and/or set_name do not work as specified."
+                    },
+                    {
+                        "id" : "SurveyModel_get_set_image_file",
+                        "criteria" : "get/set_image_file",
+                        "jump" : ["class SurveyModel", "def get_image_file"],
+                        "weight" : 0.25,
+                        "false" : "get_image_file and/or set_image_file do not work as specified."
+                    },
+                    {
+                        "id" : "SurveyModel_get_organism_dictionary",
+                        "criteria" : "get_organism_dictionary",
+                        "jump" : ["class SurveyModel", "def get_organism_dictionary"],
+                        "weight" : 0.5,
+                        "false" : "get_organism_dictionary does not return the correct organism dictionary, as specified."
+                    },
+                    {
+                        "id" : "SurveyModel_stores_in_dict",
+                        "criteria" : "Uses dictionary for organisms/trackers",
+                        "jump" : ["class SurveyModel", "\\{"],
+                        "weight" : 0.25,
+                        "false" : "SurveyModel must use a dictionary(s) to store organisms and trackers."
+                    },
+                    {
+                        "id" : "SurveyModel_set_organisms",
+                        "criteria" : "set_organisms",
+                        "jump" : ["class SurveyModel", "def set_organisms"],
+                        "weight" : 0.25,
+                        "false" : "set_organisms does not work as specified."
+                    },
+                    {
+                        "id" : "SurveyModel_get_set_trackers",
+                        "criteria" : "get/set_trackers",
+                        "jump" : ["class SurveyModel", "def get_trackers"],
+                        "weight" : 0.25,
+                        "false" : "get_trackers and/or set_trackers do not work as specified."
+                    },
+                    {
+                        "id" : "SurveyModel_add_trackers",
+                        "criteria" : "add_trackers",
+                        "jump" : ["class SurveyModel", "def add_trackers"],
+                        "weight" : 0.25,
+                        "false" : "add_tracker does not work as specified."
+                    },
+                    {
+                        "id" : "SurveyModel_add_organism",
+                        "criteria" : "add_organism",
+                        "jump" : ["class SurveyModel", "def add_organism"],
+                        "weight" : 0.25,
+                        "false" : "add_organism does not work as specified."
+                    },
+                    {
+                        "id" : "SurveyModel_get_organism_ids",
+                        "criteria" : "get_organism_ids",
+                        "jump" : ["class SurveyModel", "def get_organism_ids"],
+                        "weight" : 0.25,
+                        "false" : "get_organism_ids does return a list of the organism ids, as specified."
+                    },
+                    {
+                        "id" : "SurveyModel_update_location",
+                        "criteria" : "update_location",
+                        "jump" : ["class SurveyModel", "def update_location"],
+                        "weight" : 0.25,
+                        "false" : "update_location does not work as specified."
+                    },
+                    {
+                        "id" : "SurveyModel_dict_class_attr",
+                        "criteria" : "Dictionaries Initialized on Class",
+                        "jump" : ["class SurveyModel", "def "],
+                        "weight" : -0.25,
+                        "true" : "Organism/tracker dictionary(s) should be initialized in __init__, and not as an attribute on the SurveyModel class."
+                    }
+                ]
+            },
+            {
+                "criteria": "Organism",
+                "weight": 1.75,
+                "jump" : ["class Organism"],
+                "children" : [
+                    {
+                        "id" : "Organism_to_dictionary",
+                        "criteria" : "to_dictionary",
+                        "jump" : ["class Organism", "def to_dictionary"],
+                        "weight" : 0.5,
+                        "false" : "to_dictionary does not work as specified."
+                    },
+                    {
+                        "id" : "Organism_counter",
+                        "criteria" : "ID Counter",
+                        "jump" : ["class Organism", "id \\="],
+                        "weight" : 0.25,
+                        "false" : "The Organism class does not keep track of ids correctly (i.e. incrementing a counter)."
+                    },
+                    {
+                        "id" : "Organism_get_set_id_get_name",
+                        "criteria" : "get/set_id + get_name",
+                        "jump" : ["class Organism", "def get_id"],
+                        "weight" : 0.25,
+                        "false" : "get_id, set_id, and/or get_name do not all work as specified."
+                    },
+                    {
+                        "id" : "Organism_get_track",
+                        "criteria" : "get_track",
+                        "jump" : ["class Organism", "def get_track"],
+                        "weight" : 0.25,
+                        "false" : "get_track does not return [] as specified."
+                    },
+                    {
+                        "id" : "Organism_get_position",
+                        "criteria" : "get_position",
+                        "jump" : ["class Organism", "def get_position"],
+                        "weight" : 0.25,
+                        "false" : "get_position does not work as specified."
+                    },
+                    {
+                        "id" : "Organism_get_full_position",
+                        "criteria" : "get_full_position",
+                        "jump" : ["class Organism", "def get_full_position"],
+                        "weight" : 0.25,
+                        "false" : "get_full_position does not work as specified."
+                    }
+                ]
+            },
+            {
+                "criteria": "Plant",
+                "weight": 0.75,
+                "jump" : ["class Plant"],
+                "children" : [
+                    {
+                        "id" : "Plant_super_init",
+                        "criteria" : "super().__init__",
+                        "jump" : ["class Plant", "super\\(\\).__init__"],
+                        "weight" : 0.25,
+                        "false" : "__init__ should call the __init__ method of the super class."
+                    },
+                    {
+                        "id" : "Plant_to_dictionary",
+                        "criteria" : "to_dictionary",
+                        "jump" : ["class Plant", "to_dictionary"],
+                        "weight" : 0.25,
+                        "false" : "to_dictionary does not work as specified."
+                    },
+                    {
+                        "id" : "Plant_str",
+                        "criteria" : "__str__",
+                        "jump" : ["class Plant", "def __str__"],
+                        "weight" : 0.25,
+                        "false" : "__str__ does not return the correct string, as specified."
+                    }
+                ]
+            },
+            {
+                "criteria": "Animal",
+                "weight": 1.75,
+                "jump" : ["class Animal"],
+                "children" : [
+                    {
+                        "id" : "Animal_get_track_none",
+                        "criteria" : "get_track (none)",
+                        "jump" : ["class Animal", "def get_track"],
+                        "weight" : 0.25,
+                        "false" : "get_track must return [] when there is no track, as specified."
+                    },
+                    {
+                        "id" : "Animal_get_track",
+                        "criteria" : "get_track",
+                        "jump" : ["class Animal", "def get_track"],
+                        "weight" : 0.25,
+                        "false" : "get_track does not return the correct list of positions, as specified."
+                    },
+                    {
+                        "id" : "Animal_super_init",
+                        "criteria" : "super().__init__",
+                        "jump" : ["class Animal", "super\\(\\).__init__"],
+                        "weight" : 0.25,
+                        "false" : "__init__ should call the __init__ method of the super class."
+                    },
+                    {
+                        "id" : "Animal_get_position",
+                        "criteria" : "get_position",
+                        "jump" : ["class Animal", "def get_position"],
+                        "weight" : 0.25,
+                        "false" : "get_position does not work as specified."
+                    },
+                    {
+                        "id" : "Animal_get_full_position",
+                        "criteria" : "get_full_position",
+                        "jump" : ["class Animal", "def get_full_position"],
+                        "weight" : 0.25,
+                        "false" : "get_full_position does not work as specified."
+                    },
+                    {
+                        "id" : "Animal_to_dictionary",
+                        "criteria" : "to_dictionary",
+                        "jump" : ["class Animal", "def to_dictionary"],
+                        "weight" : 0.25,
+                        "false" : "to_dictionary does not work as specified."
+                    },
+                    {
+                        "id" : "Animal_str",
+                        "criteria" : "__str__",
+                        "jump" : ["class Animal", "def __str__"],
+                        "weight" : 0.25,
+                        "false" : "__str__ does not return the correct string, as specified."
+                    }
+                ]
+            },
+            {
+                "criteria": "TrackerError",
+                "weight": 0.75,
+                "jump" : ["class TrackerError"],
+                "children" : [
+                    {
+                        "id" : "TrackerError_id",
+                        "criteria" : "Message Contains Tracker ID",
+                        "jump" : ["class TrackerError", ""],
+                        "weight" : 0.25,
+                        "false" : "The message for a TrackerError must include the relevant tracker_id, as shown in the specification."
+                    },
+                    {
+                        "id" : "TrackerError_add_tracker",
+                        "criteria" : "add_tracker",
+                        "jump" : ["class SurveyModel", "raise TrackerError"],
+                        "weight" : 0.25,
+                        "false" : "TrackerError must be raised by SurveyModel.add_tracker when a duplicate tracker id is added, as specified."
+                    },
+                    {
+                        "id" : "TrackerError_update_location",
+                        "criteria" : "update_location",
+                        "jump" : ["class SurveyModel", "raise TrackerError"],
+                        "weight" : 0.25,
+                        "false" : "TrackerError must be raised by SurveyModel.update_location when a tracker id that has not been assigned is used, as specified."
+                    }
+                ]
+            },
+            {
+                "criteria": "Inheritance",
+                "weight": 0.75,
+                "children" : [
+                    {
+                        "id" : "Inheritance_Plant",
+                        "criteria" : "Plant inherits from Organism",
+                        "jump" : ["class Plant\\(Organism\\)"],
+                        "weight" : 0.25,
+                        "false" : "Plant must inherit from Organism."
+                    },
+                    {
+                        "id" : "Inheritance_Animal",
+                        "criteria" : "Animal inherits from Organism",
+                        "jump" : ["class Animal\\(Organism\\)"],
+                        "weight" : 0.25,
+                        "false" : "Animal must inherit from Organism."
+                    },
+                    {
+                        "id" : "Inheritance_",
+                        "criteria" : "TrackerError inherits from Organism",
+                        "jump" : ["class TrackerError\\(Exception\\)"],
+                        "weight" : 0.25,
+                        "false" : "TrackerError must inherit from Exception."
+                    }
+                ]
+            },
+            {
+                "criteria": "Perfect",
+                "weight": 0.25,
+                "children" : [
+                    {
+                        "id" : "Perfect_perfect",
+                        "criteria" : "Otherwise Perfect Submission",
+                        "weight" : 0.25
+                    }
+                ]
+            },
+            {
+                "criteria" : "comments",
+                "weight" : 1,
+                "jump" : ["def *", "\"\"\""],
+                "children" : [
+                    {
+                        "id" : "comments_basic_docstring",
+                        "criteria" : "Most have Description & Types",
+                        "weight" : 0.25,
+                        "jump" : ["def *", "\"\"\""],
+                        "false" : "Some of the classes/functions are missing descriptions and/or argument and return types. Every class/function should have a short description comment to let readers quickly know what it does, and should include the argument and return types as a comment to let readers know how to interact with it."
+                    },
+                    {
+                        "id": "comments_perfect",
+                        "criteria": "Perfect Commenting",
+                        "weight": 0.5,
+                        "jump" : ["def *", "\"\"\""],
+                        "false": "Not all class/function comments adhere to the specification outlined in the course notes."
+                    },
+                    {
+                        "id": "comments_preconditions",
+                        "criteria": "Relevant Preconditions",
+                        "weight": 0.25,
+                        "jump" : ["def *", "\"\"\""],
+                        "false": "Not all function comments include preconditions where appropriate."
+                    },
+                    {
+                        "id" : "comments_under_function",
+                        "criteria" : "Properly Placed",
+                        "weight" : 0,
+                        "jump" : ["def *", "\"\"\""],
+                        "false" : "The docstrings aren’t in the right spot. Docstrings should go directly under the function name to support Pythons help method."
+                    },
+                    {
+                        "id" : "comments_line_length",
+                        "criteria" : "Line length < 80",
+                        "weight" : 0,
+                        "jump" : ["def *", "\"\"\""],
+                        "false" : "Line length should be less than 80 characters."
+                    }
+
+                ]
+            },
+            {
+                "criteria" : "general",
+                "weight" : -3.5,
+                "children" : [
+                    {
+                        "id" : "general_function_name",
+                        "criteria" : "Functions are misnamed",
+                        "weight" : -1,
+                        "true" : "Make sure your function names exactly match the assignment sheet."
+                    },
+                    {
+                        "id" : "general_syntax_minor",
+                        "criteria" : "Single Syntax Error",
+                        "weight" : -1,
+                        "true" : "Your code contains a syntax error."
+                    },
+                    {
+                        "id" : "general_syntax_major",
+                        "criteria" : "Multiple Syntax Errors",
+                        "weight" : -2,
+                        "true" : "Your code contains multiple syntax errors."
+                    },
+                    {
+                        "id": "general_fns_not_global",
+                        "criteria": "Functions not Global",
+                        "weight": -1,
+                        "true": "Make sure your functions are defined in the appropriate place."
+                    },
+                    {
+                        "id": "general_globals",
+                        "criteria": "Globals",
+                        "weight": -1,
+                        "true": "Make sure your code does not contain global variables or code outside interact (aside from function definitions)."
+                    },
+                    {
+                        "id" : "general_hardcoding",
+                        "criteria" : "Hardcoding",
+                        "weight": -1
+                    },
+                    {
+                        "id" : "general_stdout",
+                        "criteria" : "Printing",
+                        "weight": -0.5,
+                        "true": "Your code should not be printing any data."
+                    }
+                ]
+            }
+        ]
+    }
+]
